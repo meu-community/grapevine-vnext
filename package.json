@@ -1,0 +1,11 @@
+{
+  "name": "grapevine-vnext",
+  "version": "0.0.1-prealpha1",
+  "description": "Next generation RPG administration tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tory Alsip",
+  "license": "CC0-1.0"
+}
