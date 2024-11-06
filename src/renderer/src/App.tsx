@@ -2,7 +2,8 @@ import Versions from './components/Versions'
 import electronLogo from './assets/electron.svg'
 
 function App(): JSX.Element {
-  const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
+  const openHandle = (): void => window.electron.ipcRenderer.send('open_file')
+  const createHandle = (): void => window.electron.ipcRenderer.send('create_file')
 
   return (
     <>
@@ -17,13 +18,13 @@ function App(): JSX.Element {
       </p>
       <div className="actions">
         <div className="action">
-          <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">
-            Documentation
+          <a target="_blank" rel="noreferrer" onClick={openHandle}>
+            Open File
           </a>
         </div>
         <div className="action">
-          <a target="_blank" rel="noreferrer" onClick={ipcHandle}>
-            Send IPC
+          <a target="_blank" rel="noreferrer" onClick={createHandle}>
+            Create New
           </a>
         </div>
       </div>
