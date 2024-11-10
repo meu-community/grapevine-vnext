@@ -1,9 +1,10 @@
 import Versions from './components/Versions'
 import electronLogo from './assets/electron.svg'
+import { channels } from '@shared/constants'
 
 function App(): JSX.Element {
-  const openHandle = (): void => window.electron.ipcRenderer.send('open_file')
-  const createHandle = (): void => window.electron.ipcRenderer.send('create_file')
+  const openHandle = (): void => window.electron.ipcRenderer.send(channels.OPEN_FILE)
+  const createHandle = (): void => window.electron.ipcRenderer.send(channels.CREATE_FILE)
 
   return (
     <>

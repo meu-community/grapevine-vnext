@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { channels } from '@shared/constants'
 
 function createWindow(): void {
   // Create the browser window.
@@ -50,8 +51,8 @@ app.whenReady().then(() => {
   })
 
   // IPC test
-  ipcMain.on('open_file', () => dialog.showOpenDialog({ properties: ['openFile'] }))
-  ipcMain.on('create_file', () => console.log('Create File clicked'))
+  ipcMain.on(channels.OPEN_FILE, () => dialog.showOpenDialog({ properties: ['openFile'] }))
+  ipcMain.on(channels.CREATE_FILE, () => console.log('Create File clicked'))
 
   createWindow()
 
