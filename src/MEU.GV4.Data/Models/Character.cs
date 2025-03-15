@@ -15,7 +15,7 @@ namespace MEU.GV4.Data.Models
         public Player? Player { get; set; }
         public string? Status { get; set; }
         public bool IsNPC { get; set; }
-        public IEnumerable<Trait> Equipment { get; set; }
+        public TraitList Equipment { get; set; }
         public string? Biography { get; set; }
         public string? Notes { get; set; }
         public DateTimeOffset CreateDate { get; set; }
