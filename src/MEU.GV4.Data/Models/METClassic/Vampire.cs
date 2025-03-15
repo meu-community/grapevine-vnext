@@ -23,7 +23,12 @@ namespace MEU.GV4.Data.Models.METClassic
         public int SelfControl { get; set; }
         public int Courage { get; set; }
         public int PathTraits { get; set; }
+        public IEnumerable<Trait> KindredStatus { get; set; }
+        public IEnumerable<Trait> Bonds { get; set; }
+        public IEnumerable<Trait> Derangements { get; set; }
+        public IEnumerable<Trait> Disciplines { get; set; }
+        public IEnumerable<Trait> Rituals { get; set; }
+        public IEnumerable<Trait> Boons { get; set; }
 
-        // TODO: Add remaining Vampire-specific traits...
     }
 }

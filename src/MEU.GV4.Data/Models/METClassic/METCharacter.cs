@@ -26,6 +26,8 @@ namespace MEU.GV4.Data.Models.METClassic
         public IEnumerable<Trait> Backgrounds { get; set; }
         public IEnumerable<Trait> Merits { get; set; }
         public IEnumerable<Trait> Flaws { get; set; }
+        public IEnumerable<Trait> Health { get; set; }
+        public IEnumerable<Trait> Miscellanious { get; set; }
 
     }
 }
