@@ -19,6 +19,7 @@ namespace MEU.GV4.Data.Models
         public TraitList Hangouts { get; set; }
         public string? Biography { get; set; }
         public string? Notes { get; set; }
+        public string? Other { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset ModifyDate { get; set; }
     }

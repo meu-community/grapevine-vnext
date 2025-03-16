@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MEU.GV4.Data.Models.METClassic
 {
-    public class Fera : METCharacter
+    public class Fera : Werewolf
     {
+        public string? FeraName { get; set; }
     }
 }

@@ -8,5 +8,20 @@ namespace MEU.GV4.Data.Models.METClassic
 {
     public class KueiJin : METCharacter
     {
+        public string? Dharma { get; set; }
+        public string? Direction { get; set; }
+        public string? Balance { get; set; }
+        public string? Station { get; set; }
+        public string? PoArchetype { get; set; }
+        public int Hun { get; set; }
+        public int Po { get; set; }
+        public int YinChi { get; set; }
+        public int YangChi { get; set; }
+        public int DemonChi { get; set; }
+        public int DharmaTraits { get; set; }
+        public TraitList Guanxi { get; set; }
+        public TraitList Disciplines { get; set; }
+        public TraitList Rites { get; set; }
+
     }
 }
