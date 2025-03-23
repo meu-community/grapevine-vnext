@@ -20,6 +20,14 @@ namespace MEU.GV4.Data.Helpers
             return null;
         }
 
+        public static decimal GetAttributeAsDecimal(XmlElement? element, string attributeName)
+        {
+            var attributeValue = element?.Attributes?.GetNamedItem(attributeName)?.Value;
+            decimal returnValue = 0;
+            decimal.TryParse(attributeValue, out returnValue);
+            return returnValue;
+        }
+
         public static string? GetCData(XmlElement? element, string elementName)
         {
             return element?.SelectSingleNode(elementName)?.FirstChild?.Value;
