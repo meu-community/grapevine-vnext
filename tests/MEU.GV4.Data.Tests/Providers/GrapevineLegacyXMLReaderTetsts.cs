@@ -40,6 +40,34 @@ namespace MEU.GV4.Data.Tests.Providers
             Assert.Equivalent(expected, result);
         }
 
+        [Fact(DisplayName = "Can Load With Empty Values")]
+        public void CanLoadWithEmptyValues()
+        {
+            var expected = new Game()
+            {
+                Title = "TEST CHRONICLE",
+                Website = null,
+                EMail = null,
+                Phone = null,
+                UsualTime = null,
+                UsualPlace = null,
+                Description = null
+            };
+            var testGameData = """
+                <?xml version="1.0"?>
+                <grapevine version="3" chronicle="TEST CHRONICLE">
+                    <usualplace>
+                    </usualplace>
+                    <description>
+                    </description>
+                </grapevine>
+                """;
+            var reader = new GrapevineLegacyXMLReader();
+            var result = reader.ReadData(testGameData);
+            Assert.NotNull(result);
+            Assert.Equivalent(expected, result);
+        }
+
         [Fact(DisplayName = "Throws provider exception when data is empty")]
         public void ThrowsProviderExceptionWhenDataIsEmpty()
         {
