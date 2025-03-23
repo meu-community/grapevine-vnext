@@ -8,10 +8,25 @@ namespace MEU.GV4.Data.Providers
     /// </summary>
     public class GrapevineLegacyXMLReader
     {
+        private const string FILE_CONTENTS_EMPTY = "File contents are empty";
+        private const string INVALID_GRAPEVINE_FILE = "Invalid grapevine file";
+
+
         public Game ReadData(string rawGameData)
         {
+            if (String.IsNullOrEmpty(rawGameData))
+            {
+                throw new GrapevineProviderException(FILE_CONTENTS_EMPTY);
+            }
             var xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(rawGameData);
+
+            var root = xmlDoc.DocumentElement;
+
+            if (root?.Name != "grapevine")
+            {
+                throw new GrapevineProviderException(INVALID_GRAPEVINE_FILE);
+            }
 
             var gameData = new Game()
             {

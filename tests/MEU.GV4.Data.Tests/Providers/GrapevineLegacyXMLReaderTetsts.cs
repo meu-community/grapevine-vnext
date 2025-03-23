@@ -39,5 +39,34 @@ namespace MEU.GV4.Data.Tests.Providers
             Assert.NotNull(result);
             Assert.Equivalent(expected, result);
         }
+
+        [Fact(DisplayName = "Throws provider exception when data is empty")]
+        public void ThrowsProviderExceptionWhenDataIsEmpty()
+        {
+            var reader = new GrapevineLegacyXMLReader();
+            Assert.Throws<GrapevineProviderException>(() => reader.ReadData(String.Empty));
+        }
+
+        [Fact(DisplayName = "Throws provider exception when data is null")]
+        public void ThrowsProviderExceptionWhenDataIsNull()
+        {
+            string? testGameData = null;
+            var reader = new GrapevineLegacyXMLReader();
+#pragma warning disable CS8604 // Possible null reference argument.
+            Assert.Throws<GrapevineProviderException>(() => reader.ReadData(testGameData));
+#pragma warning restore CS8604 // Possible null reference argument.
+        }
+
+        [Fact(DisplayName = "Throws provider exception when root element is incorrect")]
+        public void ThrowsProviderExceptionWhenRootIsIncorrect()
+        {
+            var testGameData = """
+                <?xml version="1.0"?>
+                <foo>
+                </foo>
+                """;
+            var reader = new GrapevineLegacyXMLReader();
+            Assert.Throws<GrapevineProviderException>(() => reader.ReadData(testGameData));
+        }
     }
 }
