@@ -37,10 +37,35 @@ namespace MEU.GV4.Data.Providers
                 Phone = XmlHelper.GetAttribute(root, "phone"),
                 UsualTime = XmlHelper.GetAttribute(root, "usualtime"),
                 UsualPlace = XmlHelper.GetCData(root, "usualplace"),
-                Description = XmlHelper.GetCData(root, "description")
+                Description = XmlHelper.GetCData(root, "description"),
+                Players = GetPlayers(root)
             };
 
             return gameData;
+        }
+
+        private static List<Player> GetPlayers(XmlElement root)
+        {
+            var playerList = new List<Player>();
+            foreach (XmlElement el in root.GetElementsByTagName("player"))
+            {
+                playerList.Add(new()
+                {
+                    Name = XmlHelper.GetAttribute(el, "name"),
+                    ID = XmlHelper.GetAttribute(el, "id"),
+                    EMail = XmlHelper.GetAttribute(el, "email"),
+                    Phone = XmlHelper.GetAttribute(el, "phone"),
+                    Position = XmlHelper.GetAttribute(el, "position"),
+                    Status = XmlHelper.GetAttribute(el, "status"),
+                    Address = XmlHelper.GetCData(el, "address"),
+                    Notes = XmlHelper.GetCData(el, "notes"),
+                    // When importing, there is no create date so we will set it the same as the modify date
+                    CreateDate = XmlHelper.GetAttributeAsDateTimeOffset(el, "lastmodified"),
+                    ModifyDate = XmlHelper.GetAttributeAsDateTimeOffset(el, "lastmodified")
+                });
+            }
+
+            return playerList;
         }
     }
 }
