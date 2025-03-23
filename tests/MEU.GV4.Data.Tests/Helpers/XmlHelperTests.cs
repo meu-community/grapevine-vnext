@@ -17,8 +17,8 @@ namespace MEU.GV4.Data.Tests.Helpers
             Assert.Equal("foo", XmlHelper.GetAttribute(testDoc.DocumentElement, "attr1"));
         }
 
-        [Fact(DisplayName = "Can CData value from child element")]
-        public void CanReadChildElement()
+        [Fact(DisplayName = "Can read CData value from child element")]
+        public void CanReadCDataChildElement()
         {
             var testDoc = new XmlDocument();
             testDoc.LoadXml("""
