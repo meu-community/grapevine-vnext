@@ -14,7 +14,9 @@ namespace MEU.GV4.Data.Models.METClassic
         public string? Legion { get; set; }
         public string? Rank { get; set; }
         public int Pathos { get; set; }
+        public int PathosTemp { get; set; }
         public int Corpus { get; set; }
+        public int CorpusTemp { get; set; }
         public TraitList Arcanoi { get; set; }
         public string? Passions { get; set; }
         public string? Fetters { get; set; }

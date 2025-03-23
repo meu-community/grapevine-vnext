@@ -22,6 +22,7 @@ namespace MEU.GV4.Data.Models.METClassic
         public int SocialMax { get; set; }
         public int MentalMax { get; set; }
         public int Willpower { get; set; }
+        public int WillpowerTemp { get; set; }
         public TraitList Abilities { get; set; }
         public TraitList Influences { get; set; }
         public TraitList Backgrounds { get; set; }

@@ -16,7 +16,9 @@ namespace MEU.GV4.Data.Models.METClassic
         public string? House { get; set; }
         public string? Threshold { get; set; }
         public int Glamour { get; set; }
+        public int GlamourTemp { get; set; }
         public int Banality { get; set; }
+        public int BanalityTemp { get; set; }
         public TraitList Arts { get; set; }
         public TraitList Realms { get; set; }
         public string? Oaths { get; set; }

@@ -14,8 +14,11 @@ namespace MEU.GV4.Data.Models.METClassic
         public string? Cabal { get; set; }
         public string? Rank { get; set; }
         public int Arete { get; set; }
+        public int AreteTemp { get; set; }
         public int Quintessence { get; set; }
+        public int QuintessenceTemp { get; set; }
         public int Paradox { get; set; }
+        public int ParadoxTemp { get; set; }
         public TraitList Resonance { get; set; }
         public TraitList Reputation { get; set; }
         public TraitList Spheres { get; set; }
