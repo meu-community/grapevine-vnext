@@ -19,7 +19,7 @@ namespace MEU.GV4.Data.Models
 
     public class ExperienceEntry
     {
-        public DateTimeOffset EntryDate { get; set; }
+        public DateTimeOffset? EntryDate { get; set; }
         public decimal Change { get; set; }
         public ExperienceChangeType Type { get; set; }
         public string? Reason { get; set; }

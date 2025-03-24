@@ -59,6 +59,7 @@ namespace MEU.GV4.Data.Providers
                     Status = XmlHelper.GetAttribute(el, "status"),
                     Address = XmlHelper.GetCData(el, "address"),
                     Notes = XmlHelper.GetCData(el, "notes"),
+                    PlayerExperience = GetExperience(el),
                     // When importing, there is no create date so we will set it the same as the modify date
                     CreateDate = XmlHelper.GetAttributeAsDateTimeOffset(el, "lastmodified"),
                     ModifyDate = XmlHelper.GetAttributeAsDateTimeOffset(el, "lastmodified")
@@ -66,6 +67,37 @@ namespace MEU.GV4.Data.Providers
             }
 
             return playerList;
+        }
+
+        private static Experience? GetExperience(XmlElement element)
+        {
+            var expElement = element.SelectSingleNode("experience") as XmlElement;
+            if (expElement != null)
+            {
+                var experience = new Experience()
+                {
+                    Earned = XmlHelper.GetAttributeAsDecimal(expElement, "earned"),
+                    Unspent = XmlHelper.GetAttributeAsDecimal(expElement, "unspent"),
+                    Entries = []
+                };
+
+                foreach (XmlElement entry in expElement.GetElementsByTagName("entry"))
+                {
+                    experience.Entries.Add(new()
+                    {
+                        EntryDate = XmlHelper.GetAttributeAsDateTimeOffset(entry, "date"),
+                        Change = XmlHelper.GetAttributeAsDecimal(entry, "change"),
+                        Type = Enum.Parse<ExperienceChangeType>(XmlHelper.GetAttribute(entry, "type")),
+                        Reason = XmlHelper.GetAttribute(entry, "reason"),
+                        Earned = XmlHelper.GetAttributeAsDecimal(entry, "earned"),
+                        Unspent = XmlHelper.GetAttributeAsDecimal(entry, "unspent")
+                    });
+                }
+
+                return experience;
+            }
+
+            return null;
         }
     }
 }

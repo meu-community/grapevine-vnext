@@ -66,6 +66,30 @@ namespace MEU.GV4.Data.Tests.Helpers
             Assert.Equal(0, XmlHelper.GetAttributeAsDecimal(testDoc.DocumentElement, "attr1"));
         }
 
+        [Fact(DisplayName = "Can read attribute as int from an element")]
+        public void CanReadAttributeAsInt()
+        {
+            var testDoc = new XmlDocument();
+            testDoc.LoadXml("""
+                <?xml version="1.0"?>
+                <test attr1="42">
+                </test>
+                """);
+            Assert.Equal(42, XmlHelper.GetAttributeAsInt(testDoc.DocumentElement, "attr1"));
+        }
+
+        [Fact(DisplayName = "Invalid int returns 0")]
+        public void InvalidIntReturnsZero()
+        {
+            var testDoc = new XmlDocument();
+            testDoc.LoadXml("""
+                <?xml version="1.0"?>
+                <test attr1="foo">
+                </test>
+                """);
+            Assert.Equal(0, XmlHelper.GetAttributeAsInt(testDoc.DocumentElement, "attr1"));
+        }
+
         [Fact(DisplayName = "Can read CData value from child element")]
         public void CanReadCDataChildElement()
         {

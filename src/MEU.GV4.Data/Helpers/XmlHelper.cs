@@ -28,6 +28,14 @@ namespace MEU.GV4.Data.Helpers
             return returnValue;
         }
 
+        public static int GetAttributeAsInt(XmlElement? element, string attributeName)
+        {
+            var attributeValue = element?.Attributes?.GetNamedItem(attributeName)?.Value;
+            int returnValue = 0;
+            int.TryParse(attributeValue, out returnValue);
+            return returnValue;
+        }
+
         public static string? GetCData(XmlElement? element, string elementName)
         {
             return element?.SelectSingleNode(elementName)?.FirstChild?.Value;

@@ -105,8 +105,8 @@ namespace MEU.GV4.Data.Tests.Providers
             var expected = new Game()
             {
                 Title = "TEST CHRONICLE",
-                Players = new ()
-                {
+                Players =
+                [
                     new () {
                         Name = "Leeroy Jenkins",
                         ID = "12345",
@@ -119,10 +119,21 @@ namespace MEU.GV4.Data.Tests.Providers
                         Somewhere, XY 12345
                         """,
                         Notes = "Player notes",
+                        PlayerExperience = new ()
+                        {
+                            Unspent = 1,
+                            Earned = 2,
+                            Entries =
+                            [
+                                new () { EntryDate = DateTimeOffset.Parse("1/1/2020"), Change = 1, Type = ExperienceChangeType.Earned, Reason = "test", Earned = 1, Unspent = 1 },
+                                new () { EntryDate = DateTimeOffset.Parse("1/1/2020"), Change = 1, Type = ExperienceChangeType.Earned, Reason = "test 2", Earned = 2, Unspent = 2 },
+                                new () { EntryDate = DateTimeOffset.Parse("1/1/2020"), Change = 1, Type = ExperienceChangeType.Spent, Reason = "test spend", Earned = 2, Unspent = 1 }
+                            ]
+                        },
                         CreateDate = DateTimeOffset.Parse("1/1/2020 00:00:01 AM"),
                         ModifyDate = DateTimeOffset.Parse("1/1/2020 00:00:01 AM")
                     }
-                }
+                ]
             };
             var testGameData = """
                 <?xml version="1.0"?>
@@ -132,7 +143,11 @@ namespace MEU.GV4.Data.Tests.Providers
                     <description>
                     </description>
                   <player name="Leeroy Jenkins" id="12345" email="test@example.com" phone="000-000-0000" position="Player" status="Active" lastmodified="1/1/2020 00:00:01 AM">
-                    <experience unspent="0" earned="0" />
+                    <experience unspent="1" earned="2">
+                        <entry date="1/1/2020" change="1" type="0" reason="test" earned="1" unspent="1"/>
+                        <entry date="1/1/2020" change="1" type="0" reason="test 2" earned="2" unspent="2"/>
+                        <entry date="1/1/2020" change="1" type="3" reason="test spend" earned="2" unspent="1"/>
+                    </experience>
                     <address>
                       <![CDATA[111 Elm St
                 Somewhere, XY 12345]]>
