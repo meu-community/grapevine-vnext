@@ -14,7 +14,7 @@
         public string? UsualTime { get; set; }
 
 
-        public IEnumerable<Player> Players { get; set; }
-        public IEnumerable<Character> Characters { get; set; }
+        public List<Player>? Players { get; set; }
+        public List<Character>? Characters { get; set; }
     }
 }
