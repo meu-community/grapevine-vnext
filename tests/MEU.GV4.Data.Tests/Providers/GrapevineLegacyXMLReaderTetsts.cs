@@ -256,6 +256,7 @@ namespace MEU.GV4.Data.Tests.Providers
                         Generation = 13,
                         KindredStatus = [ new () { Name = "Acknowleged" }, new () { Name = "Overrated" } ],
                         Disciplines = [ new () { Name = "Auspex: Heightened Senses", Value = "3", Note = "basic"}, new () { Name = "Dominate: Command", Value = "3", Note = "basic"} ],
+                        Rituals = [ new() { Name = "Basic: Blood Mead", Value = "2" } ],
                         CreateDate = DateTimeOffset.Parse("1/1/2020"),
                         ModifyDate = DateTimeOffset.Parse("1/2/2020 00:00:01 AM")
                     }
@@ -305,6 +306,9 @@ namespace MEU.GV4.Data.Tests.Providers
                         <traitlist name="Disciplines" abc="yes" display="5">
                             <trait name="Auspex: Heightened Senses" val="3" note="basic" />
                             <trait name="Dominate: Command" val="3" note="basic" />
+                        </traitlist>
+                        <traitlist name="Rituals" abc="no" atomic="yes" display="5">
+                          <trait name="Basic: Blood Mead" val="2"/>
                         </traitlist>
                         <biography>
                           <![CDATA[Born and raised in South Transylvania (actually Detroit, but don't tell him that)]]>
