@@ -324,5 +324,39 @@ namespace MEU.GV4.Data.Tests.Providers
             Assert.NotNull(result);
             Assert.Equivalent(expected, result);
         }
+
+        [Fact(DisplayName = "Can mark IsNPC as true when set in xml as yes")]
+        public void CanMarkNPCWhenSetInXml()
+        {
+            var expected = new Game()
+            {
+                Title = "TEST CHRONICLE",
+                Players = [],
+                Characters =
+                [
+                    new Vampire()
+                    {
+                        Name = "Vladymur",
+                        IsNPC = true,
+                        CreateDate = DateTimeOffset.Parse("1/1/2020"),
+                        ModifyDate = DateTimeOffset.Parse("1/2/2020 00:00:01 AM")
+                    }
+                ]
+            };
+            var testGameData = """
+                <?xml version="1.0"?>
+                <grapevine version="3" chronicle="TEST CHRONICLE">
+                    <usualplace>
+                    </usualplace>
+                    <description>
+                    </description>
+                    <vampire name="Vladymur" npc="yes" startdate="1/1/2020" lastmodified="1/2/2020 00:00:01 AM" />
+                </grapevine>
+                """;
+            var reader = new GrapevineLegacyXMLReader();
+            var result = reader.ReadData(testGameData);
+            Assert.NotNull(result);
+            Assert.Equivalent(expected, result);
+        }
     }
 }

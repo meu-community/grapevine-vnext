@@ -106,6 +106,7 @@ namespace MEU.GV4.Data.Providers
         {
             character.Name = XmlHelper.GetAttribute(el, "name");
             character.Player = XmlHelper.GetAttribute(el, "player");
+            character.IsNPC = XmlHelper.GetAttribute(el, "npc") == "yes";
             character.Title = XmlHelper.GetAttribute(el, "title");
             character.Nature = XmlHelper.GetAttribute(el, "nature");
             character.Demeanor = XmlHelper.GetAttribute(el, "demeanor");
