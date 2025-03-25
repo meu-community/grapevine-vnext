@@ -251,10 +251,6 @@ namespace MEU.GV4.Data.Tests.Providers
                         MentalTraits = [ new () { Name = "a"}, new () { Name = "b", Value = "2"}, new () { Name = "c"}],
                         NegativeMentalTraits = [ new () { Name = "a"} ],
                         Abilities = [ new () { Name = "Driving", Value = "3", Note = "Fast" }, new () { Name = "Lore: Bacon", Value = "2" }],
-                        Backgrounds = [],
-                        Influences = [],
-                        Derangements = [],
-                        Health = [],
                         Generation = 13,
                         KindredStatus = [ new () { Name = "Acknowleged" }, new () { Name = "Overrated" } ],
                         Disciplines = [ new () { Name = "Auspex: Heigthened Senses", Value = "3", Note = "basic"}, new () { Name = "Dominate: Command", Value = "3", Note = "basic"} ],
@@ -271,6 +267,7 @@ namespace MEU.GV4.Data.Tests.Providers
                     <description>
                     </description>
                     <vampire name="Vladymur" nature="foo" demeanor="bar" clan="Foo" sect="Cami" generation="13" blood="10" willpower="3" conscience="1" selfcontrol="2" courage="3" path="Potato" pathtraits="5" physicalmax="10" player="Fred Smith" status="Active" startdate="1/1/2020" lastmodified="1/2/2020 00:00:01 AM">
+                        <experience unspent="0" earned="0" />
                         <traitlist name="Physical" abc="yes" display="1">
                             <trait name="a" />
                             <trait name="b" val="2" />
@@ -310,6 +307,9 @@ namespace MEU.GV4.Data.Tests.Providers
                         <biography>
                           <![CDATA[Born and raised in South Transylvania (actually Detroit, but don't tell him that)]]>
                         </biography>
+                        <notes>
+                            <![CDATA[My notes]]>
+                        </notes>
                     </vampire>
                 </grapevine>
                 """;

@@ -85,7 +85,20 @@ namespace MEU.GV4.Data.Providers
         {
             var vampire = new Vampire();
             LoadCommonTraits(vampire, el);
-
+            vampire.Clan = XmlHelper.GetAttribute(el, "clan");
+            vampire.Sect = XmlHelper.GetAttribute(el, "sect");
+            vampire.Coterie = XmlHelper.GetAttribute(el, "coterie");
+            vampire.Sire = XmlHelper.GetAttribute(el, "sire");
+            vampire.Generation = XmlHelper.GetAttributeAsInt(el, "generation");
+            vampire.Path = XmlHelper.GetAttribute(el, "path");
+            vampire.PathTraits = XmlHelper.GetAttributeAsInt(el, "pathtraits");
+            vampire.Conscience = XmlHelper.GetAttributeAsInt(el, "conscience");
+            vampire.SelfControl = XmlHelper.GetAttributeAsInt(el, "selfcontrol");
+            vampire.Courage = XmlHelper.GetAttributeAsInt(el, "courage");
+            vampire.Blood = XmlHelper.GetAttributeAsInt(el, "blood");
+            vampire.Disciplines = LoadTraitList(el, "Disciplines");
+            vampire.Rituals = LoadTraitList(el, "Rituals");
+            vampire.KindredStatus = LoadTraitList(el, "Status");
             return vampire;
         }
 
@@ -93,8 +106,10 @@ namespace MEU.GV4.Data.Providers
         {
             character.Name = XmlHelper.GetAttribute(el, "name");
             character.Player = XmlHelper.GetAttribute(el, "player");
+            character.Title = XmlHelper.GetAttribute(el, "title");
             character.Nature = XmlHelper.GetAttribute(el, "nature");
             character.Demeanor = XmlHelper.GetAttribute(el, "demeanor");
+            character.Willpower = XmlHelper.GetAttributeAsInt(el, "willpower");
             character.Status = XmlHelper.GetAttribute(el, "status");
             character.PhysicalMax = XmlHelper.GetAttributeAsInt(el, "physicalmax");
             character.SocialMax = XmlHelper.GetAttributeAsInt(el, "socialmax");
@@ -111,10 +126,15 @@ namespace MEU.GV4.Data.Providers
             character.Abilities = LoadTraitList(el, "Abilities");
             character.Influences = LoadTraitList(el, "Influences");
             character.Backgrounds = LoadTraitList(el, "Backgrounds");
+            character.Merits = LoadTraitList(el, "Merits");
+            character.Flaws = LoadTraitList(el, "Flaws");
             character.Health = LoadTraitList(el, "Health Levels");
+            character.Equipment = LoadTraitList(el, "Equipment");
+            character.Hangouts = LoadTraitList(el, "Locations");
             character.Miscellanious = LoadTraitList(el, "Miscellaneous");
             character.Derangements = LoadTraitList(el, "Derangements");
             character.Biography = XmlHelper.GetCData(el, "biography");
+            character.Notes = XmlHelper.GetCData(el, "notes");
         }
 
         internal static TraitList LoadTraitList(XmlElement el, string traitListName)

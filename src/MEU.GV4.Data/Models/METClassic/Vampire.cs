@@ -20,10 +20,10 @@
         public int CourageTemp { get; set; }
         public int PathTraits { get; set; }
         public int PathTraitsTemp { get; set; }
-        public TraitList? KindredStatus { get; set; }
-        public TraitList? Bonds { get; set; }
-        public TraitList? Disciplines { get; set; }
-        public TraitList? Rituals { get; set; }
-        public TraitList? Boons { get; set; }
+        public TraitList KindredStatus { get; set; } = [];
+        public TraitList Bonds { get; set; } = [];
+        public TraitList Disciplines { get; set; } = [];
+        public TraitList Rituals { get; set; } = [];
+        public TraitList Boons { get; set; } = [];
     }
 }
