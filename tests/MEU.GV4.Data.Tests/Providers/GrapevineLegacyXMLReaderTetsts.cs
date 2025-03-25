@@ -1,4 +1,5 @@
 ﻿using MEU.GV4.Data.Models;
+using MEU.GV4.Data.Models.METClassic;
 using MEU.GV4.Data.Providers;
 
 namespace MEU.GV4.Data.Tests.Providers
@@ -53,7 +54,8 @@ namespace MEU.GV4.Data.Tests.Providers
                 UsualTime = null,
                 UsualPlace = null,
                 Description = null,
-                Players = new()
+                Players = new(),
+                Characters = new()
             };
             var testGameData = """
                 <?xml version="1.0"?>
@@ -133,7 +135,8 @@ namespace MEU.GV4.Data.Tests.Providers
                         CreateDate = DateTimeOffset.Parse("1/1/2020 00:00:01 AM"),
                         ModifyDate = DateTimeOffset.Parse("1/1/2020 00:00:01 AM")
                     }
-                ]
+                ],
+                Characters = []
             };
             var testGameData = """
                 <?xml version="1.0"?>
@@ -156,6 +159,98 @@ namespace MEU.GV4.Data.Tests.Providers
                       <![CDATA[Player notes]]>
                     </notes>
                   </player>
+                </grapevine>
+                """;
+            var reader = new GrapevineLegacyXMLReader();
+            var result = reader.ReadData(testGameData);
+            Assert.NotNull(result);
+            Assert.Equivalent(expected, result);
+        }
+
+        [Fact(DisplayName = "Can Load Vampire Character Data")]
+        public void CanLoadVampireCharacterData()
+        {
+            var expected = new Game()
+            {
+                Title = "TEST CHRONICLE",
+                Players = [],
+                Characters =
+                [
+                    new Vampire()
+                    {
+                        Name = "Vladymur",
+                        Player = "Fred Smith",
+                        Status = "Active",
+                        Clan = "Foo",
+                        Sect = "Cami",
+                        Nature = "foo",
+                        Demeanor = "bar",
+                        Path = "Potato",
+                        PathTraits = 5,
+                        Conscience = 1,
+                        SelfControl = 2,
+                        Courage = 3,
+                        Willpower = 3,
+                        Blood = 10,
+                        PhysicalMax = 10,
+                        Notes = "My notes",
+                        Biography = "Born and raised in South Transylvania (actually Detroit, but don't tell him that)",
+                        PhysicalTraits = [ new () { Name = "a"}, new () { Name = "b", Value = "2"}, new () { Name = "c"} ],
+                        NegativePhysicalTraits = [ new () { Name = "a"} ],
+                        SocialTraits = [ new () { Name = "a"}, new () { Name = "b", Value = "2"}, new () { Name = "c"} ],
+                        NegativeSocialTraits = [ new () { Name = "a"} ],
+                        MentalTraits = [ new () { Name = "a"}, new () { Name = "b", Value = "2"}, new () { Name = "c"}],
+                        NegativeMentalTraits = [ new () { Name = "a"} ],
+                        Abilities = [ new () { Name = "Driving", Value = "3", Note = "Fast" }, new () { Name = "Lore: Bacon", Value = "2" }],
+                        Generation = 13,
+                        KindredStatus = [ new () { Name = "Acknowleged" }, new () { Name = "Overrated" } ],
+                        Disciplines = [ new () { Name = "Auspex: Heigthened Senses", Value = "3", Note = "basic"}, new () { Name = "Dominate: Command", Value = "3", Note = "basic"} ],
+                        CreateDate = DateTimeOffset.Parse("1/1/2020"),
+                        ModifyDate = DateTimeOffset.Parse("1/2/2020 00:00:01 AM")
+                    }
+                ]
+            };
+            var testGameData = """
+                <?xml version="1.0"?>
+                <grapevine version="3" chronicle="TEST CHRONICLE">
+                    <usualplace>
+                    </usualplace>
+                    <description>
+                    </description>
+                    <vampire name="Vladymur" nature="foo" demeanor="bar" clan="Foo" sect="Cami" generation="13" blood="10" willpower="3" conscience="1" selfcontrol="2" courage="3" path="Potato" pathtraits="5" physicalmax="10" player="Fred Smith" status="Active" startdate="1/1/2020" lastmodified="1/2/2020 00:00:01 AM">
+                        <traitlist name="Physical" abc="yes" display="1">
+                            <trait name="a" />
+                            <trait name="b" val="2" />
+                            <trait name="c" />
+                        </traitlist>
+                        <traitlist name="Social" abc="yes" display="1">
+                            <trait name="a" />
+                            <trait name="b" val="2" />
+                            <trait name="c" />
+                        </traitlist>
+                        <traitlist name="Mental" abc="yes" display="1">
+                            <trait name="a" />
+                            <trait name="b" val="2" />
+                            <trait name="c" />
+                        </traitlist>
+                        <traitlist name="Negative Physical" abc="yes" negative="yes" display="1">
+                            <trait name="a" />
+                        </traitlist>
+                        <traitlist name="Negative Social" abc="yes" negative="yes" display="1">
+                            <trait name="a" />
+                        </traitlist>
+                        <traitlist name="Negative Mental" abc="yes" negative="yes" display="1">
+                            <trait name="a" />
+                        </traitlist>
+                        <traitlist name="Status" abc="yes" display="1">
+                          <trait name="Acknowledged"/>
+                          <trait name="Overrated"/>
+                        </traitlist>
+                        <traitlist name="Abilities" abc="yes" display="1">
+                          <trait name="Driving" val="3" note="Fast" />
+                          <trait name="Lore: Bacon" val="2"/>
+                        </traitlist>
+                    </vampire>
                 </grapevine>
                 """;
             var reader = new GrapevineLegacyXMLReader();

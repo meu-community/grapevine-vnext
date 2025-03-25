@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MEU.GV4.Data.Models.METClassic
+﻿namespace MEU.GV4.Data.Models.METClassic
 {
     public class Vampire : METCharacter
     {
@@ -26,11 +20,10 @@ namespace MEU.GV4.Data.Models.METClassic
         public int CourageTemp { get; set; }
         public int PathTraits { get; set; }
         public int PathTraitsTemp { get; set; }
-        public TraitList KindredStatus { get; set; }
-        public TraitList Bonds { get; set; }
-        public TraitList Disciplines { get; set; }
-        public TraitList Rituals { get; set; }
-        public TraitList Boons { get; set; }
-
+        public TraitList? KindredStatus { get; set; }
+        public TraitList? Bonds { get; set; }
+        public TraitList? Disciplines { get; set; }
+        public TraitList? Rituals { get; set; }
+        public TraitList? Boons { get; set; }
     }
 }
