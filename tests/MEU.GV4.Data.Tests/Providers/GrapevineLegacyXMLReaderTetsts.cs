@@ -1,6 +1,7 @@
 ﻿using MEU.GV4.Data.Models;
 using MEU.GV4.Data.Models.METClassic;
 using MEU.GV4.Data.Providers;
+using System.Xml;
 
 namespace MEU.GV4.Data.Tests.Providers
 {
@@ -18,7 +19,8 @@ namespace MEU.GV4.Data.Tests.Providers
                 UsualTime = "4:00 PM",
                 UsualPlace = "That place",
                 Description = "TEST DESCRIPTION",
-                Players = new()
+                Players = new(),
+                Characters = new()
             };
             var testGameData = """
                 <?xml version="1.0"?>
@@ -121,17 +123,7 @@ namespace MEU.GV4.Data.Tests.Providers
                         Somewhere, XY 12345
                         """,
                         Notes = "Player notes",
-                        PlayerExperience = new ()
-                        {
-                            Unspent = 1,
-                            Earned = 2,
-                            Entries =
-                            [
-                                new () { EntryDate = DateTimeOffset.Parse("1/1/2020"), Change = 1, Type = ExperienceChangeType.Earned, Reason = "test", Earned = 1, Unspent = 1 },
-                                new () { EntryDate = DateTimeOffset.Parse("1/1/2020"), Change = 1, Type = ExperienceChangeType.Earned, Reason = "test 2", Earned = 2, Unspent = 2 },
-                                new () { EntryDate = DateTimeOffset.Parse("1/1/2020"), Change = 1, Type = ExperienceChangeType.Spent, Reason = "test spend", Earned = 2, Unspent = 1 }
-                            ]
-                        },
+                        PlayerExperience = new () { Entries = new () },
                         CreateDate = DateTimeOffset.Parse("1/1/2020 00:00:01 AM"),
                         ModifyDate = DateTimeOffset.Parse("1/1/2020 00:00:01 AM")
                     }
@@ -146,11 +138,7 @@ namespace MEU.GV4.Data.Tests.Providers
                     <description>
                     </description>
                   <player name="Leeroy Jenkins" id="12345" email="test@example.com" phone="000-000-0000" position="Player" status="Active" lastmodified="1/1/2020 00:00:01 AM">
-                    <experience unspent="1" earned="2">
-                        <entry date="1/1/2020" change="1" type="0" reason="test" earned="1" unspent="1"/>
-                        <entry date="1/1/2020" change="1" type="0" reason="test 2" earned="2" unspent="2"/>
-                        <entry date="1/1/2020" change="1" type="3" reason="test spend" earned="2" unspent="1"/>
-                    </experience>
+                    <experience unspent="0" earned="0" />
                     <address>
                       <![CDATA[111 Elm St
                 Somewhere, XY 12345]]>
@@ -164,6 +152,67 @@ namespace MEU.GV4.Data.Tests.Providers
             var reader = new GrapevineLegacyXMLReader();
             var result = reader.ReadData(testGameData);
             Assert.NotNull(result);
+            Assert.Equivalent(expected, result);
+        }
+
+        [Fact(DisplayName = "Can load experience data")]
+        public void CanLoadExperienceData()
+        {
+            var expected = new Experience()
+            {
+                Unspent = 1,
+                Earned = 2,
+                Entries =
+                [
+                    new () { EntryDate = DateTimeOffset.Parse("1/1/2020"), Change = 1, Type = ExperienceChangeType.Earned, Reason = "test", Earned = 1, Unspent = 1 },
+                    new () { EntryDate = DateTimeOffset.Parse("1/1/2020"), Change = 1, Type = ExperienceChangeType.Earned, Reason = "test 2", Earned = 2, Unspent = 2 },
+                    new () { EntryDate = DateTimeOffset.Parse("1/1/2020"), Change = 1, Type = ExperienceChangeType.Spent, Reason = "test spend", Earned = 2, Unspent = 1 }
+                ]
+            };
+
+            var xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml("""
+                <?xml version="1.0"?>
+                <foo>
+                    <experience unspent="1" earned="2">
+                        <entry date="1/1/2020" change="1" type="0" reason="test" earned="1" unspent="1"/>
+                        <entry date="1/1/2020" change="1" type="0" reason="test 2" earned="2" unspent="2"/>
+                        <entry date="1/1/2020" change="1" type="3" reason="test spend" earned="2" unspent="1"/>
+                    </experience>
+                </foo>
+                """);
+
+#pragma warning disable CS8604 // Possible null reference argument.
+            var result = GrapevineLegacyXMLReader.LoadExperience(xmlDoc.DocumentElement);
+#pragma warning restore CS8604 // Possible null reference argument.
+            Assert.Equivalent(expected, result);
+        }
+
+        [Fact(DisplayName = "Can load trait list by name")]
+        public void CanLoadTraitListByName()
+        {
+            TraitList expected =
+            [
+                new() { Name = "a" }, new() { Name = "b", Value = "2" }, new() { Name = "c", Note = "foo" }
+            ];
+
+            var xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml("""
+                <?xml version="1.0"?>
+                <foo>
+                    <traitlist name="bar" abc="yes" display="1">
+                        <trait name="a" />
+                    </traitlist>
+                    <traitlist name="foo" abc="yes" display="1">
+                        <trait name="a" />
+                        <trait name="b" val="2" />
+                        <trait name="c" note="foo" />
+                    </traitlist>
+                </foo>
+                """);
+#pragma warning disable CS8604 // Possible null reference argument.
+            var result = GrapevineLegacyXMLReader.LoadTraitList(xmlDoc.DocumentElement, "foo");
+#pragma warning disable CS8604 // Possible null reference argument.
             Assert.Equivalent(expected, result);
         }
 
@@ -202,6 +251,10 @@ namespace MEU.GV4.Data.Tests.Providers
                         MentalTraits = [ new () { Name = "a"}, new () { Name = "b", Value = "2"}, new () { Name = "c"}],
                         NegativeMentalTraits = [ new () { Name = "a"} ],
                         Abilities = [ new () { Name = "Driving", Value = "3", Note = "Fast" }, new () { Name = "Lore: Bacon", Value = "2" }],
+                        Backgrounds = [],
+                        Influences = [],
+                        Derangements = [],
+                        Health = [],
                         Generation = 13,
                         KindredStatus = [ new () { Name = "Acknowleged" }, new () { Name = "Overrated" } ],
                         Disciplines = [ new () { Name = "Auspex: Heigthened Senses", Value = "3", Note = "basic"}, new () { Name = "Dominate: Command", Value = "3", Note = "basic"} ],
@@ -250,6 +303,13 @@ namespace MEU.GV4.Data.Tests.Providers
                           <trait name="Driving" val="3" note="Fast" />
                           <trait name="Lore: Bacon" val="2"/>
                         </traitlist>
+                        <traitlist name="Disciplines" abc="yes" display="5">
+                            <trait name="Auspex: Heightened Senses" val="3" note="basic" />
+                            <trait name="Dominate: Command" val="3" note="basic" />
+                        </traitlist>
+                        <biography>
+                          <![CDATA[Born and raised in South Transylvania (actually Detroit, but don't tell him that)]]>
+                        </biography>
                     </vampire>
                 </grapevine>
                 """;

@@ -46,7 +46,7 @@ namespace MEU.GV4.Data.Providers
             return gameData;
         }
 
-        private static List<Player> LoadPlayers(XmlElement root)
+        internal static List<Player> LoadPlayers(XmlElement root)
         {
             var playerList = new List<Player>();
             foreach (XmlElement el in root.GetElementsByTagName("player"))
@@ -71,7 +71,7 @@ namespace MEU.GV4.Data.Providers
             return playerList;
         }
 
-        private static List<Character> LoadCharacters(XmlElement root)
+        internal static List<Character> LoadCharacters(XmlElement root)
         {
             var characters = new List<Character>();
             foreach (XmlElement el in root.GetElementsByTagName("vampire"))
@@ -81,7 +81,7 @@ namespace MEU.GV4.Data.Providers
             return characters;
         }
 
-        private static Vampire LoadVampire(XmlElement el)
+        internal static Vampire LoadVampire(XmlElement el)
         {
             var vampire = new Vampire();
             LoadCommonTraits(vampire, el);
@@ -89,7 +89,7 @@ namespace MEU.GV4.Data.Providers
             return vampire;
         }
 
-        private static void LoadCommonTraits(METCharacter character, XmlElement el)
+        internal static void LoadCommonTraits(METCharacter character, XmlElement el)
         {
             character.Name = XmlHelper.GetAttribute(el, "name");
             character.Player = XmlHelper.GetAttribute(el, "player");
@@ -108,12 +108,19 @@ namespace MEU.GV4.Data.Providers
             character.NegativePhysicalTraits = LoadTraitList(el, "Negative Physical");
             character.NegativeSocialTraits = LoadTraitList(el, "Negative Social");
             character.NegativeMentalTraits = LoadTraitList(el, "Negative Mental");
+            character.Abilities = LoadTraitList(el, "Abilities");
+            character.Influences = LoadTraitList(el, "Influences");
+            character.Backgrounds = LoadTraitList(el, "Backgrounds");
+            character.Health = LoadTraitList(el, "Health Levels");
+            character.Miscellanious = LoadTraitList(el, "Miscellaneous");
+            character.Derangements = LoadTraitList(el, "Derangements");
+            character.Biography = XmlHelper.GetCData(el, "biography");
         }
 
-        private static TraitList LoadTraitList(XmlElement el, string traitListName)
+        internal static TraitList LoadTraitList(XmlElement el, string traitListName)
         {
             var traitList = new TraitList();
-            var traits = el.SelectSingleNode($"traitlist[@name={traitListName}") as XmlElement;
+            var traits = el.SelectSingleNode($"traitlist[@name='{traitListName}']") as XmlElement;
             if (traits != null)
             {
                 foreach (XmlElement trait in traits.GetElementsByTagName("trait"))
@@ -129,7 +136,7 @@ namespace MEU.GV4.Data.Providers
 
             return traitList;
         }
-        private static Experience? LoadExperience(XmlElement element)
+        internal static Experience? LoadExperience(XmlElement element)
         {
             var expElement = element.SelectSingleNode("experience") as XmlElement;
             if (expElement != null)
