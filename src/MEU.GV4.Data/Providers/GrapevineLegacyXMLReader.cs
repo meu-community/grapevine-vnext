@@ -156,17 +156,14 @@ namespace MEU.GV4.Data.Providers
 
             return traitList;
         }
-        internal static Experience? LoadExperience(XmlElement element)
+        internal static Experience LoadExperience(XmlElement element)
         {
+            var experience = new Experience();
             var expElement = element.SelectSingleNode("experience") as XmlElement;
             if (expElement != null)
             {
-                var experience = new Experience()
-                {
-                    Earned = XmlHelper.GetAttributeAsDecimal(expElement, "earned"),
-                    Unspent = XmlHelper.GetAttributeAsDecimal(expElement, "unspent"),
-                    Entries = []
-                };
+                experience.Earned = XmlHelper.GetAttributeAsDecimal(expElement, "earned");
+                experience.Unspent = XmlHelper.GetAttributeAsDecimal(expElement, "unspent");
 
                 foreach (XmlElement entry in expElement.GetElementsByTagName("entry"))
                 {
@@ -180,11 +177,9 @@ namespace MEU.GV4.Data.Providers
                         Unspent = XmlHelper.GetAttributeAsDecimal(entry, "unspent")
                     });
                 }
-
-                return experience;
             }
 
-            return null;
+            return experience;
         }
     }
 }

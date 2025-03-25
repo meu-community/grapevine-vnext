@@ -232,6 +232,8 @@ namespace MEU.GV4.Data.Tests.Providers
                         Status = "Active",
                         Clan = "Foo",
                         Sect = "Cami",
+                        Sire = "Mr. Popo",
+                        Coterie = "The Cool Klub",
                         Nature = "foo",
                         Demeanor = "bar",
                         Path = "Potato",
@@ -253,7 +255,7 @@ namespace MEU.GV4.Data.Tests.Providers
                         Abilities = [ new () { Name = "Driving", Value = "3", Note = "Fast" }, new () { Name = "Lore: Bacon", Value = "2" }],
                         Generation = 13,
                         KindredStatus = [ new () { Name = "Acknowleged" }, new () { Name = "Overrated" } ],
-                        Disciplines = [ new () { Name = "Auspex: Heigthened Senses", Value = "3", Note = "basic"}, new () { Name = "Dominate: Command", Value = "3", Note = "basic"} ],
+                        Disciplines = [ new () { Name = "Auspex: Heightened Senses", Value = "3", Note = "basic"}, new () { Name = "Dominate: Command", Value = "3", Note = "basic"} ],
                         CreateDate = DateTimeOffset.Parse("1/1/2020"),
                         ModifyDate = DateTimeOffset.Parse("1/2/2020 00:00:01 AM")
                     }
@@ -266,7 +268,7 @@ namespace MEU.GV4.Data.Tests.Providers
                     </usualplace>
                     <description>
                     </description>
-                    <vampire name="Vladymur" nature="foo" demeanor="bar" clan="Foo" sect="Cami" generation="13" blood="10" willpower="3" conscience="1" selfcontrol="2" courage="3" path="Potato" pathtraits="5" physicalmax="10" player="Fred Smith" status="Active" startdate="1/1/2020" lastmodified="1/2/2020 00:00:01 AM">
+                    <vampire name="Vladymur" sire="Mr. Popo" coterie="The Cool Klub" nature="foo" demeanor="bar" clan="Foo" sect="Cami" generation="13" blood="10" willpower="3" conscience="1" selfcontrol="2" courage="3" path="Potato" pathtraits="5" physicalmax="10" player="Fred Smith" status="Active" startdate="1/1/2020" lastmodified="1/2/2020 00:00:01 AM">
                         <experience unspent="0" earned="0" />
                         <traitlist name="Physical" abc="yes" display="1">
                             <trait name="a" />
@@ -293,7 +295,7 @@ namespace MEU.GV4.Data.Tests.Providers
                             <trait name="a" />
                         </traitlist>
                         <traitlist name="Status" abc="yes" display="1">
-                          <trait name="Acknowledged"/>
+                          <trait name="Acknowleged"/>
                           <trait name="Overrated"/>
                         </traitlist>
                         <traitlist name="Abilities" abc="yes" display="1">
