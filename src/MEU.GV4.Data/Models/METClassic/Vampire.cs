@@ -24,6 +24,6 @@
         public TraitList Bonds { get; set; } = [];
         public TraitList Disciplines { get; set; } = [];
         public TraitList Rituals { get; set; } = [];
-        public TraitList Boons { get; set; } = [];
+        public List<Boon> Boons { get; set; } = [];
     }
 }

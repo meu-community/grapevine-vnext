@@ -6,11 +6,12 @@
     public abstract class Character
     {
         public string? Name { get; set; }
+        public string? ID { get; set; }
         public string? Player { get; set; }
         public string? Status { get; set; }
         public bool IsNPC { get; set; }
         public TraitList Equipment { get; set; } = [];
-        public TraitList Hangouts { get; set; } = [];
+        public TraitList Locations { get; set; } = [];
         public string? Biography { get; set; }
         public string? Notes { get; set; }
         public string? Other { get; set; }

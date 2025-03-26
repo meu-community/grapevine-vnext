@@ -99,12 +99,31 @@ namespace MEU.GV4.Data.Providers
             vampire.Disciplines = LoadTraitList(el, "Disciplines");
             vampire.Rituals = LoadTraitList(el, "Rituals");
             vampire.KindredStatus = LoadTraitList(el, "Status");
+            vampire.Bonds = LoadTraitList(el, "Bonds");
+            vampire.Boons = LoadBoons(el);
             return vampire;
+        }
+
+        internal static List<Boon> LoadBoons(XmlElement el)
+        {
+            var boons = new List<Boon>();
+            foreach (XmlElement boon in el.GetElementsByTagName("boon"))
+            {
+                boons.Add(new()
+                {
+                    Type = XmlHelper.GetAttribute(boon, "type"),
+                    Partner = XmlHelper.GetAttribute(boon, "partner"),
+                    Owed = XmlHelper.GetAttribute(boon, "owed") == "yes",
+                    CreateDate = XmlHelper.GetAttributeAsDateTimeOffset(boon, "date")
+                });
+            }
+            return boons;
         }
 
         internal static void LoadCommonTraits(METCharacter character, XmlElement el)
         {
             character.Name = XmlHelper.GetAttribute(el, "name");
+            character.ID = XmlHelper.GetAttribute(el, "id");
             character.Player = XmlHelper.GetAttribute(el, "player");
             character.IsNPC = XmlHelper.GetAttribute(el, "npc") == "yes";
             character.Title = XmlHelper.GetAttribute(el, "title");
@@ -131,7 +150,7 @@ namespace MEU.GV4.Data.Providers
             character.Flaws = LoadTraitList(el, "Flaws");
             character.Health = LoadTraitList(el, "Health Levels");
             character.Equipment = LoadTraitList(el, "Equipment");
-            character.Hangouts = LoadTraitList(el, "Locations");
+            character.Locations = LoadTraitList(el, "Locations");
             character.Miscellanious = LoadTraitList(el, "Miscellaneous");
             character.Derangements = LoadTraitList(el, "Derangements");
             character.Biography = XmlHelper.GetCData(el, "biography");

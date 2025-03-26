@@ -228,6 +228,7 @@ namespace MEU.GV4.Data.Tests.Providers
                     new Vampire()
                     {
                         Name = "Vladymur",
+                        ID = "12345",
                         Player = "Fred Smith",
                         Status = "Active",
                         Clan = "Foo",
@@ -257,6 +258,9 @@ namespace MEU.GV4.Data.Tests.Providers
                         KindredStatus = [ new () { Name = "Acknowleged" }, new () { Name = "Overrated" } ],
                         Disciplines = [ new () { Name = "Auspex: Heightened Senses", Value = "3", Note = "basic"}, new () { Name = "Dominate: Command", Value = "3", Note = "basic"} ],
                         Rituals = [ new() { Name = "Basic: Blood Mead", Value = "2" } ],
+                        Bonds = [ new () { Name = "L. Flint", Value = "2" } ],
+                        Equipment = [ new () { Name = "Flame Thrower", Note = "+0, 2 Aggravated, Heavy, Hot" } ],
+                        Locations = [ new () { Name = "The Crypt" }],
                         CreateDate = DateTimeOffset.Parse("1/1/2020"),
                         ModifyDate = DateTimeOffset.Parse("1/2/2020 00:00:01 AM")
                     }
@@ -269,7 +273,7 @@ namespace MEU.GV4.Data.Tests.Providers
                     </usualplace>
                     <description>
                     </description>
-                    <vampire name="Vladymur" sire="Mr. Popo" coterie="The Cool Klub" nature="foo" demeanor="bar" clan="Foo" sect="Cami" generation="13" blood="10" willpower="3" conscience="1" selfcontrol="2" courage="3" path="Potato" pathtraits="5" physicalmax="10" player="Fred Smith" status="Active" startdate="1/1/2020" lastmodified="1/2/2020 00:00:01 AM">
+                    <vampire name="Vladymur" id="12345" sire="Mr. Popo" coterie="The Cool Klub" nature="foo" demeanor="bar" clan="Foo" sect="Cami" generation="13" blood="10" willpower="3" conscience="1" selfcontrol="2" courage="3" path="Potato" pathtraits="5" physicalmax="10" player="Fred Smith" status="Active" startdate="1/1/2020" lastmodified="1/2/2020 00:00:01 AM">
                         <experience unspent="0" earned="0" />
                         <traitlist name="Physical" abc="yes" display="1">
                             <trait name="a" />
@@ -310,6 +314,15 @@ namespace MEU.GV4.Data.Tests.Providers
                         <traitlist name="Rituals" abc="no" atomic="yes" display="5">
                           <trait name="Basic: Blood Mead" val="2"/>
                         </traitlist>
+                        <traitlist name="Bonds" abc="yes" display="1">
+                            <trait name="L. Flint" val="2"/>
+                        </traitlist>
+                        <traitlist name="Equipment" abc="yes" display="1">
+                          <trait name="Flame Thrower" note="+0, 2 Aggravated, Heavy, Hot"/>
+                        </traitlist>
+                        <traitlist name="Locations" abc="yes" atomic="yes" display="5">
+                          <trait name="The Crypt"/>
+                        </traitlist>
                         <biography>
                           <![CDATA[Born and raised in South Transylvania (actually Detroit, but don't tell him that)]]>
                         </biography>
@@ -321,6 +334,33 @@ namespace MEU.GV4.Data.Tests.Providers
                 """;
             var reader = new GrapevineLegacyXMLReader();
             var result = reader.ReadData(testGameData);
+            Assert.NotNull(result);
+            Assert.Equivalent(expected, result);
+        }
+
+        [Fact(DisplayName = "Can load boons for a vampire character")]
+        public void CanLoadBoons()
+        {
+            var expected = new Vampire()
+            {
+                Name = "Vladymur",
+                Boons =
+                [
+                    new () { Type = "foo", Owed = true, Partner = "Stu Padasso", CreateDate = DateTimeOffset.Parse("1/1/2020") },
+                    new () { Type = "bar", Owed = false, Partner = "Santa Claus", CreateDate = DateTimeOffset.Parse("1/1/2020") }
+                ],
+                CreateDate = DateTimeOffset.Parse("1/1/2020"),
+                ModifyDate = DateTimeOffset.Parse("1/2/2020 00:00:01 AM")
+            };
+            var xmlDocument = new XmlDocument();
+            xmlDocument.LoadXml("""
+                <?xml version="1.0"?>
+                <vampire name="Vladymur" startdate="1/1/2020" lastmodified="1/2/2020 00:00:01 AM">
+                    <boon type="foo" partner="Stu Padasso" owed="yes" date="1/1/2020"/>
+                    <boon type="bar" partner="Santa Claus" owed="no" date="1/1/2020"/>
+                </vampire>
+                """);
+            var result = GrapevineLegacyXMLReader.LoadVampire(xmlDocument.DocumentElement);
             Assert.NotNull(result);
             Assert.Equivalent(expected, result);
         }
