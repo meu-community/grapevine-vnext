@@ -260,6 +260,7 @@ namespace MEU.GV4.Data.Tests.Providers
                         Rituals = [ new() { Name = "Basic: Blood Mead", Value = "2" } ],
                         Bonds = [ new () { Name = "L. Flint", Value = "2" } ],
                         Equipment = [ new () { Name = "Flame Thrower", Note = "+0, 2 Aggravated, Heavy, Hot" } ],
+                        CharacterExperience = new (),
                         Locations = [ new () { Name = "The Crypt" }],
                         CreateDate = DateTimeOffset.Parse("1/1/2020"),
                         ModifyDate = DateTimeOffset.Parse("1/2/2020 00:00:01 AM")
