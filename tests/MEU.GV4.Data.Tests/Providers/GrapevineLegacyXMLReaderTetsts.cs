@@ -399,5 +399,106 @@ namespace MEU.GV4.Data.Tests.Providers
             Assert.NotNull(result);
             Assert.Equivalent(expected, result);
         }
+
+        [Fact(DisplayName = "Can Load Werewolf Character Data")]
+        public void CanLoadWerewolfCharacterData()
+        {
+            var expected = new Game()
+            {
+                Title = "TEST CHRONICLE",
+                Players = [],
+                Characters =
+                [
+                    new Werewolf()
+                    {
+                        Name = "Ookami",
+                        ID = "12345",
+                        Player = "Fred Smith",
+                        Tribe = "x",
+                        Breed = "y",
+                        Auspice = "z",
+                        Rank = "Fostern",
+                        Pack = "Pack",
+                        Totem = "American Dream",
+                        Camp = "Bane Tenders",
+                        Position = "Fool",
+                        Notoriety = 2,
+                        Rage = 3,
+                        Gnosis = 3,
+                        Honor = 1,
+                        Glory = 1,
+                        Wisdom = 1,
+                        Status = "Active",
+                        Nature = "foo",
+                        Demeanor = "bar",
+                        PhysicalMax = 10,
+                        Notes = "My notes",
+                        Biography = "AAAOOOO!",
+                        Features = [ new () { Name = "Scar: Brain Damage" } ] ,
+                        Gifts = [ new () { Name = "Homid: Jam Technology", Value = "3", Note = "basic" } ],
+                        Rites = [ new () { Name = "Accord: Rite of Cleansing", Value = "2", Note = "basic" } ],
+                        HonorList = [ new () { Name = "Admirable" } ],
+                        GloryList = [ new () { Name = "Brash" } ],
+                        WisdomList = [ new () { Name = "Pragmatic" } ],
+                        Locations = [ new () { Name = "London" }],
+                        Willpower = 3,
+                        CreateDate = DateTimeOffset.Parse("1/1/2020"),
+                        ModifyDate = DateTimeOffset.Parse("1/2/2020 00:00:01 AM")
+                    }
+                ]
+            };
+            var testGameData = """
+                <?xml version="1.0"?>
+                <grapevine version="3" chronicle="TEST CHRONICLE">
+                    <usualplace>
+                    </usualplace>
+                    <description>
+                    </description>
+                    <werewolf name="Ookami" id="12345" nature="foo" demeanor="bar" willpower="3" physicalmax="10" tribe="x" breed="y" auspice="z" 
+                        rank="Fostern" pack="Pack" totem="American Dream" camp="Bane Tenders" position="Fool" notoriety="2" rage="3" gnosis="3"
+                        honor="1" glory="1" wisdom="1" player="Fred Smith" status="Active" startdate="1/1/2020" lastmodified="1/2/2020 00:00:01 AM">
+                        <experience unspent="0" earned="0" />
+                        <traitlist name="Physical" abc="yes" display="1" />
+                        <traitlist name="Social" abc="yes" display="1" />
+                        <traitlist name="Mental" abc="yes" display="1" />
+                        <traitlist name="Negative Physical" abc="yes" negative="yes" display="1" />
+                        <traitlist name="Negative Social" abc="yes" negative="yes" display="1" />
+                        <traitlist name="Negative Mental" abc="yes" negative="yes" display="1" />
+                        <traitlist name="Abilities" abc="yes" display="1" />
+                        <traitlist name="Features" abc="yes" atomic="yes" display="5">
+                          <trait name="Scar: Brain Damage"/>
+                        </traitlist>
+                        <traitlist name="Gifts" abc="no" atomic="yes" display="5">
+                          <trait name="Homid: Jam Technology" val="3" note="basic"/>
+                        </traitlist>
+                        <traitlist name="Rites" abc="no" atomic="yes" display="5">
+                          <trait name="Accord: Rite of Cleansing" val="2" note="basic"/>
+                        </traitlist>
+                        <traitlist name="Honor" abc="yes" display="1">
+                          <trait name="Admirable"/>
+                        </traitlist>
+                        <traitlist name="Glory" abc="yes" display="1">
+                          <trait name="Brash"/>
+                        </traitlist>
+                        <traitlist name="Wisdom" abc="yes" display="1">
+                          <trait name="Pragmatic"/>
+                        </traitlist>
+                        <traitlist name="Locations" abc="yes" atomic="yes" display="5">
+                          <trait name="London"/>
+                        </traitlist>
+                        <biography>
+                          <![CDATA[AAAOOOO!]]>
+                        </biography>
+                        <notes>
+                            <![CDATA[My notes]]>
+                        </notes>
+                    </werewolf>
+                </grapevine>
+                """;
+            var reader = new GrapevineLegacyXMLReader();
+            var result = reader.ReadData(testGameData);
+            Assert.NotNull(result);
+            Assert.Equivalent(expected, result);
+        }
     }
 }

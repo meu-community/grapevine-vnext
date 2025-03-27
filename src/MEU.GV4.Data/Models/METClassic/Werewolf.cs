@@ -27,11 +27,11 @@ namespace MEU.GV4.Data.Models.METClassic
         public int GloryTemp { get; set; }
         public int Wisdom { get; set; }
         public int WisdomTemp { get; set; }
-        public TraitList Features { get; set; }
-        public TraitList Gifts { get; set; }
-        public TraitList Rites { get; set; }
-        public TraitList HonorList { get; set; }
-        public TraitList GloryList { get; set; }
-        public TraitList WisdomList { get; set; }
+        public TraitList Features { get; set; } = [];
+        public TraitList Gifts { get; set; } = [];
+        public TraitList Rites { get; set; } = [];
+        public TraitList HonorList { get; set; } = [];
+        public TraitList GloryList { get; set; } = [];
+        public TraitList WisdomList { get; set; } = [];
     }
 }
