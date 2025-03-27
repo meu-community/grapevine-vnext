@@ -78,6 +78,10 @@ namespace MEU.GV4.Data.Providers
             {
                 characters.Add(LoadVampire(el));
             }
+            foreach (XmlElement el in root.GetElementsByTagName("werewolf"))
+            {
+                characters.Add(LoadWerewolf(el));
+            }
             return characters;
         }
 
@@ -102,6 +106,33 @@ namespace MEU.GV4.Data.Providers
             vampire.Bonds = LoadTraitList(el, "Bonds");
             vampire.Boons = LoadBoons(el);
             return vampire;
+        }
+
+        internal static Werewolf LoadWerewolf(XmlElement el)
+        {
+            var werewolf = new Werewolf();
+            LoadCommonTraits(werewolf, el);
+            werewolf.Tribe = XmlHelper.GetAttribute(el, "tribe");
+            werewolf.Breed = XmlHelper.GetAttribute(el, "breed");
+            werewolf.Auspice = XmlHelper.GetAttribute(el, "auspice");
+            werewolf.Rank = XmlHelper.GetAttribute(el, "rank");
+            werewolf.Pack = XmlHelper.GetAttribute(el, "pack");
+            werewolf.Totem = XmlHelper.GetAttribute(el, "totem");
+            werewolf.Camp = XmlHelper.GetAttribute(el, "camp");
+            werewolf.Position = XmlHelper.GetAttribute(el, "position");
+            werewolf.Notoriety = XmlHelper.GetAttributeAsInt(el, "notoriety");
+            werewolf.Rage = XmlHelper.GetAttributeAsInt(el, "rage");
+            werewolf.Gnosis = XmlHelper.GetAttributeAsInt(el, "gnosis");
+            werewolf.Honor = XmlHelper.GetAttributeAsInt(el, "honor");
+            werewolf.Glory = XmlHelper.GetAttributeAsInt(el, "glory");
+            werewolf.Wisdom = XmlHelper.GetAttributeAsInt(el, "wisdom");
+            werewolf.Features = LoadTraitList(el, "Features");
+            werewolf.Gifts = LoadTraitList(el, "Gifts");
+            werewolf.Rites = LoadTraitList(el, "Rites");
+            werewolf.HonorList = LoadTraitList(el, "Honor");
+            werewolf.GloryList = LoadTraitList(el, "Glory");
+            werewolf.WisdomList = LoadTraitList(el, "Wisdom");
+            return werewolf;
         }
 
         internal static List<Boon> LoadBoons(XmlElement el)
