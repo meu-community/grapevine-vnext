@@ -82,6 +82,10 @@ namespace MEU.GV4.Data.Providers
             {
                 characters.Add(LoadWerewolf(el));
             }
+            foreach (XmlElement el in root.GetElementsByTagName("mortal"))
+            {
+                characters.Add(LoadMortal(el));
+            }
             return characters;
         }
 
@@ -133,6 +137,24 @@ namespace MEU.GV4.Data.Providers
             werewolf.GloryList = LoadTraitList(el, "Glory");
             werewolf.WisdomList = LoadTraitList(el, "Wisdom");
             return werewolf;
+        }
+
+        internal static Mortal LoadMortal(XmlElement el)
+        {
+            var mortal = new Mortal();
+            LoadCommonTraits(mortal, el);
+            mortal.Motivation = XmlHelper.GetAttribute(el, "motivation");
+            mortal.Association = XmlHelper.GetAttribute(el, "association");
+            mortal.Regnant = XmlHelper.GetAttribute(el, "regnant");
+            mortal.Humanity = XmlHelper.GetAttributeAsInt(el, "humanity");
+            mortal.Blood = XmlHelper.GetAttributeAsInt(el, "blood");
+            mortal.Conscience = XmlHelper.GetAttributeAsInt(el, "conscience");
+            mortal.SelfControl = XmlHelper.GetAttributeAsInt(el, "selfcontrol");
+            mortal.Courage = XmlHelper.GetAttributeAsInt(el, "courage");
+            mortal.TrueFaith = XmlHelper.GetAttributeAsInt(el, "truefaith");
+            mortal.HumanityList = LoadTraitList(el, "Humanity");
+            mortal.NuminaList = LoadTraitList(el, "Numina");
+            return mortal;
         }
 
         internal static List<Boon> LoadBoons(XmlElement el)

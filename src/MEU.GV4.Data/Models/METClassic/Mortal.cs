@@ -23,7 +23,7 @@ namespace MEU.GV4.Data.Models.METClassic
         public int CourageTemp { get; set; }
         public int TrueFaith { get; set; }
         public int TrueFaithTemp { get; set; }
-        public TraitList HumanityList { get; set; }
-        public TraitList NuminaList { get; set; }
+        public TraitList HumanityList { get; set; } = [];
+        public TraitList NuminaList { get; set; } = [];
     }
 }
