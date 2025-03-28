@@ -1,5 +1,9 @@
 name: CI - Unit Test
 
+permissions:
+  checks: write
+  pull-requests: write
+
 on:
   push:
     branches:
@@ -19,7 +23,7 @@ jobs:
       - name: Set up .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '9.x'
+          dotnet-version: "9.x"
 
       - name: Restore dependencies
         run: dotnet restore
@@ -30,8 +34,9 @@ jobs:
       - name: Run unit tests with report
         run: dotnet test --configuration Release --no-build --logger "trx;LogFileName=TestResults.trx"
 
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action/windows@v2
+        if: always()
         with:
-          name: TestResults
-          path: ./tests/MEU.GV4.Data.Tests/TestResults/TestResults.trx
+          files: |
+            tests/**/*.trx
