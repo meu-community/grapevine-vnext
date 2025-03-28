@@ -14,10 +14,6 @@ namespace MEU.GV4.Data.Tests.Providers
         [Fact(DisplayName = "Can Load Mortal Character Data")]
         public void CanLoadMortalCharacterData()
         {
-            //TraitList testStatus = [new() { Name = "Acknowleged" }, new() { Name = "Overrated" }];
-            //TraitList testDisciplines = [new() { Name = "Auspex: Heightened Senses", Value = "3", Note = "basic" }, new() { Name = "Dominate: Command", Value = "3", Note = "basic" }];
-            //TraitList testRituals = [new() { Name = "Basic: Blood Mead", Value = "2" }];
-            //TraitList testBonds = [new() { Name = "L. Flint", Value = "2" }];
             TraitList testHumanity = [new() { Name = "Benevolent" }, new() { Name = "Honorable" }];
             TraitList testNumina = [new() { Name = "Psychic: Cyberkinesis: Switch", Value = "3", Note = "basic" }];
             var xmlDoc = new XmlDocument();
