@@ -86,6 +86,10 @@ namespace MEU.GV4.Data.Providers
             {
                 characters.Add(LoadMortal(el));
             }
+            foreach (XmlElement el in root.GetElementsByTagName("hunter"))
+            {
+                characters.Add(LoadHunter(el));
+            }
             return characters;
         }
 
@@ -155,6 +159,21 @@ namespace MEU.GV4.Data.Providers
             mortal.HumanityList = LoadTraitList(el, "Humanity");
             mortal.NuminaList = LoadTraitList(el, "Numina");
             return mortal;
+        }
+
+        internal static Hunter LoadHunter(XmlElement el)
+        {
+            var hunter = new Hunter();
+            LoadCommonTraits(hunter, el);
+            hunter.Creed = XmlHelper.GetAttribute(el, "creed");
+            hunter.Camp = XmlHelper.GetAttribute(el, "camp");
+            hunter.Handle = XmlHelper.GetAttribute(el, "handle");
+            hunter.Conviction = XmlHelper.GetAttributeAsInt(el, "conviction");
+            hunter.Mercy = XmlHelper.GetAttributeAsInt(el, "mercy");
+            hunter.Vision = XmlHelper.GetAttributeAsInt(el, "vision");
+            hunter.Zeal = XmlHelper.GetAttributeAsInt(el, "zeal");
+            hunter.Edges = LoadTraitList(el, "Edges");
+            return hunter;
         }
 
         internal static List<Boon> LoadBoons(XmlElement el)
