@@ -18,6 +18,6 @@ namespace MEU.GV4.Data.Models.METClassic
         public int Vision { get; set; }
         public int VisionTemp { get; set; }
         public int Zeal { get; set; }
-        public TraitList Edges { get; set; }
+        public TraitList Edges { get; set; } = [];
     }
 }
