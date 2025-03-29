@@ -176,6 +176,35 @@ namespace MEU.GV4.Data.Providers
             return hunter;
         }
 
+        internal static Wraith LoadWraith(XmlElement el)
+        {
+            var wraith = new Wraith()
+            {
+                Ethnos = XmlHelper.GetAttribute(el, "ethnos"),
+                Guild = XmlHelper.GetAttribute(el, "guild"),
+                Faction = XmlHelper.GetAttribute(el, "faction"),
+                Legion = XmlHelper.GetAttribute(el, "legion"),
+                Rank = XmlHelper.GetAttribute(el, "rank"),
+                Pathos = XmlHelper.GetAttributeAsInt(el, "pathos"),
+                Corpus = XmlHelper.GetAttributeAsInt(el, "corpus"),
+                ShadowArchetype = XmlHelper.GetAttribute(el, "shadowarchetype"),
+                ShadowPlayer = XmlHelper.GetAttribute(el, "shadowplayer"),
+                Angst = XmlHelper.GetAttributeAsInt(el, "angst"),
+                Passions = XmlHelper.GetCData(el, "passions"),
+                Fetters = XmlHelper.GetCData(el, "fetters"),
+                Life = XmlHelper.GetCData(el, "life"),
+                Death = XmlHelper.GetCData(el, "death"),
+                Haunt = XmlHelper.GetCData(el, "haunt"),
+                Regret = XmlHelper.GetCData(el, "regret"),
+                DarkPassions = XmlHelper.GetCData(el, "darkpassions"),
+                Arcanoi = LoadTraitList(el, "Arcanoi"),
+                WraithStatus = LoadTraitList(el, "Status"),
+                ThornList = LoadTraitList(el,"Thorns")
+            };
+            LoadCommonTraits(wraith, el);
+            return wraith;
+        }
+
         internal static List<Boon> LoadBoons(XmlElement el)
         {
             var boons = new List<Boon>();
