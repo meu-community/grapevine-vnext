@@ -19,8 +19,9 @@ namespace MEU.GV4.Data.Models.METClassic
         public int GlamourTemp { get; set; }
         public int Banality { get; set; }
         public int BanalityTemp { get; set; }
-        public TraitList Arts { get; set; }
-        public TraitList Realms { get; set; }
+        public TraitList Arts { get; set; } = [];
+        public TraitList Realms { get; set; } = [];
+        public TraitList ChangelingStatus { get; set; } = [];
         public string? Oaths { get; set; }
     }
 }

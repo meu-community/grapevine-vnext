@@ -90,6 +90,14 @@ namespace MEU.GV4.Data.Providers
             {
                 characters.Add(LoadHunter(el));
             }
+            foreach (XmlElement el in root.GetElementsByTagName("wraith"))
+            {
+                characters.Add(LoadWraith(el));
+            }
+            foreach (XmlElement el in root.GetElementsByTagName("changeling"))
+            {
+                characters.Add(LoadChangeling(el));
+            }
             return characters;
         }
 
@@ -203,6 +211,28 @@ namespace MEU.GV4.Data.Providers
             };
             LoadCommonTraits(wraith, el);
             return wraith;
+        }
+
+        internal static Changeling LoadChangeling(XmlElement el)
+        {
+            var changeling = new Changeling()
+            {
+                SeelieLegacy = XmlHelper.GetAttribute(el, "seelie"),
+                UnseelieLegacy = XmlHelper.GetAttribute(el, "unseelie"),
+                Court = XmlHelper.GetAttribute(el, "court"),
+                Kith = XmlHelper.GetAttribute(el, "kith"),
+                Seeming = XmlHelper.GetAttribute(el, "seeming"),
+                House = XmlHelper.GetAttribute(el, "house"),
+                Threshold = XmlHelper.GetAttribute(el, "threshold"),
+                Glamour = XmlHelper.GetAttributeAsInt(el, "glamour"),
+                Banality = XmlHelper.GetAttributeAsInt(el, "banality"),
+                Oaths = XmlHelper.GetCData(el, "oaths"),
+                ChangelingStatus = LoadTraitList(el, "Status"),
+                Arts = LoadTraitList(el, "Arts"),
+                Realms = LoadTraitList(el, "Realms")
+            };
+            LoadCommonTraits(changeling, el);
+            return changeling;
         }
 
         internal static List<Boon> LoadBoons(XmlElement el)
