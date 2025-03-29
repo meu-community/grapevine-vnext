@@ -17,7 +17,7 @@ namespace MEU.GV4.Data.Models.METClassic
         public int PathosTemp { get; set; }
         public int Corpus { get; set; }
         public int CorpusTemp { get; set; }
-        public TraitList Arcanoi { get; set; }
+        public TraitList Arcanoi { get; set; } = [];
         public string? Passions { get; set; }
         public string? Fetters { get; set; }
         public string? Life { get; set; }
@@ -28,6 +28,7 @@ namespace MEU.GV4.Data.Models.METClassic
         public string? ShadowPlayer { get; set; }
         public int Angst { get; set; }
         public string? DarkPassions { get; set; }
-        public TraitList ThornList { get; set; }
+        public TraitList ThornList { get; set; } = [];
+        public TraitList WraithStatus { get; set; } = [];
     }
 }
