@@ -13,7 +13,9 @@ namespace MEU.GV4.Data.Tests.Providers
             TraitList testNumina = [new() { Name = "Psychic: Cyberkinesis: Switch", Value = "3", Note = "basic" }];
             var xmlDoc = XDocument.Parse("""
                 <?xml version="1.0"?>
-                <mortal motivation="Ennui" association="Local Police" regnant="Joe" humanity="1" blood="2" conscience="1" selfcontrol="2" courage="3" truefaith="6">
+                <mortal motivation="Ennui" association="Local Police" regnant="Joe"
+                    humanity="1" blood="2" conscience="1" selfcontrol="2" courage="3" truefaith="6"
+                    temphumanity="1" tempblood="1" tempconscience="1" tempselfcontrol="1" tempcourage="1" temptruefaith="1">
                     <traitlist name="Humanity" abc="yes" display="1">
                       <trait name="Benevolent"/>
                       <trait name="Honorable"/>
@@ -36,6 +38,12 @@ namespace MEU.GV4.Data.Tests.Providers
             Assert.Equal(2, result.SelfControl);
             Assert.Equal(3, result.Courage);
             Assert.Equal(6, result.TrueFaith);
+            Assert.Equal(1, result.TempBlood);
+            Assert.Equal(1, result.TempConscience);
+            Assert.Equal(1, result.TempSelfControl);
+            Assert.Equal(1, result.TempCourage);
+            Assert.Equal(1, result.TempHumanity);
+            Assert.Equal(1, result.TempTrueFaith);
             Assert.Equivalent(testHumanity, result.HumanityList);
             Assert.Equivalent(testNumina, result.NuminaList);
         }

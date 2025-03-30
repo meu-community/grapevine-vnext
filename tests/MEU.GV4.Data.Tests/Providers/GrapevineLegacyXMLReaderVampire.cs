@@ -16,7 +16,9 @@ namespace MEU.GV4.Data.Tests.Providers
             TraitList testBonds = [new() { Name = "L. Flint", Value = "2" }];
             var xmlDoc = XDocument.Parse("""
                 <?xml version="1.0"?>
-                <vampire sire="Mr. Popo" coterie="The Cool Klub" clan="Foo" sect="Cami" generation="13" blood="10" conscience="1" selfcontrol="2" courage="3" path="Potato" pathtraits="5">
+                <vampire sire="Mr. Popo" coterie="The Cool Klub" clan="Foo" sect="Cami" generation="13" blood="10" 
+                    conscience="1" selfcontrol="2" courage="3" path="Potato" pathtraits="5"
+                    tempblood="4" tempconscience="0" tempselfcontrol="0" tempcourage="0" temppathtraits="3">
                     <traitlist name="Status" abc="yes" display="1">
                         <trait name="Acknowleged"/>
                         <trait name="Overrated"/>
@@ -47,6 +49,11 @@ namespace MEU.GV4.Data.Tests.Providers
             Assert.Equal(2, result.SelfControl);
             Assert.Equal(3, result.Courage);
             Assert.Equal(10, result.Blood);
+            Assert.Equal(4, result.TempBlood);
+            Assert.Equal(0, result.TempConscience);
+            Assert.Equal(0, result.TempSelfControl);
+            Assert.Equal(0, result.TempCourage);
+            Assert.Equal(3, result.TempPathTraits);
             Assert.Equal(13, result.Generation);
             Assert.Equivalent(testStatus, result.KindredStatus);
             Assert.Equivalent(testDisciplines, result.Disciplines);

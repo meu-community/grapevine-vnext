@@ -14,7 +14,7 @@ namespace MEU.GV4.Data.Tests.Providers
         {
             var xmlDoc = XDocument.Parse("""
                 <?xml version="1.0"?>
-                <vampire name="Vladymur" title="Drama Queen" id="12345" nature="foo" demeanor="bar" willpower="3" physicalmax="10" socialmax="10" mentalmax="10" player="Fred Smith" status="Active" startdate="1/1/2020" lastmodified="1/2/2020 00:00:01 AM">
+                <vampire name="Vladymur" title="Drama Queen" id="12345" nature="foo" demeanor="bar" willpower="3" tempwillpower="2" physicalmax="10" socialmax="10" mentalmax="10" player="Fred Smith" status="Active" startdate="1/1/2020" lastmodified="1/2/2020 00:00:01 AM">
                     <experience unspent="0" earned="0" />
                     <traitlist name="Physical" abc="yes" display="1">
                         <trait name="a" />
@@ -111,6 +111,7 @@ namespace MEU.GV4.Data.Tests.Providers
             Assert.Equal("foo", result.Nature);
             Assert.Equal("bar", result.Demeanor);
             Assert.Equal(3, result.Willpower);
+            Assert.Equal(2, result.TempWillpower);
             Assert.Equal(10, result.PhysicalMax);
             Assert.Equal(10, result.SocialMax);
             Assert.Equal(10, result.MentalMax);

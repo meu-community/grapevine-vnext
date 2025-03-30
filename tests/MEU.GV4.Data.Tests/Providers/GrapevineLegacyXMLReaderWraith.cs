@@ -11,7 +11,9 @@ namespace MEU.GV4.Data.Tests.Providers
         {
             var xmlDoc = XDocument.Parse("""
                 <?xml version="1.0"?>
-                <wraith ethnos="Risen" guild="Spook" faction="Renegade" legion="The Emerald Legion" rank="Centurion" pathos="2" corpus="2" shadowarchetype="Anarchist" shadowplayer="That Guy" angst="3">
+                <wraith ethnos="Risen" guild="Spook" faction="Renegade" legion="The Emerald Legion" rank="Centurion"
+                  pathos="2" corpus="2" shadowarchetype="Anarchist" shadowplayer="That Guy" angst="3"
+                  temppathos="0" tempcorpus="0" tempangst="0">
                   <traitlist name="Status" abc="yes" display="1">
                     <trait name="Heretic" val="2"/>
                     <trait name="Renegade"/>
@@ -59,9 +61,12 @@ namespace MEU.GV4.Data.Tests.Providers
             Assert.Equal("Centurion", result.Rank);
             Assert.Equal(2, result.Pathos);
             Assert.Equal(2, result.Corpus);
+            Assert.Equal(3, result.Angst);
+            Assert.Equal(0, result.TempPathos);
+            Assert.Equal(0, result.TempCorpus);
+            Assert.Equal(0, result.TempAngst);
             Assert.Equal("Anarchist", result.ShadowArchetype);
             Assert.Equal("That Guy", result.ShadowPlayer);
-            Assert.Equal(3, result.Angst);
             Assert.Equal("None", result.Passions);
             Assert.Equal("Something something", result.Fetters);
             Assert.Equal("No life", result.Life);

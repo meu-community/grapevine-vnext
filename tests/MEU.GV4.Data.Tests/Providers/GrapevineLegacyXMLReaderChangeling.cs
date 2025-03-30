@@ -12,7 +12,7 @@ namespace MEU.GV4.Data.Tests.Providers
             var xmlDoc = XDocument.Parse("""
                 <?xml version="1.0"?>
                 <changeling seelie="Sage" unseelie="Trickster" court="Unseelie" kith="Sidhe" seeming="Elder" house="Leanhaun" threshold="Create Calm" 
-                glamour="4" banality="3">
+                glamour="4" banality="3" tempglamour="2" tempbanality="1">
                     <traitlist name="Status" abc="yes" display="1">
                         <trait name="Cherished"/>
                         <trait name="Noble"/>
@@ -44,6 +44,8 @@ namespace MEU.GV4.Data.Tests.Providers
             Assert.Equal("Create Calm", result.Threshold);
             Assert.Equal(4, result.Glamour);
             Assert.Equal(3, result.Banality);
+            Assert.Equal(1, result.TempBanality);
+            Assert.Equal(2, result.TempGlamour);
             Assert.Equal("Something something", result.Oaths);
             Assert.Equivalent(testStatus, result.ChangelingStatus);
             Assert.Equivalent(testArts, result.Arts);

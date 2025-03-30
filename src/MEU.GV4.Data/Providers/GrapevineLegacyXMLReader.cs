@@ -146,6 +146,11 @@ namespace MEU.GV4.Data.Providers
                 SelfControl = XmlHelper.GetAttributeAsInt(el, "selfcontrol"),
                 Courage = XmlHelper.GetAttributeAsInt(el, "courage"),
                 Blood = XmlHelper.GetAttributeAsInt(el, "blood"),
+                TempBlood = XmlHelper.GetAttributeAsInt(el,"tempblood"),
+                TempConscience = XmlHelper.GetAttributeAsInt(el, "tempconscience"),
+                TempCourage = XmlHelper.GetAttributeAsInt(el, "tempcourage"),
+                TempSelfControl = XmlHelper.GetAttributeAsInt(el, "tempselfcontrol"),
+                TempPathTraits = XmlHelper.GetAttributeAsInt(el, "temppathtraits"),
                 Disciplines = LoadTraitList(el, "Disciplines"),
                 Rituals = LoadTraitList(el, "Rituals"),
                 KindredStatus = LoadTraitList(el, "Status"),
@@ -174,6 +179,11 @@ namespace MEU.GV4.Data.Providers
                 Honor = XmlHelper.GetAttributeAsInt(el, "honor"),
                 Glory = XmlHelper.GetAttributeAsInt(el, "glory"),
                 Wisdom = XmlHelper.GetAttributeAsInt(el, "wisdom"),
+                TempGlory = XmlHelper.GetAttributeAsInt(el, "tempglory"),
+                TempGnosis = XmlHelper.GetAttributeAsInt(el, "tempgnosis"),
+                TempHonor = XmlHelper.GetAttributeAsInt(el, "temphonor"),
+                TempRage = XmlHelper.GetAttributeAsInt(el, "temprage"),
+                TempWisdom = XmlHelper.GetAttributeAsInt(el, "tempwisdom"),
                 Features = LoadTraitList(el, "Features"),
                 Gifts = LoadTraitList(el, "Gifts"),
                 Rites = LoadTraitList(el, "Rites"),
@@ -198,6 +208,12 @@ namespace MEU.GV4.Data.Providers
                 SelfControl = XmlHelper.GetAttributeAsInt(el, "selfcontrol"),
                 Courage = XmlHelper.GetAttributeAsInt(el, "courage"),
                 TrueFaith = XmlHelper.GetAttributeAsInt(el, "truefaith"),
+                TempBlood = XmlHelper.GetAttributeAsInt(el, "tempblood"),
+                TempConscience = XmlHelper.GetAttributeAsInt(el, "tempconscience"),
+                TempSelfControl = XmlHelper.GetAttributeAsInt(el,"tempselfcontrol"),
+                TempHumanity = XmlHelper.GetAttributeAsInt(el,"temphumanity"),
+                TempTrueFaith = XmlHelper.GetAttributeAsInt(el,"temptruefaith"),
+                TempCourage = XmlHelper.GetAttributeAsInt(el, "tempcourage"),
                 HumanityList = LoadTraitList(el, "Humanity"),
                 NuminaList = LoadTraitList(el, "Numina")
             };
@@ -216,6 +232,10 @@ namespace MEU.GV4.Data.Providers
                 Mercy = XmlHelper.GetAttributeAsInt(el, "mercy"),
                 Vision = XmlHelper.GetAttributeAsInt(el, "vision"),
                 Zeal = XmlHelper.GetAttributeAsInt(el, "zeal"),
+                TempConviction = XmlHelper.GetAttributeAsInt(el,"tempconviction"),
+                TempMercy = XmlHelper.GetAttributeAsInt(el, "tempmercy"),
+                TempVision = XmlHelper.GetAttributeAsInt(el, "tempvision"),
+                TempZeal = XmlHelper.GetAttributeAsInt(el,"tempzeal"),
                 Edges = LoadTraitList(el, "Edges")
             };
             LoadCommonTraits(hunter, el);
@@ -236,6 +256,9 @@ namespace MEU.GV4.Data.Providers
                 ShadowArchetype = XmlHelper.GetAttribute(el, "shadowarchetype"),
                 ShadowPlayer = XmlHelper.GetAttribute(el, "shadowplayer"),
                 Angst = XmlHelper.GetAttributeAsInt(el, "angst"),
+                TempAngst = XmlHelper.GetAttributeAsInt(el,"tempangst"),
+                TempCorpus = XmlHelper.GetAttributeAsInt(el,"tempcorpus"),
+                TempPathos = XmlHelper.GetAttributeAsInt(el, "temppathos"),
                 Passions = XmlHelper.GetCData(el, "passions"),
                 Fetters = XmlHelper.GetCData(el, "fetters"),
                 Life = XmlHelper.GetCData(el, "life"),
@@ -264,6 +287,8 @@ namespace MEU.GV4.Data.Providers
                 Threshold = XmlHelper.GetAttribute(el, "threshold"),
                 Glamour = XmlHelper.GetAttributeAsInt(el, "glamour"),
                 Banality = XmlHelper.GetAttributeAsInt(el, "banality"),
+                TempGlamour = XmlHelper.GetAttributeAsInt(el,"tempglamour"),
+                TempBanality = XmlHelper.GetAttributeAsInt(el, "tempbanality"),
                 Oaths = XmlHelper.GetCData(el, "oaths"),
                 ChangelingStatus = LoadTraitList(el, "Status"),
                 Arts = LoadTraitList(el, "Arts"),
@@ -340,6 +365,7 @@ namespace MEU.GV4.Data.Providers
             character.Nature = XmlHelper.GetAttribute(el, "nature");
             character.Demeanor = XmlHelper.GetAttribute(el, "demeanor");
             character.Willpower = XmlHelper.GetAttributeAsInt(el, "willpower");
+            character.TempWillpower = XmlHelper.GetAttributeAsInt(el, "tempwillpower");
             character.Status = XmlHelper.GetAttribute(el, "status");
             character.PhysicalMax = XmlHelper.GetAttributeAsInt(el, "physicalmax");
             character.SocialMax = XmlHelper.GetAttributeAsInt(el, "socialmax");
