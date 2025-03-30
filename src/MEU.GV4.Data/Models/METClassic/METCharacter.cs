@@ -27,11 +27,11 @@
         public TraitList NegativePhysicalTraits { get; set; } = [];
         public TraitList NegativeSocialTraits { get; set; } = [];
         public TraitList NegativeMentalTraits { get; set; } = [];
-        public int PhysicalMax { get; set; }
-        public int SocialMax { get; set; }
-        public int MentalMax { get; set; }
-        public int Willpower { get; set; }
-        public int WillpowerTemp { get; set; }
+        public int? PhysicalMax { get; set; }
+        public int? SocialMax { get; set; }
+        public int? MentalMax { get; set; }
+        public int? Willpower { get; set; }
+        public int? TempWillpower { get; set; }
         public TraitList Abilities { get; set; } = [];
         public TraitList Influences { get; set; } = [];
         public TraitList Backgrounds { get; set; } = [];

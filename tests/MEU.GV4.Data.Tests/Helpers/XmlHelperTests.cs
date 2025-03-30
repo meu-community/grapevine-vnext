@@ -73,14 +73,25 @@ namespace MEU.GV4.Data.Tests.Helpers
         }
 
         [Fact(DisplayName = "Invalid int returns 0")]
-        public void InvalidIntReturnsZero()
+        public void InvalidIntReturnsNull()
         {
             var testDoc = XDocument.Parse("""
                 <?xml version="1.0"?>
                 <test attr1="foo">
                 </test>
                 """);
-            Assert.Equal(0, XmlHelper.GetAttributeAsInt(testDoc.Root, "attr1"));
+            Assert.Null(XmlHelper.GetAttributeAsInt(testDoc.Root, "attr1"));
+        }
+
+        [Fact(DisplayName = "UnsetIntAttributeReturnsNull")]
+        public void UnsetIntAttributeReturnsNull()
+        {
+            var testDoc = XDocument.Parse("""
+                <?xml version="1.0"?>
+                <test>
+                </test>
+                """);
+            Assert.Null(XmlHelper.GetAttributeAsInt(testDoc.Root, "attr1"));
         }
 
         [Fact(DisplayName = "Can read CData value from child element")]
