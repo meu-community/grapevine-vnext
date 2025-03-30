@@ -1,11 +1,6 @@
 ﻿using MEU.GV4.Data.Models;
 using MEU.GV4.Data.Providers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+using System.Xml.Linq;
 
 namespace MEU.GV4.Data.Tests.Providers
 {
@@ -14,8 +9,7 @@ namespace MEU.GV4.Data.Tests.Providers
         [Fact(DisplayName = "Can Load Changeling Character Data")]
         public void CanLoadChangelingCharacterData()
         {
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml("""
+            var xmlDoc = XDocument.Parse("""
                 <?xml version="1.0"?>
                 <changeling seelie="Sage" unseelie="Trickster" court="Unseelie" kith="Sidhe" seeming="Elder" house="Leanhaun" threshold="Create Calm" 
                 glamour="4" banality="3">
@@ -38,7 +32,7 @@ namespace MEU.GV4.Data.Tests.Providers
             TraitList testArts = [new() { Name = "Chicanery: Fuddle", Value = "3", Note = "basic" }];
             TraitList testRealms = [new() { Name = "Fae: Dweomer of Glamour", Value = "2" }];
 #pragma warning disable CS8604 // Possible null reference argument.
-            var result = GrapevineLegacyXMLReader.LoadChangeling(xmlDoc.DocumentElement);
+            var result = GrapevineLegacyXMLReader.LoadChangeling(xmlDoc.Root);
 #pragma warning restore CS8604 // Possible null reference argument.
             Assert.NotNull(result);
             Assert.Equal("Sage", result.SeelieLegacy);

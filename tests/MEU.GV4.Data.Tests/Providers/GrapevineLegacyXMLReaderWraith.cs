@@ -1,6 +1,6 @@
 ﻿using MEU.GV4.Data.Models;
 using MEU.GV4.Data.Providers;
-using System.Xml;
+using System.Xml.Linq;
 
 namespace MEU.GV4.Data.Tests.Providers
 {
@@ -9,8 +9,7 @@ namespace MEU.GV4.Data.Tests.Providers
         [Fact(DisplayName = "Can Load Wraith Character Data")]
         public void CanLoadWraithCharacterData()
         {
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml("""
+            var xmlDoc = XDocument.Parse("""
                 <?xml version="1.0"?>
                 <wraith ethnos="Risen" guild="Spook" faction="Renegade" legion="The Emerald Legion" rank="Centurion" pathos="2" corpus="2" shadowarchetype="Anarchist" shadowplayer="That Guy" angst="3">
                   <traitlist name="Status" abc="yes" display="1">
@@ -50,7 +49,7 @@ namespace MEU.GV4.Data.Tests.Providers
             TraitList testArcanoi = [new() { Name = "Behest: Link", Value = "0", Note = "innate" }];
             TraitList testThorns = [new() { Name = "Devil's Dare", Value = "5" }];
 #pragma warning disable CS8604 // Possible null reference argument.
-            var result = GrapevineLegacyXMLReader.LoadWraith(xmlDoc.DocumentElement);
+            var result = GrapevineLegacyXMLReader.LoadWraith(xmlDoc.Root);
 #pragma warning restore CS8604 // Possible null reference argument.
             Assert.NotNull(result);
             Assert.Equal("Risen", result.Ethnos);

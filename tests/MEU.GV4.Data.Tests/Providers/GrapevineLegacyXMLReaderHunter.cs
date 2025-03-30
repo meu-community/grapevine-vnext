@@ -1,11 +1,6 @@
 ﻿using MEU.GV4.Data.Models;
 using MEU.GV4.Data.Providers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+using System.Xml.Linq;
 
 namespace MEU.GV4.Data.Tests.Providers
 {
@@ -15,8 +10,7 @@ namespace MEU.GV4.Data.Tests.Providers
         public void CanLoadHunterCharacterData()
         {
             TraitList testEdges = [new() { Name = "Deviance: Impart", Value = "0", Note="touched" }];
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml("""
+            var xmlDoc = XDocument.Parse("""
                 <?xml version="1.0"?>
                 <hunter creed="Avenger" camp="Idealist" handle="XYZ" conviction="3" mercy="2" vision="4" zeal="3">
                   <traitlist name="Edges" abc="no" atomic="yes" display="5">
@@ -25,7 +19,7 @@ namespace MEU.GV4.Data.Tests.Providers
                 </hunter>
                 """);
 #pragma warning disable CS8604 // Possible null reference argument.
-            var result = GrapevineLegacyXMLReader.LoadHunter(xmlDoc.DocumentElement);
+            var result = GrapevineLegacyXMLReader.LoadHunter(xmlDoc.Root);
 #pragma warning restore CS8604 // Possible null reference argument.
             Assert.NotNull(result);
             Assert.Equal("Avenger", result.Creed);

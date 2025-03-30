@@ -1,17 +1,17 @@
-﻿using System.Xml;
+﻿using System.Xml.Linq;
 
 namespace MEU.GV4.Data.Helpers
 {
     public class XmlHelper
     {
-        public static string? GetAttribute(XmlElement? element, string attributeName)
+        public static string? GetAttribute(XElement? element, string attributeName)
         {
-            return element?.Attributes?.GetNamedItem(attributeName)?.Value;
+            return element?.Attribute(attributeName)?.Value;
         }
 
-        public static DateTimeOffset? GetAttributeAsDateTimeOffset(XmlElement? element, string attributeName)
+        public static DateTimeOffset? GetAttributeAsDateTimeOffset(XElement? element, string attributeName)
         {
-            var attributeValue = element?.Attributes?.GetNamedItem(attributeName)?.Value;
+            var attributeValue = GetAttribute(element, attributeName);
             DateTimeOffset returnValue;
             if (DateTimeOffset.TryParse(attributeValue, out returnValue))
             {
@@ -20,25 +20,30 @@ namespace MEU.GV4.Data.Helpers
             return null;
         }
 
-        public static decimal GetAttributeAsDecimal(XmlElement? element, string attributeName)
+        public static decimal GetAttributeAsDecimal(XElement? element, string attributeName)
         {
-            var attributeValue = element?.Attributes?.GetNamedItem(attributeName)?.Value;
+            var attributeValue = GetAttribute(element, attributeName);
             decimal returnValue = 0;
             decimal.TryParse(attributeValue, out returnValue);
             return returnValue;
         }
 
-        public static int GetAttributeAsInt(XmlElement? element, string attributeName)
+        public static int GetAttributeAsInt(XElement? element, string attributeName)
         {
-            var attributeValue = element?.Attributes?.GetNamedItem(attributeName)?.Value;
+            var attributeValue = GetAttribute(element, attributeName);
             int returnValue = 0;
             int.TryParse(attributeValue, out returnValue);
             return returnValue;
         }
 
-        public static string? GetCData(XmlElement? element, string elementName)
+        public static string? GetCData(XElement? element, string elementName)
         {
-            return element?.SelectSingleNode(elementName)?.FirstChild?.Value;
+            var cdataValue = element?.Element(elementName)?.Value;
+            if (cdataValue != String.Empty)
+            {
+                return cdataValue;
+            }
+            return null;
         }
     }
 }
