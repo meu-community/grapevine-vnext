@@ -18,8 +18,8 @@ namespace MEU.GV4.Data.Models.METClassic
         public int? Conviction { get; set; }
         public int? TempConviction { get; set; }
         public int? Courage { get; set; }
-        public int? CourageTemp { get; set; }
-        public TraitList Lore { get; set; } = [];
+        public int? TempCourage { get; set; }
+        public TraitList Lores { get; set; } = [];
         public TraitList Visage { get; set; } = [];
     }
 }

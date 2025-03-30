@@ -384,7 +384,22 @@ namespace MEU.GV4.Data.Providers
 
         internal static Demon LoadDemon(XElement el)
         {
-            var demon = new Demon() { };
+            var demon = new Demon()
+            {
+                House = XmlHelper.GetAttribute(el, "house"),
+                Faction = XmlHelper.GetAttribute(el, "faction"),
+                Torment = XmlHelper.GetAttributeAsInt(el, "torment"),
+                Faith = XmlHelper.GetAttributeAsInt(el, "faith"),
+                Conscience = XmlHelper.GetAttributeAsInt(el, "conscience"),
+                Conviction = XmlHelper.GetAttributeAsInt(el, "conviction"),
+                Courage = XmlHelper.GetAttributeAsInt(el, "courage"),
+                TempFaith = XmlHelper.GetAttributeAsInt(el, "tempfaith"),
+                TempConscience = XmlHelper.GetAttributeAsInt(el, "tempconscience"),
+                TempConviction = XmlHelper.GetAttributeAsInt(el, "tempconviction"),
+                TempCourage = XmlHelper.GetAttributeAsInt(el, "tempcourage"),
+                Lores = LoadTraitList(el, "Lores"),
+                Visage = LoadTraitList(el, "Apocalyptic Form")
+            };
             LoadCommonTraits(demon, el);
             return demon;
         }

@@ -53,6 +53,42 @@ namespace MEU.GV4.Data.Tests.Providers
             Assert.Equivalent(testRealms, result.Realms);
         }
 
+        [Fact(DisplayName = "Can Load Demon Character Data")]
+        public void CanLoadDemonCharacterData()
+        {
+            var xmlDoc = XDocument.Parse("""
+                <?xml version="1.0"?>
+                <demon house="Defiler" faction="Cryptic" torment="3" faith="3" conscience="2" conviction="3" courage="1"
+                    tempfaith="0" tempconscience="0" tempconviction="0" tempcourage="0">
+                    <traitlist name="Lores" abc="no" atomic="yes" display="5">
+                        <trait name="Fundament: Manipulate Gravity" val="3" note="basic"/>
+                    </traitlist>
+                    <traitlist name="Apocalyptic Form" abc="no" atomic="yes" display="5">
+                        <trait name="Ishhara, Longing: Enhanced Social Traits" val="0"/>
+                    </traitlist>
+                </demon>
+                """);
+            TraitList testLores = [new() { Name = "Fundament: Manipulate Gravity", Value = "3", Note = "basic" }];
+            TraitList testVisage = [new() { Name = "Ishhara, Longing: Enhanced Social Traits", Value = "0" }];
+#pragma warning disable CS8604 // Possible null reference argument.
+            var result = GrapevineLegacyXMLReader.LoadDemon(xmlDoc.Root);
+#pragma warning restore CS8604 // Possible null reference argument.
+            Assert.NotNull(result);
+            Assert.Equal("Defiler", result.House);
+            Assert.Equal("Cryptic", result.Faction);
+            Assert.Equal(3, result.Torment);
+            Assert.Equal(3, result.Faith);
+            Assert.Equal(2, result.Conscience);
+            Assert.Equal(3, result.Conviction);
+            Assert.Equal(1, result.Courage);
+            Assert.Equal(0, result.TempFaith);
+            Assert.Equal(0, result.TempConscience);
+            Assert.Equal(0, result.TempConviction);
+            Assert.Equal(0, result.TempCourage);
+            Assert.Equivalent(testLores, result.Lores);
+            Assert.Equivalent(testVisage, result.Visage);
+        }
+
         [Fact(DisplayName = "Can Load Hunter Character Data")]
         public void CanLoadHunterCharacterData()
         {
