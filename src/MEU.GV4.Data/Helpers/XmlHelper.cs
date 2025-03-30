@@ -28,12 +28,11 @@ namespace MEU.GV4.Data.Helpers
             return returnValue;
         }
 
-        public static int GetAttributeAsInt(XElement? element, string attributeName)
+        public static int? GetAttributeAsInt(XElement? element, string attributeName)
         {
+            int returnValue;
             var attributeValue = GetAttribute(element, attributeName);
-            int returnValue = 0;
-            int.TryParse(attributeValue, out returnValue);
-            return returnValue;
+            return int.TryParse(attributeValue, out returnValue) ? returnValue : null;
         }
 
         public static string? GetCData(XElement? element, string elementName)
