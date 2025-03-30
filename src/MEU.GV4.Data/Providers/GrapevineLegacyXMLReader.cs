@@ -1,7 +1,8 @@
 ﻿using MEU.GV4.Data.Models;
 using MEU.GV4.Data.Helpers;
-using System.Xml;
+using System.Xml.Linq;
 using MEU.GV4.Data.Models.METClassic;
+using System.Runtime.CompilerServices;
 
 namespace MEU.GV4.Data.Providers
 {
@@ -20,10 +21,9 @@ namespace MEU.GV4.Data.Providers
             {
                 throw new GrapevineProviderException(FILE_CONTENTS_EMPTY);
             }
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(rawGameData);
+            var xmlDoc = XDocument.Parse(rawGameData);
 
-            var root = xmlDoc.DocumentElement;
+            var root = xmlDoc.Root;
 
             if (root?.Name != "grapevine")
             {
@@ -46,10 +46,10 @@ namespace MEU.GV4.Data.Providers
             return gameData;
         }
 
-        internal static List<Player> LoadPlayers(XmlElement root)
+        internal static List<Player> LoadPlayers(XElement root)
         {
             var playerList = new List<Player>();
-            foreach (XmlElement el in root.GetElementsByTagName("player"))
+            foreach (var el in root.Elements("player"))
             {
                 playerList.Add(new()
                 {
@@ -71,37 +71,67 @@ namespace MEU.GV4.Data.Providers
             return playerList;
         }
 
-        internal static List<Character> LoadCharacters(XmlElement root)
+        internal static string[]? GetSupportedTypes()
         {
+            var types = Enum.GetNames(typeof(CharacterType));
+            // Element names in grapevine xml files are stored in lower case
+            return Array.ConvertAll(types, s => s.ToLower());
+        }
+
+        internal static List<Character> LoadCharacters(XElement root)
+        {
+            var types = GetSupportedTypes();
             var characters = new List<Character>();
-            foreach (XmlElement el in root.GetElementsByTagName("vampire"))
+            var selectedElements = root
+                .Elements()
+                .Where(e => types.Contains(e.Name.LocalName));
+
+            foreach (var el in selectedElements)
             {
-                characters.Add(LoadVampire(el));
-            }
-            foreach (XmlElement el in root.GetElementsByTagName("werewolf"))
-            {
-                characters.Add(LoadWerewolf(el));
-            }
-            foreach (XmlElement el in root.GetElementsByTagName("mortal"))
-            {
-                characters.Add(LoadMortal(el));
-            }
-            foreach (XmlElement el in root.GetElementsByTagName("hunter"))
-            {
-                characters.Add(LoadHunter(el));
-            }
-            foreach (XmlElement el in root.GetElementsByTagName("wraith"))
-            {
-                characters.Add(LoadWraith(el));
-            }
-            foreach (XmlElement el in root.GetElementsByTagName("changeling"))
-            {
-                characters.Add(LoadChangeling(el));
+                switch (el.Name.LocalName)
+                {
+                    case "vampire":
+                        characters.Add(LoadVampire(el));
+                        break;
+                    case "werewolf":
+                        characters.Add(LoadWerewolf(el));
+                        break;
+                    case "mortal":
+                        characters.Add(LoadMortal(el));
+                        break;
+                    case "hunter":
+                        characters.Add(LoadHunter(el));
+                        break;
+                    case "wraith":
+                        characters.Add(LoadWraith(el));
+                        break;
+                    case "changeling":
+                        characters.Add(LoadChangeling(el));
+                        break;
+                    case "mummy":
+                        characters.Add(LoadMummy(el));
+                        break;
+                    case "kueijin":
+                        characters.Add(LoadKueiJin(el));
+                        break;
+                    case "mage":
+                        characters.Add(LoadMage(el));
+                        break;
+                    case "demon":
+                        characters.Add(LoadDemon(el));
+                        break;
+                    case "various":
+                        characters.Add(LoadVarious(el));
+                        break;
+                    case "fera":
+                        characters.Add(LoadFera(el));
+                        break;
+                }
             }
             return characters;
         }
 
-        internal static Vampire LoadVampire(XmlElement el)
+        internal static Vampire LoadVampire(XElement el)
         {
             var vampire = new Vampire();
             LoadCommonTraits(vampire, el);
@@ -124,7 +154,7 @@ namespace MEU.GV4.Data.Providers
             return vampire;
         }
 
-        internal static Werewolf LoadWerewolf(XmlElement el)
+        internal static Werewolf LoadWerewolf(XElement el)
         {
             var werewolf = new Werewolf();
             LoadCommonTraits(werewolf, el);
@@ -151,7 +181,7 @@ namespace MEU.GV4.Data.Providers
             return werewolf;
         }
 
-        internal static Mortal LoadMortal(XmlElement el)
+        internal static Mortal LoadMortal(XElement el)
         {
             var mortal = new Mortal();
             LoadCommonTraits(mortal, el);
@@ -169,7 +199,7 @@ namespace MEU.GV4.Data.Providers
             return mortal;
         }
 
-        internal static Hunter LoadHunter(XmlElement el)
+        internal static Hunter LoadHunter(XElement el)
         {
             var hunter = new Hunter();
             LoadCommonTraits(hunter, el);
@@ -184,7 +214,7 @@ namespace MEU.GV4.Data.Providers
             return hunter;
         }
 
-        internal static Wraith LoadWraith(XmlElement el)
+        internal static Wraith LoadWraith(XElement el)
         {
             var wraith = new Wraith()
             {
@@ -213,7 +243,7 @@ namespace MEU.GV4.Data.Providers
             return wraith;
         }
 
-        internal static Changeling LoadChangeling(XmlElement el)
+        internal static Changeling LoadChangeling(XElement el)
         {
             var changeling = new Changeling()
             {
@@ -234,11 +264,52 @@ namespace MEU.GV4.Data.Providers
             LoadCommonTraits(changeling, el);
             return changeling;
         }
+        internal static Mummy LoadMummy(XElement el)
+        {
+            var mummy = new Mummy() { };
+            LoadCommonTraits(mummy, el);
+            return mummy;
+        }
 
-        internal static List<Boon> LoadBoons(XmlElement el)
+        internal static KueiJin LoadKueiJin(XElement el)
+        {
+            var kuejin = new KueiJin() { };
+            LoadCommonTraits(kuejin, el);
+            return kuejin;
+        }
+
+        internal static Mage LoadMage(XElement el)
+        {
+            var mage = new Mage() { };
+            LoadCommonTraits(mage, el);
+            return mage;
+        }
+
+        internal static Demon LoadDemon(XElement el)
+        {
+            var demon = new Demon() { };
+            LoadCommonTraits(demon, el);
+            return demon;
+        }
+
+        internal static Fera LoadFera(XElement el)
+        {
+            var fera = new Fera() { };
+            LoadCommonTraits(fera, el);
+            return fera;
+        }
+
+        internal static Various LoadVarious(XElement el)
+        {
+            var various = new Various() { };
+            LoadCommonTraits(various, el);
+            return various;
+        }
+
+        internal static List<Boon> LoadBoons(XElement el)
         {
             var boons = new List<Boon>();
-            foreach (XmlElement boon in el.GetElementsByTagName("boon"))
+            foreach (var boon in el.Elements("boon"))
             {
                 boons.Add(new()
                 {
@@ -251,7 +322,7 @@ namespace MEU.GV4.Data.Providers
             return boons;
         }
 
-        internal static void LoadCommonTraits(METCharacter character, XmlElement el)
+        internal static void LoadCommonTraits(METCharacter character, XElement el)
         {
             character.Name = XmlHelper.GetAttribute(el, "name");
             character.ID = XmlHelper.GetAttribute(el, "id");
@@ -288,13 +359,14 @@ namespace MEU.GV4.Data.Providers
             character.Notes = XmlHelper.GetCData(el, "notes");
         }
 
-        internal static TraitList LoadTraitList(XmlElement el, string traitListName)
+        internal static TraitList LoadTraitList(XElement el, string traitListName)
         {
             var traitList = new TraitList();
-            var traits = el.SelectSingleNode($"traitlist[@name='{traitListName}']") as XmlElement;
+            var traits = el.Elements()
+                .Where(el => el.Name.LocalName == "traitlist" && el.Attribute("name")?.Value == traitListName);
             if (traits != null)
             {
-                foreach (XmlElement trait in traits.GetElementsByTagName("trait"))
+                foreach (var trait in traits.Elements("trait"))
                 {
                     traitList.Add(new Trait()
                     {
@@ -307,16 +379,16 @@ namespace MEU.GV4.Data.Providers
 
             return traitList;
         }
-        internal static Experience LoadExperience(XmlElement element)
+        internal static Experience LoadExperience(XElement element)
         {
             var experience = new Experience();
-            var expElement = element.SelectSingleNode("experience") as XmlElement;
+            var expElement = element.Element("experience");
             if (expElement != null)
             {
                 experience.Earned = XmlHelper.GetAttributeAsDecimal(expElement, "earned");
                 experience.Unspent = XmlHelper.GetAttributeAsDecimal(expElement, "unspent");
 
-                foreach (XmlElement entry in expElement.GetElementsByTagName("entry"))
+                foreach (var entry in expElement.Elements("entry"))
                 {
                     experience.Entries.Add(new()
                     {

@@ -1,7 +1,7 @@
 ﻿using MEU.GV4.Data.Models.METClassic;
 using MEU.GV4.Data.Models;
 using MEU.GV4.Data.Providers;
-using System.Xml;
+using System.Xml.Linq;
 
 namespace MEU.GV4.Data.Tests.Providers
 {
@@ -14,8 +14,7 @@ namespace MEU.GV4.Data.Tests.Providers
             TraitList testDisciplines = [new() { Name = "Auspex: Heightened Senses", Value = "3", Note = "basic" }, new() { Name = "Dominate: Command", Value = "3", Note = "basic" }];
             TraitList testRituals = [new() { Name = "Basic: Blood Mead", Value = "2" }];
             TraitList testBonds = [new() { Name = "L. Flint", Value = "2" }];
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml("""
+            var xmlDoc = XDocument.Parse("""
                 <?xml version="1.0"?>
                 <vampire sire="Mr. Popo" coterie="The Cool Klub" clan="Foo" sect="Cami" generation="13" blood="10" conscience="1" selfcontrol="2" courage="3" path="Potato" pathtraits="5">
                     <traitlist name="Status" abc="yes" display="1">
@@ -35,7 +34,7 @@ namespace MEU.GV4.Data.Tests.Providers
                 </vampire>
                 """);
 #pragma warning disable CS8604 // Possible null reference argument.
-            var result = GrapevineLegacyXMLReader.LoadVampire(xmlDoc.DocumentElement);
+            var result = GrapevineLegacyXMLReader.LoadVampire(xmlDoc.Root);
 #pragma warning restore CS8604 // Possible null reference argument.
             Assert.NotNull(result);
             Assert.Equal("Foo", result.Clan);
@@ -69,15 +68,16 @@ namespace MEU.GV4.Data.Tests.Providers
                 CreateDate = DateTimeOffset.Parse("1/1/2020"),
                 ModifyDate = DateTimeOffset.Parse("1/2/2020 00:00:01 AM")
             };
-            var xmlDocument = new XmlDocument();
-            xmlDocument.LoadXml("""
+            var xmlDocument = XDocument.Parse("""
                 <?xml version="1.0"?>
                 <vampire name="Vladymur" startdate="1/1/2020" lastmodified="1/2/2020 00:00:01 AM">
                     <boon type="foo" partner="Stu Padasso" owed="yes" date="1/1/2020"/>
                     <boon type="bar" partner="Santa Claus" owed="no" date="1/1/2020"/>
                 </vampire>
                 """);
-            var result = GrapevineLegacyXMLReader.LoadVampire(xmlDocument.DocumentElement);
+#pragma warning disable CS8604 // Possible null reference argument.
+            var result = GrapevineLegacyXMLReader.LoadVampire(xmlDocument.Root);
+#pragma warning restore CS8604 // Possible null reference argument.
             Assert.NotNull(result);
             Assert.Equivalent(expected, result);
         }

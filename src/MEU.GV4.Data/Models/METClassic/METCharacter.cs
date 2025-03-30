@@ -1,5 +1,21 @@
 ﻿namespace MEU.GV4.Data.Models.METClassic
 {
+    public enum CharacterType
+    {
+        Changeling,
+        Demon,
+        Fera,
+        Hunter,
+        KueiJin,
+        Mage,
+        Mortal,
+        Mummy,
+        Vampire,
+        Various,
+        Werewolf,
+        Wraith
+    }
+
     public abstract class METCharacter : Character
     {
         public string? Title { get; set; }

@@ -1,11 +1,6 @@
 ﻿using MEU.GV4.Data.Models;
 using MEU.GV4.Data.Providers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+using System.Xml.Linq;
 
 namespace MEU.GV4.Data.Tests.Providers
 {
@@ -16,8 +11,7 @@ namespace MEU.GV4.Data.Tests.Providers
         {
             TraitList testHumanity = [new() { Name = "Benevolent" }, new() { Name = "Honorable" }];
             TraitList testNumina = [new() { Name = "Psychic: Cyberkinesis: Switch", Value = "3", Note = "basic" }];
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml("""
+            var xmlDoc = XDocument.Parse("""
                 <?xml version="1.0"?>
                 <mortal motivation="Ennui" association="Local Police" regnant="Joe" humanity="1" blood="2" conscience="1" selfcontrol="2" courage="3" truefaith="6">
                     <traitlist name="Humanity" abc="yes" display="1">
@@ -30,7 +24,7 @@ namespace MEU.GV4.Data.Tests.Providers
                 </mortal>
                 """);
 #pragma warning disable CS8604 // Possible null reference argument.
-            var result = GrapevineLegacyXMLReader.LoadMortal(xmlDoc.DocumentElement);
+            var result = GrapevineLegacyXMLReader.LoadMortal(xmlDoc.Root);
 #pragma warning restore CS8604 // Possible null reference argument.
             Assert.NotNull(result);
             Assert.Equal("Ennui", result.Motivation);

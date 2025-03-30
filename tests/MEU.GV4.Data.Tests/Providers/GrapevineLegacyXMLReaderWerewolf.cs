@@ -1,12 +1,6 @@
-﻿using MEU.GV4.Data.Models.METClassic;
-using MEU.GV4.Data.Models;
+﻿using MEU.GV4.Data.Models;
 using MEU.GV4.Data.Providers;
-using System.Xml;
-using System.Diagnostics;
-using System.Drawing;
-using System;
-using System.Runtime.InteropServices;
-using Xunit.Abstractions;
+using System.Xml.Linq;
 
 namespace MEU.GV4.Data.Tests.Providers
 {
@@ -15,8 +9,7 @@ namespace MEU.GV4.Data.Tests.Providers
         [Fact(DisplayName = "Can Load Werewolf Character Data")]
         public void CanLoadWerewolfCharacterData()
         {
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml("""
+            var xmlDoc = XDocument.Parse("""
                 <?xml version="1.0"?>
                 <werewolf  tribe="x" breed="y" auspice="z" rank="Fostern" pack="Pack" totem="American Dream" camp="Bane Tenders" position="Fool"
                     notoriety="2" rage="3" gnosis="3" honor="1" glory="1" wisdom="1">
@@ -50,7 +43,7 @@ namespace MEU.GV4.Data.Tests.Providers
             TraitList testGloryList = [new() { Name = "Brash" }];
             TraitList testWisdomList = [new() { Name = "Pragmatic" }];
 #pragma warning disable CS8604 // Possible null reference argument.
-            var result = GrapevineLegacyXMLReader.LoadWerewolf(xmlDoc.DocumentElement);
+            var result = GrapevineLegacyXMLReader.LoadWerewolf(xmlDoc.Root);
 #pragma warning restore CS8604 // Possible null reference argument.
             Assert.NotNull(result);
             Assert.Equal("x", result.Tribe);

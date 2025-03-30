@@ -1,7 +1,7 @@
 ﻿using MEU.GV4.Data.Models;
 using MEU.GV4.Data.Models.METClassic;
 using MEU.GV4.Data.Providers;
-using System.Xml;
+using System.Xml.Linq;
 
 namespace MEU.GV4.Data.Tests.Providers
 {
@@ -118,10 +118,7 @@ namespace MEU.GV4.Data.Tests.Providers
                         Phone = "000-000-0000",
                         Position = "Player",
                         Status = "Active",
-                        Address = """
-                        111 Elm St
-                        Somewhere, XY 12345
-                        """,
+                        Address = "111 Elm St\nSomewhere, XY 12345", // Xml for Linq parses line breaks as \n instead of \r\n
                         Notes = "Player notes",
                         PlayerExperience = new () { Entries = new () },
                         CreateDate = DateTimeOffset.Parse("1/1/2020 00:00:01 AM"),
@@ -170,8 +167,7 @@ namespace MEU.GV4.Data.Tests.Providers
                 ]
             };
 
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml("""
+            var xmlDoc = XDocument.Parse("""
                 <?xml version="1.0"?>
                 <foo>
                     <experience unspent="1" earned="2">
@@ -183,9 +179,36 @@ namespace MEU.GV4.Data.Tests.Providers
                 """);
 
 #pragma warning disable CS8604 // Possible null reference argument.
-            var result = GrapevineLegacyXMLReader.LoadExperience(xmlDoc.DocumentElement);
+            var result = GrapevineLegacyXMLReader.LoadExperience(xmlDoc.Root);
 #pragma warning restore CS8604 // Possible null reference argument.
             Assert.Equivalent(expected, result);
+        }
+
+        [Fact(DisplayName = "Can Load All Supported Character Types")]
+        public void CanLoadAllSupportedCharacterTypes()
+        {
+            var expectedTypes = GrapevineLegacyXMLReader.GetSupportedTypes();
+
+            var xmlDoc = XDocument.Parse("""
+                <?xml version="1.0"?>
+                <foo>
+                </foo>
+                """);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            foreach (var type in expectedTypes)
+            {
+                xmlDoc.Root.Add(XElement.Parse($"<{type}/>"));
+            }
+#pragma warning disable CS8604 // Possible null reference argument.
+            var result = GrapevineLegacyXMLReader.LoadCharacters(xmlDoc.Root);
+#pragma warning restore CS8604 // Possible null reference argument.
+            var parsedTypes = new string[expectedTypes.Length];
+            for (int i = 0; i < result.Count; i++)
+            {
+                parsedTypes[i] = result[i].GetType().Name.ToLower();
+            }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            Assert.Equivalent(expectedTypes, parsedTypes);
         }
 
         [Fact(DisplayName = "Can load trait list by name")]
@@ -196,8 +219,7 @@ namespace MEU.GV4.Data.Tests.Providers
                 new() { Name = "a" }, new() { Name = "b", Value = "2" }, new() { Name = "c", Note = "foo" }
             ];
 
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml("""
+            var xmlDoc = XDocument.Parse("""
                 <?xml version="1.0"?>
                 <foo>
                     <traitlist name="bar" abc="yes" display="1">
@@ -211,7 +233,7 @@ namespace MEU.GV4.Data.Tests.Providers
                 </foo>
                 """);
 #pragma warning disable CS8604 // Possible null reference argument.
-            var result = GrapevineLegacyXMLReader.LoadTraitList(xmlDoc.DocumentElement, "foo");
+            var result = GrapevineLegacyXMLReader.LoadTraitList(xmlDoc.Root, "foo");
 #pragma warning disable CS8604 // Possible null reference argument.
             Assert.Equivalent(expected, result);
         }

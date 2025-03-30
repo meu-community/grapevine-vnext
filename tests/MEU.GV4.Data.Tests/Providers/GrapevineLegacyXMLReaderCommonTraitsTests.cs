@@ -1,7 +1,6 @@
-﻿using MEU.GV4.Data.Models.METClassic;
-using MEU.GV4.Data.Models;
+﻿using MEU.GV4.Data.Models;
 using MEU.GV4.Data.Providers;
-using System.Xml;
+using System.Xml.Linq;
 
 namespace MEU.GV4.Data.Tests.Providers
 {
@@ -13,8 +12,7 @@ namespace MEU.GV4.Data.Tests.Providers
         [Fact(DisplayName = "Can Load Common Traits")]
         public void CanLoadCommonTraits()
         {
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml("""
+            var xmlDoc = XDocument.Parse("""
                 <?xml version="1.0"?>
                 <vampire name="Vladymur" title="Drama Queen" id="12345" nature="foo" demeanor="bar" willpower="3" physicalmax="10" socialmax="10" mentalmax="10" player="Fred Smith" status="Active" startdate="1/1/2020" lastmodified="1/2/2020 00:00:01 AM">
                     <experience unspent="0" earned="0" />
@@ -103,7 +101,7 @@ namespace MEU.GV4.Data.Tests.Providers
             TraitList testDerangements = [new() { Name = "Something" }];
             TraitList testHealth = [new() { Name = "Healthy", Value = "2" }, new() { Name = "Bruised", Value = "3" }, new() { Name = "Wounded", Value = "2" }, new() { Name = "Incapacitated" }, new() { Name = "Torpor" }];
 #pragma warning disable CS8604 // Possible null reference argument.
-            var result = GrapevineLegacyXMLReader.LoadVampire(xmlDoc.DocumentElement);
+            var result = GrapevineLegacyXMLReader.LoadVampire(xmlDoc.Root);
 #pragma warning restore CS8604 // Possible null reference argument.
             Assert.NotNull(result);
             Assert.Equal("Vladymur", result.Name);
