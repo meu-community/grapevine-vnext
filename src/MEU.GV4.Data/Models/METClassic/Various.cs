@@ -13,6 +13,7 @@ namespace MEU.GV4.Data.Models.METClassic
         public string? Affinity { get; set; }
         public string? Plane { get; set; }
         public string? Brood { get; set; }
+        public string? Other { get; set; }
         public TraitList Tempers { get; set; } = [];
         public TraitList Powers { get; set; } = [];
     }

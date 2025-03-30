@@ -14,7 +14,6 @@
         public TraitList Locations { get; set; } = [];
         public string? Biography { get; set; }
         public string? Notes { get; set; }
-        public string? Other { get; set; }
         public Experience CharacterExperience { get; set; } = new Experience();
         public DateTimeOffset? CreateDate { get; set; }
         public DateTimeOffset? ModifyDate { get; set; }

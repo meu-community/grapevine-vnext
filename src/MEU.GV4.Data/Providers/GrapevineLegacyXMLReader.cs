@@ -406,14 +406,51 @@ namespace MEU.GV4.Data.Providers
 
         internal static Fera LoadFera(XElement el)
         {
-            var fera = new Fera() { };
+            var fera = new Fera()
+            {
+                FeraName = XmlHelper.GetAttribute(el, "fera"),
+                Breed = XmlHelper.GetAttribute(el, "breed"),
+                Auspice = XmlHelper.GetAttribute(el, "auspice"),
+                Rank = XmlHelper.GetAttribute(el, "rank"),
+                Pack = XmlHelper.GetAttribute(el, "pack"),
+                Totem = XmlHelper.GetAttribute(el, "totem"),
+                Camp = XmlHelper.GetAttribute(el, "camp"),
+                Position = XmlHelper.GetAttribute(el, "position"),
+                Notoriety = XmlHelper.GetAttributeAsInt(el, "notoriety"),
+                Rage = XmlHelper.GetAttributeAsInt(el, "rage"),
+                Gnosis = XmlHelper.GetAttributeAsInt(el, "gnosis"),
+                Honor = XmlHelper.GetAttributeAsInt(el, "honor"),
+                Glory = XmlHelper.GetAttributeAsInt(el, "glory"),
+                Wisdom = XmlHelper.GetAttributeAsInt(el, "wisdom"),
+                TempGlory = XmlHelper.GetAttributeAsInt(el, "tempglory"),
+                TempGnosis = XmlHelper.GetAttributeAsInt(el, "tempgnosis"),
+                TempHonor = XmlHelper.GetAttributeAsInt(el, "temphonor"),
+                TempRage = XmlHelper.GetAttributeAsInt(el, "temprage"),
+                TempWisdom = XmlHelper.GetAttributeAsInt(el, "tempwisdom"),
+                Features = LoadTraitList(el, "Features"),
+                Gifts = LoadTraitList(el, "Gifts"),
+                Rites = LoadTraitList(el, "Rites"),
+                HonorList = LoadTraitList(el, "Honor"),
+                GloryList = LoadTraitList(el, "Glory"),
+                WisdomList = LoadTraitList(el, "Wisdom")
+            };
             LoadCommonTraits(fera, el);
             return fera;
         }
 
         internal static Various LoadVarious(XElement el)
         {
-            var various = new Various() { };
+            var various = new Various()
+            {
+                Class = XmlHelper.GetAttribute(el, "class"),
+                Subclass = XmlHelper.GetAttribute(el, "subclass"),
+                Affinity = XmlHelper.GetAttribute(el,"affinity"),
+                Plane = XmlHelper.GetAttribute(el, "plane"),
+                Brood = XmlHelper.GetAttribute(el, "brood"),
+                Other = XmlHelper.GetCData(el, "other"),
+                Tempers = LoadTraitList(el, "Tempers"),
+                Powers = LoadTraitList(el, "Powers")
+            };
             LoadCommonTraits(various, el);
             return various;
         }
