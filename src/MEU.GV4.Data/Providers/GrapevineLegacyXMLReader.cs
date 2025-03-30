@@ -299,7 +299,30 @@ namespace MEU.GV4.Data.Providers
         }
         internal static Mummy LoadMummy(XElement el)
         {
-            var mummy = new Mummy() { };
+            var mummy = new Mummy()
+            {
+                Amenti = XmlHelper.GetAttribute(el, "amenti"),
+                Sekhem = XmlHelper.GetAttributeAsInt(el, "sekhem"),
+                Balance = XmlHelper.GetAttributeAsInt(el, "balance"),
+                Memory = XmlHelper.GetAttributeAsInt(el, "memory"),
+                Integrity = XmlHelper.GetAttributeAsInt(el, "integrity"),
+                Joy = XmlHelper.GetAttributeAsInt(el, "joy"),
+                Ba = XmlHelper.GetAttributeAsInt(el, "ba"),
+                Ka = XmlHelper.GetAttributeAsInt(el, "ka"),
+                TempSekhem = XmlHelper.GetAttributeAsInt(el, "tempsekhem"),
+                TempBalance = XmlHelper.GetAttributeAsInt(el, "tempbalance"),
+                TempMemory = XmlHelper.GetAttributeAsInt(el, "tempmemory"),
+                TempIntegrity = XmlHelper.GetAttributeAsInt(el, "tempintegrity"),
+                TempJoy = XmlHelper.GetAttributeAsInt(el, "tempjoy"),
+                TempBa = XmlHelper.GetAttributeAsInt(el, "tempba"),
+                TempKa = XmlHelper.GetAttributeAsInt(el, "tempka"),
+                Inheritance = XmlHelper.GetCData(el, "inheritance"),
+                Humanity = LoadTraitList(el, "Humanity"),
+                MummyStatus = LoadTraitList(el, "Status"),
+                Hekau = LoadTraitList(el, "Hekau"),
+                Spells = LoadTraitList(el, "Spells"),
+                Rituals = LoadTraitList(el, "Rituals")
+            };
             LoadCommonTraits(mummy, el);
             return mummy;
         }
