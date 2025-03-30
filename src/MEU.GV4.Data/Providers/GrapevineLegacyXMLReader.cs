@@ -2,6 +2,7 @@
 using MEU.GV4.Data.Helpers;
 using System.Xml.Linq;
 using MEU.GV4.Data.Models.METClassic;
+using System.Runtime.CompilerServices;
 
 namespace MEU.GV4.Data.Providers
 {
@@ -70,11 +71,16 @@ namespace MEU.GV4.Data.Providers
             return playerList;
         }
 
-        internal static List<Character> LoadCharacters(XElement root)
+        internal static string[]? GetSupportedTypes()
         {
             var types = Enum.GetNames(typeof(CharacterType));
             // Element names in grapevine xml files are stored in lower case
-            types = Array.ConvertAll(types, s => s.ToLower());
+            return Array.ConvertAll(types, s => s.ToLower());
+        }
+
+        internal static List<Character> LoadCharacters(XElement root)
+        {
+            var types = GetSupportedTypes();
             var characters = new List<Character>();
             var selectedElements = root
                 .Elements()
@@ -101,6 +107,24 @@ namespace MEU.GV4.Data.Providers
                         break;
                     case "changeling":
                         characters.Add(LoadChangeling(el));
+                        break;
+                    case "mummy":
+                        characters.Add(LoadMummy(el));
+                        break;
+                    case "kueijin":
+                        characters.Add(LoadKueiJin(el));
+                        break;
+                    case "mage":
+                        characters.Add(LoadMage(el));
+                        break;
+                    case "demon":
+                        characters.Add(LoadDemon(el));
+                        break;
+                    case "various":
+                        characters.Add(LoadVarious(el));
+                        break;
+                    case "fera":
+                        characters.Add(LoadFera(el));
                         break;
                 }
             }
@@ -239,6 +263,47 @@ namespace MEU.GV4.Data.Providers
             };
             LoadCommonTraits(changeling, el);
             return changeling;
+        }
+        internal static Mummy LoadMummy(XElement el)
+        {
+            var mummy = new Mummy() { };
+            LoadCommonTraits(mummy, el);
+            return mummy;
+        }
+
+        internal static KueiJin LoadKueiJin(XElement el)
+        {
+            var kuejin = new KueiJin() { };
+            LoadCommonTraits(kuejin, el);
+            return kuejin;
+        }
+
+        internal static Mage LoadMage(XElement el)
+        {
+            var mage = new Mage() { };
+            LoadCommonTraits(mage, el);
+            return mage;
+        }
+
+        internal static Demon LoadDemon(XElement el)
+        {
+            var demon = new Demon() { };
+            LoadCommonTraits(demon, el);
+            return demon;
+        }
+
+        internal static Fera LoadFera(XElement el)
+        {
+            var fera = new Fera() { };
+            LoadCommonTraits(fera, el);
+            return fera;
+        }
+
+        internal static Various LoadVarious(XElement el)
+        {
+            var various = new Various() { };
+            LoadCommonTraits(various, el);
+            return various;
         }
 
         internal static List<Boon> LoadBoons(XElement el)

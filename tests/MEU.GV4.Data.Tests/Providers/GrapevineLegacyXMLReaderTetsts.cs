@@ -184,6 +184,33 @@ namespace MEU.GV4.Data.Tests.Providers
             Assert.Equivalent(expected, result);
         }
 
+        [Fact(DisplayName = "Can Load All Supported Character Types")]
+        public void CanLoadAllSupportedCharacterTypes()
+        {
+            var expectedTypes = GrapevineLegacyXMLReader.GetSupportedTypes();
+
+            var xmlDoc = XDocument.Parse("""
+                <?xml version="1.0"?>
+                <foo>
+                </foo>
+                """);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            foreach (var type in expectedTypes)
+            {
+                xmlDoc.Root.Add(XElement.Parse($"<{type}/>"));
+            }
+#pragma warning disable CS8604 // Possible null reference argument.
+            var result = GrapevineLegacyXMLReader.LoadCharacters(xmlDoc.Root);
+#pragma warning restore CS8604 // Possible null reference argument.
+            var parsedTypes = new string[expectedTypes.Length];
+            for (int i = 0; i < result.Count; i++)
+            {
+                parsedTypes[i] = result[i].GetType().Name.ToLower();
+            }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            Assert.Equivalent(expectedTypes, parsedTypes);
+        }
+
         [Fact(DisplayName = "Can load trait list by name")]
         public void CanLoadTraitListByName()
         {

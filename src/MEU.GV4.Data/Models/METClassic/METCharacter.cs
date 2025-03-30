@@ -6,7 +6,7 @@
         Demon,
         Fera,
         Hunter,
-        KueJin,
+        KueiJin,
         Mage,
         Mortal,
         Mummy,
