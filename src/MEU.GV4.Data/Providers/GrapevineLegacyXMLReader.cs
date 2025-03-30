@@ -313,7 +313,25 @@ namespace MEU.GV4.Data.Providers
 
         internal static Mage LoadMage(XElement el)
         {
-            var mage = new Mage() { };
+            var mage = new Mage()
+            {
+                Essence = XmlHelper.GetAttribute(el, "essence"),
+                Tradition = XmlHelper.GetAttribute(el, "tradition"),
+                Cabal = XmlHelper.GetAttribute(el, "cabal"),
+                Rank = XmlHelper.GetAttribute(el, "rank"),
+                Faction = XmlHelper.GetAttribute(el, "faction"),
+                Arete = XmlHelper.GetAttributeAsInt(el, "arete"),
+                Quintessence = XmlHelper.GetAttributeAsInt(el, "quintessence"),
+                Paradox = XmlHelper.GetAttributeAsInt(el, "paradox"),
+                TempArete = XmlHelper.GetAttributeAsInt(el, "temparete"),
+                TempQuintessence =XmlHelper.GetAttributeAsInt(el,"tempquintessence"),
+                TempParadox = XmlHelper.GetAttributeAsInt(el, "tempparadox"),
+                Foci = XmlHelper.GetCData(el, "foci"),
+                Resonance = LoadTraitList(el, "Resonance"),
+                Reputation = LoadTraitList(el, "Reputation"),
+                Spheres = LoadTraitList(el, "Spheres"),
+                Rotes = LoadTraitList(el, "Rotes")
+            };
             LoadCommonTraits(mage, el);
             return mage;
         }
