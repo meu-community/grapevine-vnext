@@ -71,7 +71,7 @@ namespace MEU.GV4.Data.Providers
             return playerList;
         }
 
-        internal static string[]? GetSupportedTypes()
+        internal static string[] GetSupportedTypes()
         {
             var types = Enum.GetNames(typeof(CharacterType));
             // Element names in grapevine xml files are stored in lower case
@@ -133,84 +133,112 @@ namespace MEU.GV4.Data.Providers
 
         internal static Vampire LoadVampire(XElement el)
         {
-            var vampire = new Vampire();
+            var vampire = new Vampire()
+            {
+                Clan = XmlHelper.GetAttribute(el, "clan"),
+                Sect = XmlHelper.GetAttribute(el, "sect"),
+                Coterie = XmlHelper.GetAttribute(el, "coterie"),
+                Sire = XmlHelper.GetAttribute(el, "sire"),
+                Generation = XmlHelper.GetAttributeAsInt(el, "generation"),
+                Path = XmlHelper.GetAttribute(el, "path"),
+                PathTraits = XmlHelper.GetAttributeAsInt(el, "pathtraits"),
+                Conscience = XmlHelper.GetAttributeAsInt(el, "conscience"),
+                SelfControl = XmlHelper.GetAttributeAsInt(el, "selfcontrol"),
+                Courage = XmlHelper.GetAttributeAsInt(el, "courage"),
+                Blood = XmlHelper.GetAttributeAsInt(el, "blood"),
+                TempBlood = XmlHelper.GetAttributeAsInt(el,"tempblood"),
+                TempConscience = XmlHelper.GetAttributeAsInt(el, "tempconscience"),
+                TempCourage = XmlHelper.GetAttributeAsInt(el, "tempcourage"),
+                TempSelfControl = XmlHelper.GetAttributeAsInt(el, "tempselfcontrol"),
+                TempPathTraits = XmlHelper.GetAttributeAsInt(el, "temppathtraits"),
+                Disciplines = LoadTraitList(el, "Disciplines"),
+                Rituals = LoadTraitList(el, "Rituals"),
+                KindredStatus = LoadTraitList(el, "Status"),
+                Bonds = LoadTraitList(el, "Bonds"),
+                Boons = LoadBoons(el)
+            };
             LoadCommonTraits(vampire, el);
-            vampire.Clan = XmlHelper.GetAttribute(el, "clan");
-            vampire.Sect = XmlHelper.GetAttribute(el, "sect");
-            vampire.Coterie = XmlHelper.GetAttribute(el, "coterie");
-            vampire.Sire = XmlHelper.GetAttribute(el, "sire");
-            vampire.Generation = XmlHelper.GetAttributeAsInt(el, "generation");
-            vampire.Path = XmlHelper.GetAttribute(el, "path");
-            vampire.PathTraits = XmlHelper.GetAttributeAsInt(el, "pathtraits");
-            vampire.Conscience = XmlHelper.GetAttributeAsInt(el, "conscience");
-            vampire.SelfControl = XmlHelper.GetAttributeAsInt(el, "selfcontrol");
-            vampire.Courage = XmlHelper.GetAttributeAsInt(el, "courage");
-            vampire.Blood = XmlHelper.GetAttributeAsInt(el, "blood");
-            vampire.Disciplines = LoadTraitList(el, "Disciplines");
-            vampire.Rituals = LoadTraitList(el, "Rituals");
-            vampire.KindredStatus = LoadTraitList(el, "Status");
-            vampire.Bonds = LoadTraitList(el, "Bonds");
-            vampire.Boons = LoadBoons(el);
             return vampire;
         }
 
         internal static Werewolf LoadWerewolf(XElement el)
         {
-            var werewolf = new Werewolf();
+            var werewolf = new Werewolf()
+            {
+                Tribe = XmlHelper.GetAttribute(el, "tribe"),
+                Breed = XmlHelper.GetAttribute(el, "breed"),
+                Auspice = XmlHelper.GetAttribute(el, "auspice"),
+                Rank = XmlHelper.GetAttribute(el, "rank"),
+                Pack = XmlHelper.GetAttribute(el, "pack"),
+                Totem = XmlHelper.GetAttribute(el, "totem"),
+                Camp = XmlHelper.GetAttribute(el, "camp"),
+                Position = XmlHelper.GetAttribute(el, "position"),
+                Notoriety = XmlHelper.GetAttributeAsInt(el, "notoriety"),
+                Rage = XmlHelper.GetAttributeAsInt(el, "rage"),
+                Gnosis = XmlHelper.GetAttributeAsInt(el, "gnosis"),
+                Honor = XmlHelper.GetAttributeAsInt(el, "honor"),
+                Glory = XmlHelper.GetAttributeAsInt(el, "glory"),
+                Wisdom = XmlHelper.GetAttributeAsInt(el, "wisdom"),
+                TempGlory = XmlHelper.GetAttributeAsInt(el, "tempglory"),
+                TempGnosis = XmlHelper.GetAttributeAsInt(el, "tempgnosis"),
+                TempHonor = XmlHelper.GetAttributeAsInt(el, "temphonor"),
+                TempRage = XmlHelper.GetAttributeAsInt(el, "temprage"),
+                TempWisdom = XmlHelper.GetAttributeAsInt(el, "tempwisdom"),
+                Features = LoadTraitList(el, "Features"),
+                Gifts = LoadTraitList(el, "Gifts"),
+                Rites = LoadTraitList(el, "Rites"),
+                HonorList = LoadTraitList(el, "Honor"),
+                GloryList = LoadTraitList(el, "Glory"),
+                WisdomList = LoadTraitList(el, "Wisdom")
+            };
             LoadCommonTraits(werewolf, el);
-            werewolf.Tribe = XmlHelper.GetAttribute(el, "tribe");
-            werewolf.Breed = XmlHelper.GetAttribute(el, "breed");
-            werewolf.Auspice = XmlHelper.GetAttribute(el, "auspice");
-            werewolf.Rank = XmlHelper.GetAttribute(el, "rank");
-            werewolf.Pack = XmlHelper.GetAttribute(el, "pack");
-            werewolf.Totem = XmlHelper.GetAttribute(el, "totem");
-            werewolf.Camp = XmlHelper.GetAttribute(el, "camp");
-            werewolf.Position = XmlHelper.GetAttribute(el, "position");
-            werewolf.Notoriety = XmlHelper.GetAttributeAsInt(el, "notoriety");
-            werewolf.Rage = XmlHelper.GetAttributeAsInt(el, "rage");
-            werewolf.Gnosis = XmlHelper.GetAttributeAsInt(el, "gnosis");
-            werewolf.Honor = XmlHelper.GetAttributeAsInt(el, "honor");
-            werewolf.Glory = XmlHelper.GetAttributeAsInt(el, "glory");
-            werewolf.Wisdom = XmlHelper.GetAttributeAsInt(el, "wisdom");
-            werewolf.Features = LoadTraitList(el, "Features");
-            werewolf.Gifts = LoadTraitList(el, "Gifts");
-            werewolf.Rites = LoadTraitList(el, "Rites");
-            werewolf.HonorList = LoadTraitList(el, "Honor");
-            werewolf.GloryList = LoadTraitList(el, "Glory");
-            werewolf.WisdomList = LoadTraitList(el, "Wisdom");
             return werewolf;
         }
 
         internal static Mortal LoadMortal(XElement el)
         {
-            var mortal = new Mortal();
+            var mortal = new Mortal()
+            {
+                Motivation = XmlHelper.GetAttribute(el, "motivation"),
+                Association = XmlHelper.GetAttribute(el, "association"),
+                Regnant = XmlHelper.GetAttribute(el, "regnant"),
+                Humanity = XmlHelper.GetAttributeAsInt(el, "humanity"),
+                Blood = XmlHelper.GetAttributeAsInt(el, "blood"),
+                Conscience = XmlHelper.GetAttributeAsInt(el, "conscience"),
+                SelfControl = XmlHelper.GetAttributeAsInt(el, "selfcontrol"),
+                Courage = XmlHelper.GetAttributeAsInt(el, "courage"),
+                TrueFaith = XmlHelper.GetAttributeAsInt(el, "truefaith"),
+                TempBlood = XmlHelper.GetAttributeAsInt(el, "tempblood"),
+                TempConscience = XmlHelper.GetAttributeAsInt(el, "tempconscience"),
+                TempSelfControl = XmlHelper.GetAttributeAsInt(el,"tempselfcontrol"),
+                TempHumanity = XmlHelper.GetAttributeAsInt(el,"temphumanity"),
+                TempTrueFaith = XmlHelper.GetAttributeAsInt(el,"temptruefaith"),
+                TempCourage = XmlHelper.GetAttributeAsInt(el, "tempcourage"),
+                HumanityList = LoadTraitList(el, "Humanity"),
+                NuminaList = LoadTraitList(el, "Numina")
+            };
             LoadCommonTraits(mortal, el);
-            mortal.Motivation = XmlHelper.GetAttribute(el, "motivation");
-            mortal.Association = XmlHelper.GetAttribute(el, "association");
-            mortal.Regnant = XmlHelper.GetAttribute(el, "regnant");
-            mortal.Humanity = XmlHelper.GetAttributeAsInt(el, "humanity");
-            mortal.Blood = XmlHelper.GetAttributeAsInt(el, "blood");
-            mortal.Conscience = XmlHelper.GetAttributeAsInt(el, "conscience");
-            mortal.SelfControl = XmlHelper.GetAttributeAsInt(el, "selfcontrol");
-            mortal.Courage = XmlHelper.GetAttributeAsInt(el, "courage");
-            mortal.TrueFaith = XmlHelper.GetAttributeAsInt(el, "truefaith");
-            mortal.HumanityList = LoadTraitList(el, "Humanity");
-            mortal.NuminaList = LoadTraitList(el, "Numina");
             return mortal;
         }
 
         internal static Hunter LoadHunter(XElement el)
         {
-            var hunter = new Hunter();
+            var hunter = new Hunter()
+            {
+                Creed = XmlHelper.GetAttribute(el, "creed"),
+                Camp = XmlHelper.GetAttribute(el, "camp"),
+                Handle = XmlHelper.GetAttribute(el, "handle"),
+                Conviction = XmlHelper.GetAttributeAsInt(el, "conviction"),
+                Mercy = XmlHelper.GetAttributeAsInt(el, "mercy"),
+                Vision = XmlHelper.GetAttributeAsInt(el, "vision"),
+                Zeal = XmlHelper.GetAttributeAsInt(el, "zeal"),
+                TempConviction = XmlHelper.GetAttributeAsInt(el,"tempconviction"),
+                TempMercy = XmlHelper.GetAttributeAsInt(el, "tempmercy"),
+                TempVision = XmlHelper.GetAttributeAsInt(el, "tempvision"),
+                TempZeal = XmlHelper.GetAttributeAsInt(el,"tempzeal"),
+                Edges = LoadTraitList(el, "Edges")
+            };
             LoadCommonTraits(hunter, el);
-            hunter.Creed = XmlHelper.GetAttribute(el, "creed");
-            hunter.Camp = XmlHelper.GetAttribute(el, "camp");
-            hunter.Handle = XmlHelper.GetAttribute(el, "handle");
-            hunter.Conviction = XmlHelper.GetAttributeAsInt(el, "conviction");
-            hunter.Mercy = XmlHelper.GetAttributeAsInt(el, "mercy");
-            hunter.Vision = XmlHelper.GetAttributeAsInt(el, "vision");
-            hunter.Zeal = XmlHelper.GetAttributeAsInt(el, "zeal");
-            hunter.Edges = LoadTraitList(el, "Edges");
             return hunter;
         }
 
@@ -228,6 +256,9 @@ namespace MEU.GV4.Data.Providers
                 ShadowArchetype = XmlHelper.GetAttribute(el, "shadowarchetype"),
                 ShadowPlayer = XmlHelper.GetAttribute(el, "shadowplayer"),
                 Angst = XmlHelper.GetAttributeAsInt(el, "angst"),
+                TempAngst = XmlHelper.GetAttributeAsInt(el,"tempangst"),
+                TempCorpus = XmlHelper.GetAttributeAsInt(el,"tempcorpus"),
+                TempPathos = XmlHelper.GetAttributeAsInt(el, "temppathos"),
                 Passions = XmlHelper.GetCData(el, "passions"),
                 Fetters = XmlHelper.GetCData(el, "fetters"),
                 Life = XmlHelper.GetCData(el, "life"),
@@ -256,6 +287,8 @@ namespace MEU.GV4.Data.Providers
                 Threshold = XmlHelper.GetAttribute(el, "threshold"),
                 Glamour = XmlHelper.GetAttributeAsInt(el, "glamour"),
                 Banality = XmlHelper.GetAttributeAsInt(el, "banality"),
+                TempGlamour = XmlHelper.GetAttributeAsInt(el,"tempglamour"),
+                TempBanality = XmlHelper.GetAttributeAsInt(el, "tempbanality"),
                 Oaths = XmlHelper.GetCData(el, "oaths"),
                 ChangelingStatus = LoadTraitList(el, "Status"),
                 Arts = LoadTraitList(el, "Arts"),
@@ -266,42 +299,158 @@ namespace MEU.GV4.Data.Providers
         }
         internal static Mummy LoadMummy(XElement el)
         {
-            var mummy = new Mummy() { };
+            var mummy = new Mummy()
+            {
+                Amenti = XmlHelper.GetAttribute(el, "amenti"),
+                Sekhem = XmlHelper.GetAttributeAsInt(el, "sekhem"),
+                Balance = XmlHelper.GetAttributeAsInt(el, "balance"),
+                Memory = XmlHelper.GetAttributeAsInt(el, "memory"),
+                Integrity = XmlHelper.GetAttributeAsInt(el, "integrity"),
+                Joy = XmlHelper.GetAttributeAsInt(el, "joy"),
+                Ba = XmlHelper.GetAttributeAsInt(el, "ba"),
+                Ka = XmlHelper.GetAttributeAsInt(el, "ka"),
+                TempSekhem = XmlHelper.GetAttributeAsInt(el, "tempsekhem"),
+                TempBalance = XmlHelper.GetAttributeAsInt(el, "tempbalance"),
+                TempMemory = XmlHelper.GetAttributeAsInt(el, "tempmemory"),
+                TempIntegrity = XmlHelper.GetAttributeAsInt(el, "tempintegrity"),
+                TempJoy = XmlHelper.GetAttributeAsInt(el, "tempjoy"),
+                TempBa = XmlHelper.GetAttributeAsInt(el, "tempba"),
+                TempKa = XmlHelper.GetAttributeAsInt(el, "tempka"),
+                Inheritance = XmlHelper.GetCData(el, "inheritance"),
+                Humanity = LoadTraitList(el, "Humanity"),
+                MummyStatus = LoadTraitList(el, "Status"),
+                Hekau = LoadTraitList(el, "Hekau"),
+                Spells = LoadTraitList(el, "Spells"),
+                Rituals = LoadTraitList(el, "Rituals")
+            };
             LoadCommonTraits(mummy, el);
             return mummy;
         }
 
         internal static KueiJin LoadKueiJin(XElement el)
         {
-            var kuejin = new KueiJin() { };
+            var kuejin = new KueiJin()
+            {
+                Dharma = XmlHelper.GetAttribute(el, "dharma"),
+                Balance = XmlHelper.GetAttribute(el, "balance"),
+                Direction = XmlHelper.GetAttribute(el, "direction"),
+                Station = XmlHelper.GetAttribute(el, "station"),
+                PoArchetype = XmlHelper.GetAttribute(el, "poarchetype"),
+                Hun = XmlHelper.GetAttributeAsInt(el, "hun"),
+                Po = XmlHelper.GetAttributeAsInt(el, "po"),
+                YinChi = XmlHelper.GetAttributeAsInt(el, "yinchi"),
+                YangChi = XmlHelper.GetAttributeAsInt(el, "yangchi"),
+                DemonChi = XmlHelper.GetAttributeAsInt(el, "demonchi"),
+                DharmaTraits = XmlHelper.GetAttributeAsInt(el, "dharmatraits"),
+                TempHun = XmlHelper.GetAttributeAsInt(el, "temphun"),
+                TempPo = XmlHelper.GetAttributeAsInt(el, "temppo"),
+                TempYinChi = XmlHelper.GetAttributeAsInt(el, "tempyinchi"),
+                TempYangChi = XmlHelper.GetAttributeAsInt(el, "tempyangchi"),
+                TempDemonChi = XmlHelper.GetAttributeAsInt(el, "tempdemonchi"),
+                TempDharmaTraits = XmlHelper.GetAttributeAsInt(el, "tempdharmatraits"),
+                KuejinStatus = LoadTraitList(el, "Status"),
+                Guanxi = LoadTraitList(el, "Guanxi"),
+                Disciplines = LoadTraitList(el, "Disciplines"),
+                Rites = LoadTraitList(el, "Rites")
+            };
             LoadCommonTraits(kuejin, el);
             return kuejin;
         }
 
         internal static Mage LoadMage(XElement el)
         {
-            var mage = new Mage() { };
+            var mage = new Mage()
+            {
+                Essence = XmlHelper.GetAttribute(el, "essence"),
+                Tradition = XmlHelper.GetAttribute(el, "tradition"),
+                Cabal = XmlHelper.GetAttribute(el, "cabal"),
+                Rank = XmlHelper.GetAttribute(el, "rank"),
+                Faction = XmlHelper.GetAttribute(el, "faction"),
+                Arete = XmlHelper.GetAttributeAsInt(el, "arete"),
+                Quintessence = XmlHelper.GetAttributeAsInt(el, "quintessence"),
+                Paradox = XmlHelper.GetAttributeAsInt(el, "paradox"),
+                TempArete = XmlHelper.GetAttributeAsInt(el, "temparete"),
+                TempQuintessence =XmlHelper.GetAttributeAsInt(el,"tempquintessence"),
+                TempParadox = XmlHelper.GetAttributeAsInt(el, "tempparadox"),
+                Foci = XmlHelper.GetCData(el, "foci"),
+                Resonance = LoadTraitList(el, "Resonance"),
+                Reputation = LoadTraitList(el, "Reputation"),
+                Spheres = LoadTraitList(el, "Spheres"),
+                Rotes = LoadTraitList(el, "Rotes")
+            };
             LoadCommonTraits(mage, el);
             return mage;
         }
 
         internal static Demon LoadDemon(XElement el)
         {
-            var demon = new Demon() { };
+            var demon = new Demon()
+            {
+                House = XmlHelper.GetAttribute(el, "house"),
+                Faction = XmlHelper.GetAttribute(el, "faction"),
+                Torment = XmlHelper.GetAttributeAsInt(el, "torment"),
+                Faith = XmlHelper.GetAttributeAsInt(el, "faith"),
+                Conscience = XmlHelper.GetAttributeAsInt(el, "conscience"),
+                Conviction = XmlHelper.GetAttributeAsInt(el, "conviction"),
+                Courage = XmlHelper.GetAttributeAsInt(el, "courage"),
+                TempFaith = XmlHelper.GetAttributeAsInt(el, "tempfaith"),
+                TempConscience = XmlHelper.GetAttributeAsInt(el, "tempconscience"),
+                TempConviction = XmlHelper.GetAttributeAsInt(el, "tempconviction"),
+                TempCourage = XmlHelper.GetAttributeAsInt(el, "tempcourage"),
+                Lores = LoadTraitList(el, "Lores"),
+                Visage = LoadTraitList(el, "Apocalyptic Form")
+            };
             LoadCommonTraits(demon, el);
             return demon;
         }
 
         internal static Fera LoadFera(XElement el)
         {
-            var fera = new Fera() { };
+            var fera = new Fera()
+            {
+                FeraName = XmlHelper.GetAttribute(el, "fera"),
+                Breed = XmlHelper.GetAttribute(el, "breed"),
+                Auspice = XmlHelper.GetAttribute(el, "auspice"),
+                Rank = XmlHelper.GetAttribute(el, "rank"),
+                Pack = XmlHelper.GetAttribute(el, "pack"),
+                Totem = XmlHelper.GetAttribute(el, "totem"),
+                Camp = XmlHelper.GetAttribute(el, "camp"),
+                Position = XmlHelper.GetAttribute(el, "position"),
+                Notoriety = XmlHelper.GetAttributeAsInt(el, "notoriety"),
+                Rage = XmlHelper.GetAttributeAsInt(el, "rage"),
+                Gnosis = XmlHelper.GetAttributeAsInt(el, "gnosis"),
+                Honor = XmlHelper.GetAttributeAsInt(el, "honor"),
+                Glory = XmlHelper.GetAttributeAsInt(el, "glory"),
+                Wisdom = XmlHelper.GetAttributeAsInt(el, "wisdom"),
+                TempGlory = XmlHelper.GetAttributeAsInt(el, "tempglory"),
+                TempGnosis = XmlHelper.GetAttributeAsInt(el, "tempgnosis"),
+                TempHonor = XmlHelper.GetAttributeAsInt(el, "temphonor"),
+                TempRage = XmlHelper.GetAttributeAsInt(el, "temprage"),
+                TempWisdom = XmlHelper.GetAttributeAsInt(el, "tempwisdom"),
+                Features = LoadTraitList(el, "Features"),
+                Gifts = LoadTraitList(el, "Gifts"),
+                Rites = LoadTraitList(el, "Rites"),
+                HonorList = LoadTraitList(el, "Honor"),
+                GloryList = LoadTraitList(el, "Glory"),
+                WisdomList = LoadTraitList(el, "Wisdom")
+            };
             LoadCommonTraits(fera, el);
             return fera;
         }
 
         internal static Various LoadVarious(XElement el)
         {
-            var various = new Various() { };
+            var various = new Various()
+            {
+                Class = XmlHelper.GetAttribute(el, "class"),
+                Subclass = XmlHelper.GetAttribute(el, "subclass"),
+                Affinity = XmlHelper.GetAttribute(el,"affinity"),
+                Plane = XmlHelper.GetAttribute(el, "plane"),
+                Brood = XmlHelper.GetAttribute(el, "brood"),
+                Other = XmlHelper.GetCData(el, "other"),
+                Tempers = LoadTraitList(el, "Tempers"),
+                Powers = LoadTraitList(el, "Powers")
+            };
             LoadCommonTraits(various, el);
             return various;
         }
@@ -332,6 +481,7 @@ namespace MEU.GV4.Data.Providers
             character.Nature = XmlHelper.GetAttribute(el, "nature");
             character.Demeanor = XmlHelper.GetAttribute(el, "demeanor");
             character.Willpower = XmlHelper.GetAttributeAsInt(el, "willpower");
+            character.TempWillpower = XmlHelper.GetAttributeAsInt(el, "tempwillpower");
             character.Status = XmlHelper.GetAttribute(el, "status");
             character.PhysicalMax = XmlHelper.GetAttributeAsInt(el, "physicalmax");
             character.SocialMax = XmlHelper.GetAttributeAsInt(el, "socialmax");

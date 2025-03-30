@@ -18,6 +18,7 @@ namespace MEU.GV4.Data.Models.METClassic
         public int? Vision { get; set; }
         public int? TempVision { get; set; }
         public int? Zeal { get; set; }
+        public int? TempZeal { get; set; }
         public TraitList Edges { get; set; } = [];
     }
 }

@@ -18,7 +18,7 @@ namespace MEU.GV4.Data.Models.METClassic
         public int? Quintessence { get; set; }
         public int? TempQuintessence { get; set; }
         public int? Paradox { get; set; }
-        public int TempParadox { get; set; }
+        public int? TempParadox { get; set; }
         public TraitList Resonance { get; set; } = [];
         public TraitList Reputation { get; set; } = [];
         public TraitList Spheres { get; set; } = [];

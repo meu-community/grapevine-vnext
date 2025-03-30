@@ -23,9 +23,11 @@ namespace MEU.GV4.Data.Models.METClassic
         public int? TempBa { get; set; }
         public int? Ka { get; set; }
         public int? TempKa { get; set; }
+        public TraitList Humanity { get; set; } = [];
         public TraitList Hekau { get; set; } = [];
         public TraitList Spells { get; set; } = [];
         public TraitList Rituals { get; set; } = [];
+        public TraitList MummyStatus { get; set; } = [];
         public string? Inheritance { get; set; }
     }
 }
