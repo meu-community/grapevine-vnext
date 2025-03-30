@@ -329,7 +329,30 @@ namespace MEU.GV4.Data.Providers
 
         internal static KueiJin LoadKueiJin(XElement el)
         {
-            var kuejin = new KueiJin() { };
+            var kuejin = new KueiJin()
+            {
+                Dharma = XmlHelper.GetAttribute(el, "dharma"),
+                Balance = XmlHelper.GetAttribute(el, "balance"),
+                Direction = XmlHelper.GetAttribute(el, "direction"),
+                Station = XmlHelper.GetAttribute(el, "station"),
+                PoArchetype = XmlHelper.GetAttribute(el, "poarchetype"),
+                Hun = XmlHelper.GetAttributeAsInt(el, "hun"),
+                Po = XmlHelper.GetAttributeAsInt(el, "po"),
+                YinChi = XmlHelper.GetAttributeAsInt(el, "yinchi"),
+                YangChi = XmlHelper.GetAttributeAsInt(el, "yangchi"),
+                DemonChi = XmlHelper.GetAttributeAsInt(el, "demonchi"),
+                DharmaTraits = XmlHelper.GetAttributeAsInt(el, "dharmatraits"),
+                TempHun = XmlHelper.GetAttributeAsInt(el, "temphun"),
+                TempPo = XmlHelper.GetAttributeAsInt(el, "temppo"),
+                TempYinChi = XmlHelper.GetAttributeAsInt(el, "tempyinchi"),
+                TempYangChi = XmlHelper.GetAttributeAsInt(el, "tempyangchi"),
+                TempDemonChi = XmlHelper.GetAttributeAsInt(el, "tempdemonchi"),
+                TempDharmaTraits = XmlHelper.GetAttributeAsInt(el, "tempdharmatraits"),
+                KuejinStatus = LoadTraitList(el, "Status"),
+                Guanxi = LoadTraitList(el, "Guanxi"),
+                Disciplines = LoadTraitList(el, "Disciplines"),
+                Rites = LoadTraitList(el, "Rites")
+            };
             LoadCommonTraits(kuejin, el);
             return kuejin;
         }

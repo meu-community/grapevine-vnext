@@ -84,6 +84,59 @@ namespace MEU.GV4.Data.Tests.Providers
             Assert.Equivalent(testEdges, result.Edges);
         }
 
+        [Fact(DisplayName = "Can Load KueiJin Character Data")]
+        public void CanLoadKueiJinCharacterData()
+        {
+            var xmlDoc = XDocument.Parse("""
+                <?xml version="1.0"?>
+                <kueijin dharma="Song of the Shadow" balance="Yang" direction="Center" station="Arhat" poarchetype="Monkey"
+                  hun="2" po="3" yinchi="2" yangchi="2" demonchi="2" dharmatraits="3"
+                  temphun="0" temppo="0" tempyinchi="0" tempyangchi="0" tempdemonchi="0" tempdharmatraits="0">
+                  <traitlist name="Status" abc="yes" display="1">
+                    <trait name="Acknowledged"/>
+                  </traitlist>
+                  <traitlist name="Guanxi" abc="yes" display="1">
+                    <trait name="Vegeta"/>
+                  </traitlist>
+                  <traitlist name="Disciplines" abc="no" atomic="yes" display="5">
+                    <trait name="Black Wind: Level 1" val="3" note="basic"/>
+                  </traitlist>
+                  <traitlist name="Rites" abc="no" atomic="yes" display="5">
+                    <trait name="Devil-Tiger Li: Savage Joss" val="2" note="basic"/>
+                  </traitlist>
+                </kueijin>
+                """);
+            TraitList testStatus = [new() { Name = "Acknowledged" }];
+            TraitList testGuanxi = [new() { Name = "Vegeta" }];
+            TraitList testDisciplines = [new() { Name = "Black Wind: Level 1", Value = "3", Note = "basic" }];
+            TraitList testRites = [new() { Name = "Devil-Tiger Li: Savage Joss", Value = "2", Note = "basic" }];
+#pragma warning disable CS8604 // Possible null reference argument.
+            var result = GrapevineLegacyXMLReader.LoadKueiJin(xmlDoc.Root);
+#pragma warning restore CS8604 // Possible null reference argument.
+            Assert.NotNull(result);
+            Assert.Equal("Song of the Shadow", result.Dharma);
+            Assert.Equal("Yang", result.Balance);
+            Assert.Equal("Center", result.Direction);
+            Assert.Equal("Arhat", result.Station);
+            Assert.Equal("Monkey", result.PoArchetype);
+            Assert.Equal(2, result.Hun);
+            Assert.Equal(3, result.Po);
+            Assert.Equal(2, result.YinChi);
+            Assert.Equal(2, result.YangChi);
+            Assert.Equal(2, result.DemonChi);
+            Assert.Equal(3, result.DharmaTraits);
+            Assert.Equal(0, result.TempHun);
+            Assert.Equal(0, result.TempPo);
+            Assert.Equal(0, result.TempYinChi);
+            Assert.Equal(0, result.TempYangChi);
+            Assert.Equal(0, result.TempDemonChi);
+            Assert.Equal(0, result.TempDharmaTraits);
+            Assert.Equivalent(testStatus, result.KuejinStatus);
+            Assert.Equivalent(testGuanxi, result.Guanxi);
+            Assert.Equivalent(testDisciplines, result.Disciplines);
+            Assert.Equivalent(testRites, result.Rites);
+        }
+
         [Fact(DisplayName = "Can Load Mage Character Data")]
         public void CanLoadMageCharacterData()
         {
