@@ -38,6 +38,50 @@ namespace MEU.GV4.Data.Tests.Helpers
             Assert.Null(XmlHelper.GetAttributeAsDateTimeOffset(testDoc.Root, "attr1"));
         }
 
+        [Fact(DisplayName = "Can read attribute as DateOnly from an element")]
+        public void CanReadAttributeAsDateOnly()
+        {
+            var testDoc = XDocument.Parse("""
+                <?xml version="1.0"?>
+                <test attr1="1/1/2020">
+                </test>
+                """);
+            Assert.Equal(DateOnly.Parse("1/1/2020"), XmlHelper.GetAttributeAsDateOnly(testDoc.Root, "attr1"));
+        }
+
+        [Fact(DisplayName = "Invalid DateOnly returns as null")]
+        public void InvalidDateOnlyReturnsAsNull()
+        {
+            var testDoc = XDocument.Parse("""
+                <?xml version="1.0"?>
+                <test attr1="foo">
+                </test>
+                """);
+            Assert.Null(XmlHelper.GetAttributeAsDateOnly(testDoc.Root, "attr1"));
+        }
+
+        [Fact(DisplayName = "Can read attribute as TimeOnly from an element")]
+        public void CanReadAttributeAsTimeOnly()
+        {
+            var testDoc = XDocument.Parse("""
+                <?xml version="1.0"?>
+                <test attr1="4:00 PM">
+                </test>
+                """);
+            Assert.Equal(TimeOnly.Parse("4:00 PM"), XmlHelper.GetAttributeAsTimeOnly(testDoc.Root, "attr1"));
+        }
+
+        [Fact(DisplayName = "Invalid TimeOnly returns as null")]
+        public void InvalidTimeOnlyReturnsAsNull()
+        {
+            var testDoc = XDocument.Parse("""
+                <?xml version="1.0"?>
+                <test attr1="foo">
+                </test>
+                """);
+            Assert.Null(XmlHelper.GetAttributeAsTimeOnly(testDoc.Root, "attr1"));
+        }
+
 
         [Fact(DisplayName = "Can read attribute as decimal from an element")]
         public void CanReadAttributeAsDecimal()

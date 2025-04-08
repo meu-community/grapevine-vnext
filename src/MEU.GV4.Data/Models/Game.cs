@@ -14,7 +14,8 @@
         public string? UsualTime { get; set; }
 
 
-        public List<Player>? Players { get; set; }
-        public List<Character>? Characters { get; set; }
+        public List<Player> Players { get; set; } = [];
+        public List<Character> Characters { get; set; } = [];
+        public List<CalendarEntry> Calendar { get; set; } = [];
     }
 }

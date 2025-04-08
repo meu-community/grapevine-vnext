@@ -74,6 +74,67 @@ namespace MEU.GV4.Data.Tests.Providers
             Assert.Equivalent(expected, result);
         }
 
+        [Fact(DisplayName = "Can Load Calendar Data")]
+        public void CanLoadCalendarData()
+        {
+            List<CalendarEntry> expected =
+            [
+                new() { GameDate = DateOnly.Parse("1/1/2020"), GameTime = TimeOnly.Parse("4:00 PM"), Place = "xyz" },
+                new() { GameDate = DateOnly.Parse("2/1/2020"), GameTime = TimeOnly.Parse("4:00 PM"), Place = "xyz", Notes = "foo" },
+            ];
+
+            var testGameData = """
+                <?xml version="1.0"?>
+                <grapevine version="3">
+                    <calendar>
+                      <game date="1/1/2020" time="4:00 PM">
+                        <place>
+                          <![CDATA[xyz]]>
+                        </place>
+                      </game>
+                      <game date="2/1/2020" time="4:00 PM">
+                        <place>
+                          <![CDATA[xyz]]>
+                        </place>
+                        <notes>
+                          <![CDATA[foo]]>
+                        </notes>
+                      </game>
+                    </calendar>
+                </grapevine>
+                """;
+            var reader = new GrapevineLegacyXMLReader();
+            var result = reader.ReadData(testGameData);
+            Assert.NotNull(result);
+            Assert.Equivalent(expected, result.Calendar);
+        }
+
+        [Fact(DisplayName = "Can Load Calendar Data With Invalid Time")]
+        public void CanLoadCalendarDataWithInvalidTime()
+        {
+            List<CalendarEntry> expected =
+            [
+                new() { GameDate = DateOnly.Parse("1/1/2020"), Place = "xyz" }
+            ];
+
+            var testGameData = """
+                <?xml version="1.0"?>
+                <grapevine version="3">
+                    <calendar>
+                      <game date="1/1/2020" time="??">
+                        <place>
+                          <![CDATA[xyz]]>
+                        </place>
+                      </game>
+                    </calendar>
+                </grapevine>
+                """;
+            var reader = new GrapevineLegacyXMLReader();
+            var result = reader.ReadData(testGameData);
+            Assert.NotNull(result);
+            Assert.Equivalent(expected, result.Calendar);
+        }
+
         [Fact(DisplayName = "Throws provider exception when data is empty")]
         public void ThrowsProviderExceptionWhenDataIsEmpty()
         {
