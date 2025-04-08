@@ -20,6 +20,28 @@ namespace MEU.GV4.Data.Helpers
             return null;
         }
 
+        public static DateOnly? GetAttributeAsDateOnly(XElement? element, string attributeName)
+        {
+            var attributeValue = GetAttribute(element, attributeName);
+            DateOnly returnValue;
+            if (DateOnly.TryParse(attributeValue, out returnValue))
+            {
+                return returnValue;
+            }
+            return null;
+        }
+
+        public static TimeOnly? GetAttributeAsTimeOnly(XElement? element, string attributeName)
+        {
+            var attributeValue = GetAttribute(element, attributeName);
+            TimeOnly returnValue;
+            if (TimeOnly.TryParse(attributeValue, out returnValue))
+            {
+                return returnValue;
+            }
+            return null;
+        }
+
         public static decimal GetAttributeAsDecimal(XElement? element, string attributeName)
         {
             var attributeValue = GetAttribute(element, attributeName);

@@ -2,7 +2,6 @@
 using MEU.GV4.Data.Helpers;
 using System.Xml.Linq;
 using MEU.GV4.Data.Models.METClassic;
-using System.Runtime.CompilerServices;
 
 namespace MEU.GV4.Data.Providers
 {
@@ -40,7 +39,8 @@ namespace MEU.GV4.Data.Providers
                 UsualPlace = XmlHelper.GetCData(root, "usualplace"),
                 Description = XmlHelper.GetCData(root, "description"),
                 Players = LoadPlayers(root),
-                Characters = LoadCharacters(root)
+                Characters = LoadCharacters(root),
+                Calendar = LoadCalendar(root)
             };
 
             return gameData;
@@ -69,6 +69,26 @@ namespace MEU.GV4.Data.Providers
             }
 
             return playerList;
+        }
+
+        internal static List<CalendarEntry> LoadCalendar(XElement root)
+        {
+            var calendarList = new List<CalendarEntry>();
+            var calendarElement = root?.Element("calendar");
+            if (calendarElement != null)
+            {
+                foreach (var el in calendarElement.Elements("game"))
+                {
+                    calendarList.Add(new()
+                    {
+                        GameDate = XmlHelper.GetAttributeAsDateOnly(el, "date"),
+                        GameTime = XmlHelper.GetAttributeAsTimeOnly(el, "time"),
+                        Place = XmlHelper.GetCData(el, "place"),
+                        Notes = XmlHelper.GetCData(el, "notes")
+                    });
+                }
+            }
+            return calendarList;
         }
 
         internal static string[] GetSupportedTypes()
