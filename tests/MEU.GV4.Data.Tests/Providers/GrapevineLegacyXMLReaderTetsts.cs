@@ -10,7 +10,7 @@ public class GrapevineLegacyXMLReaderTetsts
     [Fact(DisplayName = "Can Load Basic Game Data")]
     public void CanLoadBasicGameData()
     {
-        var expected = new Game()
+        var expected = new METGame()
         {
             Title = "TEST CHRONICLE",
             Website = "https://example.com",
@@ -47,7 +47,7 @@ public class GrapevineLegacyXMLReaderTetsts
     [Fact(DisplayName = "Can Load With Empty Values")]
     public void CanLoadWithEmptyValues()
     {
-        var expected = new Game()
+        var expected = new METGame()
         {
             Title = "TEST CHRONICLE",
             Website = null,
@@ -167,7 +167,7 @@ public class GrapevineLegacyXMLReaderTetsts
     [Fact(DisplayName = "Can Load PlayerData")]
     public void CanLoadPlayerData()
     {
-        var expected = new Game()
+        var expected = new METGame()
         {
             Title = "TEST CHRONICLE",
             Players =
@@ -302,7 +302,7 @@ public class GrapevineLegacyXMLReaderTetsts
     [Fact(DisplayName = "Can mark IsNPC as true when set in xml as yes")]
     public void CanMarkNPCWhenSetInXml()
     {
-        var expected = new Game()
+        var expected = new METGame()
         {
             Title = "TEST CHRONICLE",
             Players = [],
