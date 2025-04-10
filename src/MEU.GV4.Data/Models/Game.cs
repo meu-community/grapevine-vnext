@@ -3,7 +3,7 @@
 /// <summary>
 /// The Game class is the top-level container for all game-related data.
 /// </summary>
-public class Game
+public abstract class Game
 {
     public string? Title { get; set; }
     public string? Website { get; set; }

@@ -29,7 +29,7 @@ public class GrapevineLegacyXMLReader
             throw new GrapevineProviderException(INVALID_GRAPEVINE_FILE);
         }
 
-        var gameData = new Game()
+        var gameData = new METGame()
         {
             Title = XmlHelper.GetAttribute(root, "chronicle"),
             Website = XmlHelper.GetAttribute(root, "website"),
