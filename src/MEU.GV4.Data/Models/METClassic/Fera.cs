@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MEU.GV4.Data.Models.METClassic
+namespace MEU.GV4.Data.Models.METClassic;
+
+public class Fera : Werewolf
 {
-    public class Fera : Werewolf
-    {
-        public string? FeraName { get; set; }
-    }
+    public string? FeraName { get; set; }
 }
