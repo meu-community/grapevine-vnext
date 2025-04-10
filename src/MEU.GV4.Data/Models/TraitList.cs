@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MEU.GV4.Data.Models
-{
-    public class TraitList : List<Trait>
-    {
+namespace MEU.GV4.Data.Models;
 
-    }
+public class TraitList : List<Trait>
+{
+
 }
