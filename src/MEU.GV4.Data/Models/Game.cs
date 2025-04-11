@@ -1,8 +1,12 @@
-﻿namespace MEU.GV4.Data.Models;
+﻿using MEU.GV4.Data.Models.METClassic;
+using System.Text.Json.Serialization;
+
+namespace MEU.GV4.Data.Models;
 
 /// <summary>
 /// The Game class is the top-level container for all game-related data.
 /// </summary>
+[JsonDerivedType(typeof(METGame), typeDiscriminator: "METGame")]
 public abstract class Game
 {
     public string? Title { get; set; }

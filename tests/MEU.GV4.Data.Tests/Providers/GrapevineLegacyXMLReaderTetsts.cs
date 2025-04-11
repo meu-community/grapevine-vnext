@@ -199,6 +199,14 @@ public class GrapevineLegacyXMLReaderTetsts
         Assert.Throws<GrapevineProviderException>(() => reader.ReadData(String.Empty));
     }
 
+
+    [Fact(DisplayName = "Throws provider exception when data is white space")]
+    public void ThrowsProviderExceptionWhenDataIsWhitespace()
+    {
+        var reader = new GrapevineLegacyXMLReader();
+        Assert.Throws<GrapevineProviderException>(() => reader.ReadData(" "));
+    }
+
     [Fact(DisplayName = "Throws provider exception when data is null")]
     public void ThrowsProviderExceptionWhenDataIsNull()
     {
