@@ -14,7 +14,7 @@ public class GrapevineLegacyXMLReader
     private const string INVALID_GRAPEVINE_FILE = "Invalid grapevine file";
 
 
-    public Game ReadData(string rawGameData)
+    public METGame ReadData(string rawGameData)
     {
         if (String.IsNullOrEmpty(rawGameData))
         {
@@ -40,7 +40,8 @@ public class GrapevineLegacyXMLReader
             Description = XmlHelper.GetCData(root, "description"),
             Players = LoadPlayers(root),
             Characters = LoadCharacters(root),
-            Calendar = LoadCalendar(root)
+            Calendar = LoadCalendar(root),
+            Items = LoadItems(root)
         };
 
         return gameData;
@@ -89,6 +90,36 @@ public class GrapevineLegacyXMLReader
             }
         }
         return calendarList;
+    }
+
+    internal static List<Item> LoadItems(XElement root)
+    {
+        var items = new List<Item>();
+
+        foreach (var el in root.Elements("item"))
+        {
+            items.Add(new()
+            {
+                Name = XmlHelper.GetAttribute(el, "name"),
+                Type = XmlHelper.GetAttribute(el, "type"),
+                SubType = XmlHelper.GetAttribute(el, "subtype"),
+                Level = XmlHelper.GetAttributeAsInt(el, "level"),
+                Bonus = XmlHelper.GetAttributeAsInt(el, "bonus"),
+                Damage = XmlHelper.GetAttribute(el, "damage"),
+                Amount = XmlHelper.GetAttributeAsInt(el, "amount"),
+                Conceal = XmlHelper.GetAttribute(el, "conceal"),
+                Tempers = LoadTraitList(el, "Tempers"),
+                Abilities = LoadTraitList(el, "Abilities"),
+                Negatives = LoadTraitList(el, "Negatives"),
+                Availability = LoadTraitList(el, "Availability"),
+                Powers = XmlHelper.GetCData(el, "powers"),
+                Appearance = XmlHelper.GetCData(el, "appearance"),
+                Notes = XmlHelper.GetCData(el, "notes"),
+                CreateDate = XmlHelper.GetAttributeAsDateTimeOffset(el, "lastmodified"),
+                ModifyDate = XmlHelper.GetAttributeAsDateTimeOffset(el, "lastmodified")
+            });
+        }
+        return items;
     }
 
     internal static string[] GetSupportedTypes()

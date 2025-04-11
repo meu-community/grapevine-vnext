@@ -2,4 +2,5 @@
 
 public class METGame : Game
 {
+    public List<Item> Items { get; set; } = [];
 }
