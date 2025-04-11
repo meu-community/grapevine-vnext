@@ -135,6 +135,63 @@ public class GrapevineLegacyXMLReaderTetsts
         Assert.Equivalent(expected, result.Calendar);
     }
 
+    [Fact(DisplayName = "Can Load Item Data")]
+    public void CanLoadItemData()
+    {
+        var testGameData = """
+            <?xml version="1.0"?>
+            <grapevine version="3">
+                <item name="Foobar" type="Charm" subtype="Enhancement" level="2" bonus="2" damage="Bashing" amount="2" conceal="None" lastmodified="1/1/2020">
+                  <traitlist name="Tempers" abc="yes" display="2">
+                    <trait name="Arete" val="2"/>
+                  </traitlist>
+                  <traitlist name="Abilities" abc="yes" display="1">
+                    <trait name="Destroy Shield"/>
+                  </traitlist>
+                  <traitlist name="Negatives" abc="yes" negative="yes" display="1">
+                    <trait name="Slow"/>
+                  </traitlist>
+                  <traitlist name="Availability" abc="yes" display="1">
+                    <trait name="Scholarly" val="4"/>
+                  </traitlist>
+                  <powers>
+                    <![CDATA[Has the power of foo]]>
+                  </powers>
+                  <appearance>
+                    <![CDATA[Looks ugly]]>
+                  </appearance>
+                  <notes>
+                    <![CDATA[what is this?]]>
+                  </notes>
+                </item>
+            </grapevine>
+            """;
+        TraitList testTempers = [new() { Name = "Arete", Value = "2" }];
+        TraitList testAbilities = [new() { Name = "Destroy Shield" }];
+        TraitList testNegatives = [new() { Name = "Slow" }];
+        TraitList testAvailability = [new() { Name = "Scholarly", Value = "4" }];
+        var reader = new GrapevineLegacyXMLReader();
+        var result = reader.ReadData(testGameData).Items[0];
+        Assert.NotNull(result);
+        Assert.Equal("Foobar", result.Name);
+        Assert.Equal("Charm", result.Type);
+        Assert.Equal("Enhancement", result.SubType);
+        Assert.Equal(2, result.Level);
+        Assert.Equal(2, result.Bonus);
+        Assert.Equal("Bashing", result.Damage);
+        Assert.Equal(2, result.Amount);
+        Assert.Equal("None", result.Conceal);
+        Assert.Equivalent(testTempers, result.Tempers);
+        Assert.Equivalent(testAbilities, result.Abilities);
+        Assert.Equivalent(testNegatives, result.Negatives);
+        Assert.Equivalent(testAvailability, result.Availability);
+        Assert.Equal("Has the power of foo", result.Powers);
+        Assert.Equal("Looks ugly", result.Appearance);
+        Assert.Equal("what is this?", result.Notes);
+        Assert.Equal(DateTimeOffset.Parse("1/1/2020"), result.CreateDate);
+        Assert.Equal(DateTimeOffset.Parse("1/1/2020"), result.ModifyDate);
+    }
+
     [Fact(DisplayName = "Throws provider exception when data is empty")]
     public void ThrowsProviderExceptionWhenDataIsEmpty()
     {
