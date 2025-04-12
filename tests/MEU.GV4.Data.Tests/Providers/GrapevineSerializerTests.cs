@@ -16,6 +16,21 @@ public class GrapevineSerializerTests
         Assert.IsType<METGame>(deserialized);
     }
 
+    [Fact(DisplayName = "Can Serialize MET Vampire and retain type data")]
+    public void CanSerializeMETVampireAndRetainType()
+    {
+        var game = new METGame()
+        {
+            Characters = [ new Vampire() ]
+        };
+        var serializer = new GrapevineSerializer();
+        var serialized = serializer.Serialize(game);
+#pragma warning disable CS8604 // Possible null reference argument.
+        var deserialized = serializer.Deserialize(serialized);
+#pragma warning restore CS8604 // Possible null reference argument.
+        Assert.IsType<Vampire>(deserialized?.Characters[0]);
+    }
+
     [Fact(DisplayName = "Deserialize Throws GrapevineProviderException when string is empty")]
     public void DeserializeThrowsGrapevineProviderExceptionWhenEmpty()
     {
