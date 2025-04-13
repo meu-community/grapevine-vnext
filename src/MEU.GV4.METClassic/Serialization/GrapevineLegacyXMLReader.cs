@@ -38,7 +38,8 @@ public class GrapevineLegacyXMLReader
             Players = LoadPlayers(root),
             Characters = LoadCharacters(root),
             Calendar = LoadCalendar(root),
-            Items = LoadItems(root)
+            Items = LoadItems(root),
+            Rotes = LoadRotes(root)
         };
 
         return gameData;
@@ -117,6 +118,25 @@ public class GrapevineLegacyXMLReader
             });
         }
         return items;
+    }
+
+    internal static List<Rote> LoadRotes(XElement root)
+    {
+        var rotes = new List<Rote>();
+        foreach (var el in root.Elements("rote"))
+        {
+            rotes.Add(new()
+            {
+                Name = XmlHelper.GetAttribute(el, "name"),
+                Level = XmlHelper.GetAttributeAsInt(el, "level"),
+                Spheres = LoadTraitList(el, "Spheres"),
+                Description = XmlHelper.GetCData(el, "description"),
+                Grades = XmlHelper.GetCData(el, "grades"),
+                CreateDate = XmlHelper.GetAttributeAsDateTimeOffset(el, "lastmodified"),
+                ModifyDate = XmlHelper.GetAttributeAsDateTimeOffset(el, "lastmodified")
+            });
+        }
+        return rotes;
     }
 
     internal static string[] GetSupportedTypes()
