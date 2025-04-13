@@ -21,12 +21,26 @@ public class GrapevineSerializerTests
         }
     }
 
-    [Fact(DisplayName = "Can Serialize MET Vampire and retain type data")]
-    public async Task CanSerializeMETVampireAndRetainType()
+    [Fact(DisplayName = "Can Serialize MET characters and retain type data")]
+    public async Task CanSerializeMETCharactersAndRetainType()
     {
         var game = new METGame()
         {
-            Characters = [new Vampire()]
+            Characters =
+            [
+                new Changeling(),
+                new Demon(),
+                new Fera(),
+                new Hunter(),
+                new KueiJin(),
+                new Mage(),
+                new Mortal(),
+                new Mummy(),
+                new Vampire(),
+                new Various(),
+                new Werewolf(),
+                new Wraith()
+            ]
         };
         var serializer = new GrapevineSerializer();
         using (var memStream = new MemoryStream())
@@ -37,7 +51,7 @@ public class GrapevineSerializerTests
 #pragma warning disable CS8604 // Possible null reference argument.
             var deserialized = await serializer.DeserializeAsync(memStream);
 #pragma warning restore CS8604 // Possible null reference argument.
-            Assert.IsType<Vampire>(deserialized?.Characters[0]);
+            Assert.Equivalent(game.Characters, deserialized?.Characters);
         }
     }
 
