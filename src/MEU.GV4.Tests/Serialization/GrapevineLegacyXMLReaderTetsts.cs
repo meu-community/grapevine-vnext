@@ -193,6 +193,38 @@ public class GrapevineLegacyXMLReaderTetsts
         Assert.Equal(DateTimeOffset.Parse("1/1/2020"), result.ModifyDate);
     }
 
+    [Fact(DisplayName = "Can Load Rotes")]
+    public void CanLoadRotes()
+    {
+        var testGameData = """
+            <?xml version="1.0"?>
+            <grapevine version="3">
+                <rote name="Foo" level="1" lastmodified="1/1/2020">
+                  <traitlist name="Spheres" abc="no" atomic="yes" display="5">
+                    <trait name="Correspondence: Apprentice" val="5" note="basic"/>
+                  </traitlist>
+                  <description>
+                    <![CDATA[foo]]>
+                  </description>
+                  <grades>
+                    <![CDATA[foo]]>
+                  </grades>
+                </rote>
+            </grapevine>
+            """;
+        TraitList testSpheres = [new() { Name = "Correspondence: Apprentice", Value = "5", Note = "basic" }];
+        var reader = new GrapevineLegacyXMLReader();
+        var result = reader.ReadData(testGameData).Rotes[0];
+        Assert.NotNull(result);
+        Assert.Equal("Foo", result.Name);
+        Assert.Equal(1, result.Level);
+        Assert.Equal("foo", result.Description);
+        Assert.Equal("foo", result.Grades);
+        Assert.Equivalent(testSpheres, result.Spheres);
+        Assert.Equal(DateTimeOffset.Parse("1/1/2020"), result.CreateDate);
+        Assert.Equal(DateTimeOffset.Parse("1/1/2020"), result.ModifyDate);
+    }
+
     [Fact(DisplayName = "Throws provider exception when data is empty")]
     public void ThrowsProviderExceptionWhenDataIsEmpty()
     {
