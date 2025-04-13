@@ -1,7 +1,4 @@
-﻿using MEU.GV4.Data.Models.METClassic;
-using System.Text.Json.Serialization;
-
-namespace MEU.GV4.Data.Models;
+﻿namespace MEU.GV4.Data.Models;
 
 /// <summary>
 /// The Character class is the base class that all other character types inherit from

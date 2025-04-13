@@ -1,7 +1,4 @@
-﻿using MEU.GV4.Data.Models.METClassic;
-using System.Text.Json.Serialization;
-
-namespace MEU.GV4.Data.Models;
+﻿namespace MEU.GV4.Data.Models;
 
 /// <summary>
 /// The Game class is the top-level container for all game-related data.
