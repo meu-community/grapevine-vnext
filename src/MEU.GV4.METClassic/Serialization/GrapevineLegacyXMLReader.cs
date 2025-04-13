@@ -39,7 +39,8 @@ public class GrapevineLegacyXMLReader
             Characters = LoadCharacters(root),
             Calendar = LoadCalendar(root),
             Items = LoadItems(root),
-            Rotes = LoadRotes(root)
+            Rotes = LoadRotes(root),
+            AprSettings = LoadAprSettings(root)
         };
 
         return gameData;
@@ -137,6 +138,32 @@ public class GrapevineLegacyXMLReader
             });
         }
         return rotes;
+    }
+
+    internal static AprSettings LoadAprSettings(XElement root)
+    {
+        var el = root.Element("aprsettings");
+        if (el != null)
+        {
+            return new AprSettings()
+            {
+                PersonalActions = XmlHelper.GetAttributeAsInt(el, "personalactions"),
+                AddCommon = el.Attribute("addcommon")?.Value == "yes",
+                CarryUnused = el.Attribute("carryunused")?.Value == "yes",
+                PublicRumors = el.Attribute("publicrumors")?.Value == "yes",
+                PersonalRumors = el.Attribute("personalrumors")?.Value == "yes",
+                RaceRumors = el.Attribute("racerumors")?.Value == "yes",
+                GroupRumors = el.Attribute("grouprumors")?.Value == "yes",
+                SubGroupRumors = el.Attribute("subgrouprumors")?.Value == "yes",
+                InfluenceRumors = el.Attribute("influencerumors")?.Value == "yes",
+                PreviousRumors = el.Attribute("previousrumors")?.Value == "yes",
+                CopyPrevious = el.Attribute("copyprevious")?.Value == "yes",
+                Actions = LoadTraitList(el, "Actions"),
+                Backgrounds = LoadTraitList(el, "Backgrounds")
+            };
+        }
+
+        return new AprSettings();
     }
 
     internal static string[] GetSupportedTypes()

@@ -225,6 +225,46 @@ public class GrapevineLegacyXMLReaderTetsts
         Assert.Equal(DateTimeOffset.Parse("1/1/2020"), result.ModifyDate);
     }
 
+    [Fact(DisplayName = "Can Load AprSettings")]
+    public void CanLoadAprSettings()
+    {
+        var testGameData = """
+            <?xml version="1.0"?>
+            <grapevine version="3">
+                <aprsettings personalactions="1" addcommon="yes" carryunused="yes" publicrumors="yes" personalrumors="yes" racerumors="yes"
+                  grouprumors="yes" subgrouprumors="yes" influencerumors="yes" previousrumors="yes" copyprevious="yes">
+                  <traitlist name="Actions" abc="no" display="0">
+                    <trait name="1" val="2"/>
+                    <trait name="2" val="4"/>
+                    <trait name="3" val="6"/>
+                  </traitlist>
+                  <traitlist name="Backgrounds" abc="no" display="0">
+                    <trait name="Contacts"/>
+                    <trait name="Resources"/>
+                  </traitlist>
+                </aprsettings>
+            </grapevine>
+            """;
+        TraitList testActions = [new() { Name = "1", Value = "2" }, new() { Name = "2", Value = "4" }, new() { Name = "3", Value = "6" }];
+        TraitList testBackgrounds = [new() { Name = "Contacts" }, new() { Name = "Resources" }];
+        var reader = new GrapevineLegacyXMLReader();
+        var result = reader.ReadData(testGameData).AprSettings;
+        Assert.NotNull(result);
+        Assert.Equal(1, result.PersonalActions);
+        Assert.True(result.AddCommon);
+        Assert.True(result.CarryUnused);
+        Assert.True(result.PublicRumors);
+        Assert.True(result.PersonalRumors);
+        Assert.True(result.RaceRumors);
+        Assert.True(result.GroupRumors);
+        Assert.True(result.SubGroupRumors);
+        Assert.True(result.InfluenceRumors);
+        Assert.True(result.PreviousRumors);
+        Assert.True(result.CopyPrevious);
+        Assert.Equivalent(testActions, result.Actions);
+        Assert.Equivalent(testBackgrounds, result.Backgrounds);
+    }
+
     [Fact(DisplayName = "Throws provider exception when data is empty")]
     public void ThrowsProviderExceptionWhenDataIsEmpty()
     {

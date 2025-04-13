@@ -6,4 +6,5 @@ public class METGame : Game
 {
     public List<Item> Items { get; set; } = [];
     public List<Rote> Rotes { get; set; } = [];
+    public AprSettings AprSettings { get; set; } = new AprSettings();
 }
