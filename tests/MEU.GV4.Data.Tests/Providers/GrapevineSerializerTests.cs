@@ -44,17 +44,21 @@ public class GrapevineSerializerTests
     [Fact(DisplayName = "Deserialize Throws GrapevineProviderException when stream is empty")]
     public async Task DeserializeThrowsGrapevineProviderExceptionWhenEmpty()
     {
-        var memStream = new MemoryStream();
-        var serializer = new GrapevineSerializer();
-        await Assert.ThrowsAsync<GrapevineProviderException>(async () => await serializer.DeserializeAsync(memStream));
+        using (var memStream = new MemoryStream())
+        {
+            var serializer = new GrapevineSerializer();
+            await Assert.ThrowsAsync<GrapevineProviderException>(async () => await serializer.DeserializeAsync(memStream));
+        }
     }
 
     [Fact(DisplayName = "Deserialize Throws GrapevineProviderException when stream is whitespace")]
     public async Task DeserializeThrowsGrapevineProviderExceptionWhenWhitespace()
     {
-        var memStream = new MemoryStream(Encoding.UTF8.GetBytes(" "));
-        var serializer = new GrapevineSerializer();
-        await Assert.ThrowsAsync<GrapevineProviderException>(async () => await serializer.DeserializeAsync(memStream));
+        using (var memStream = new MemoryStream(Encoding.UTF8.GetBytes(" ")))
+        {
+            var serializer = new GrapevineSerializer();
+            await Assert.ThrowsAsync<GrapevineProviderException>(async () => await serializer.DeserializeAsync(memStream));
+        }
     }
 
     [Fact(DisplayName = "Deserialize Throws GrapevineProviderException when stream is null")]
