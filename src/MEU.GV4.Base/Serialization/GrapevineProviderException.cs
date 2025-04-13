@@ -1,4 +1,4 @@
-﻿namespace MEU.GV4.Data.Serialization;
+﻿namespace MEU.GV4.Base.Serialization;
 
 public class GrapevineProviderException : Exception
 {

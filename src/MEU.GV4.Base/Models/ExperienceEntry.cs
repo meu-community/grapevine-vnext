@@ -1,4 +1,4 @@
-﻿namespace MEU.GV4.Data.Models;
+﻿namespace MEU.GV4.Base.Models;
 
 public enum ExperienceChangeType
 {

@@ -1,9 +1,9 @@
 ﻿using System.Text;
-using MEU.GV4.Data.Serialization;
 using MEU.GV4.METClassic.Serialization;
 using MEU.GV4.METClassic.Models;
+using MEU.GV4.Base.Serialization;
 
-namespace MEU.GV4.Data.Tests.Providers;
+namespace MEU.GV4.Tests.Serialization;
 public class GrapevineSerializerTests
 {
     private METTypeResolver metResolver = new METTypeResolver();

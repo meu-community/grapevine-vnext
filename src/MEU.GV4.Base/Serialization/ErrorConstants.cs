@@ -1,4 +1,4 @@
-﻿namespace MEU.GV4.Data.Serialization;
+﻿namespace MEU.GV4.Base.Serialization;
 public struct ErrorConstants
 {
     public const string FILE_CONTENTS_EMPTY = "File contents are empty";

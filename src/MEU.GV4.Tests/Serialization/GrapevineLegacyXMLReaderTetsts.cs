@@ -1,10 +1,10 @@
-﻿using MEU.GV4.Data.Models;
-using MEU.GV4.METClassic.Models;
+﻿using MEU.GV4.METClassic.Models;
 using System.Xml.Linq;
 using MEU.GV4.METClassic.Serialization;
-using MEU.GV4.Data.Serialization;
+using MEU.GV4.Base.Models;
+using MEU.GV4.Base.Serialization;
 
-namespace MEU.GV4.Data.Tests.Providers;
+namespace MEU.GV4.Tests.Serialization;
 
 public class GrapevineLegacyXMLReaderTetsts
 {
@@ -197,7 +197,7 @@ public class GrapevineLegacyXMLReaderTetsts
     public void ThrowsProviderExceptionWhenDataIsEmpty()
     {
         var reader = new GrapevineLegacyXMLReader();
-        Assert.Throws<GrapevineProviderException>(() => reader.ReadData(String.Empty));
+        Assert.Throws<GrapevineProviderException>(() => reader.ReadData(string.Empty));
     }
 
 

@@ -1,7 +1,7 @@
-﻿using MEU.GV4.Data.Helpers;
+﻿using MEU.GV4.Base.Helpers;
 using System.Xml.Linq;
 
-namespace MEU.GV4.Data.Tests.Helpers;
+namespace MEU.GV4.Tests.Helpers;
 
 public class XmlHelperTests
 {

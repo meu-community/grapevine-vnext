@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
-using MEU.GV4.Data.Models;
+using MEU.GV4.Base.Models;
 
-namespace MEU.GV4.Data.Serialization;
+namespace MEU.GV4.Base.Serialization;
 public class GrapevineSerializer : IGameSerializer
 {
     private JsonSerializerOptions options = new JsonSerializerOptions

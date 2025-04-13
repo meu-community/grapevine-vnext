@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 // attribute to true on that type.
 
 [assembly: ComVisible(false)]
-[assembly: InternalsVisibleTo("MEU.GV4.Data.Tests")]
+[assembly: InternalsVisibleTo("MEU.GV4.Tests")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM.
 

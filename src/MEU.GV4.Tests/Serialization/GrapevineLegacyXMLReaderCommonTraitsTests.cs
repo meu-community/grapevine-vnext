@@ -1,8 +1,8 @@
-﻿using MEU.GV4.Data.Models;
+﻿using MEU.GV4.Base.Models;
 using MEU.GV4.METClassic.Serialization;
 using System.Xml.Linq;
 
-namespace MEU.GV4.Data.Tests.Providers;
+namespace MEU.GV4.Tests.Serialization;
 
 /// <summary>
 /// Tests loading of traits that are common to all MET characters

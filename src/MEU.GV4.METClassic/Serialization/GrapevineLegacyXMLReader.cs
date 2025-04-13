@@ -1,8 +1,8 @@
-﻿using MEU.GV4.Data.Models;
-using MEU.GV4.Data.Helpers;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using MEU.GV4.METClassic.Models;
-using MEU.GV4.Data.Serialization;
+using MEU.GV4.Base.Models;
+using MEU.GV4.Base.Helpers;
+using MEU.GV4.Base.Serialization;
 
 namespace MEU.GV4.METClassic.Serialization;
 

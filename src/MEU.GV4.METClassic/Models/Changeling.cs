@@ -1,4 +1,4 @@
-﻿using MEU.GV4.Data.Models;
+﻿using MEU.GV4.Base.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

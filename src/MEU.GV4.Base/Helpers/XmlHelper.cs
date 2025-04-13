@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace MEU.GV4.Data.Helpers;
+namespace MEU.GV4.Base.Helpers;
 
 public class XmlHelper
 {
@@ -60,7 +60,7 @@ public class XmlHelper
     public static string? GetCData(XElement? element, string elementName)
     {
         var cdataValue = element?.Element(elementName)?.Value;
-        if (cdataValue != String.Empty)
+        if (cdataValue != string.Empty)
         {
             return cdataValue;
         }

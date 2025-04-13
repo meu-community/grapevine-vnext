@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MEU.GV4.Data\MEU.GV4.Data.csproj" />
+    <ProjectReference Include="..\MEU.GV4.Base\MEU.GV4.Base.csproj" />
   </ItemGroup>
 
 </Project>

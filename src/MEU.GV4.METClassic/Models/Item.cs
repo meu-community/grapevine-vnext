@@ -1,4 +1,4 @@
-﻿using MEU.GV4.Data.Models;
+﻿using MEU.GV4.Base.Models;
 
 namespace MEU.GV4.METClassic.Models;
 public class Item

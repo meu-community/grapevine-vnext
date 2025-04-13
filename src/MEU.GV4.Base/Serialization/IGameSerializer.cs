@@ -1,6 +1,6 @@
-﻿using MEU.GV4.Data.Models;
+﻿using MEU.GV4.Base.Models;
 
-namespace MEU.GV4.Data.Serialization;
+namespace MEU.GV4.Base.Serialization;
 public interface IGameSerializer
 {
     Task SerializeAsync(Stream output, Game game);
