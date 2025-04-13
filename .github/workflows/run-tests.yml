@@ -39,4 +39,4 @@ jobs:
         if: always()
         with:
           files: |
-            tests/**/*.trx
+            src/**/*.trx
