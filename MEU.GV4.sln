@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MEU.GV4.Data", "src\MEU.GV4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MEU.GV4.Data.Tests", "tests\MEU.GV4.Data.Tests\MEU.GV4.Data.Tests.csproj", "{76BF71E0-2A6F-4108-9D7B-CD3A6FBA5A55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MEU.GV4.METClassic", "src\MEU.GV4.METClassic\MEU.GV4.METClassic.csproj", "{31A7A43E-2B9B-4038-A9D6-72356A927586}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{76BF71E0-2A6F-4108-9D7B-CD3A6FBA5A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76BF71E0-2A6F-4108-9D7B-CD3A6FBA5A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76BF71E0-2A6F-4108-9D7B-CD3A6FBA5A55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31A7A43E-2B9B-4038-A9D6-72356A927586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31A7A43E-2B9B-4038-A9D6-72356A927586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31A7A43E-2B9B-4038-A9D6-72356A927586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31A7A43E-2B9B-4038-A9D6-72356A927586}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

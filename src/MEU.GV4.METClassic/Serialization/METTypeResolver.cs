@@ -1,11 +1,11 @@
 ﻿using MEU.GV4.Data.Models;
-using MEU.GV4.Data.Models.METClassic;
+using MEU.GV4.METClassic.Models;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 
-namespace MEU.GV4.Data.Providers;
+namespace MEU.GV4.METClassic.Serialization;
 public class METTypeResolver : DefaultJsonTypeInfoResolver
 {
     public override JsonTypeInfo GetTypeInfo(Type type, JsonSerializerOptions options)

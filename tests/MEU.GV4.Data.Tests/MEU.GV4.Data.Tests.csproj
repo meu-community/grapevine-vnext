@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\MEU.GV4.Data\MEU.GV4.Data.csproj" />
+    <ProjectReference Include="..\..\src\MEU.GV4.METClassic\MEU.GV4.METClassic.csproj" />
   </ItemGroup>
 
   <ItemGroup>

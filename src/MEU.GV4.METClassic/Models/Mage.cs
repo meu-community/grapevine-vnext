@@ -1,10 +1,11 @@
-﻿using System;
+﻿using MEU.GV4.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MEU.GV4.Data.Models.METClassic;
+namespace MEU.GV4.METClassic.Models;
 
 public class Mage : METCharacter
 {

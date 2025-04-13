@@ -1,9 +1,10 @@
 ﻿using MEU.GV4.Data.Models;
 using MEU.GV4.Data.Helpers;
 using System.Xml.Linq;
-using MEU.GV4.Data.Models.METClassic;
+using MEU.GV4.METClassic.Models;
+using MEU.GV4.Data.Serialization;
 
-namespace MEU.GV4.Data.Providers;
+namespace MEU.GV4.METClassic.Serialization;
 
 /// <summary>
 /// Reads the XML contents of a legacy Grapevine file into GV4 data.
@@ -12,7 +13,7 @@ public class GrapevineLegacyXMLReader
 {
     public METGame ReadData(string rawGameData)
     {
-        if (String.IsNullOrWhiteSpace(rawGameData))
+        if (string.IsNullOrWhiteSpace(rawGameData))
         {
             throw new GrapevineProviderException(ErrorConstants.FILE_CONTENTS_EMPTY);
         }

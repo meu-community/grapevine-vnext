@@ -1,6 +1,7 @@
-﻿using MEU.GV4.Data.Providers;
-using MEU.GV4.Data.Models.METClassic;
-using System.Text;
+﻿using System.Text;
+using MEU.GV4.Data.Serialization;
+using MEU.GV4.METClassic.Serialization;
+using MEU.GV4.METClassic.Models;
 
 namespace MEU.GV4.Data.Tests.Providers;
 public class GrapevineSerializerTests

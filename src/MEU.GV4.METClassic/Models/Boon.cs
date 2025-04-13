@@ -1,4 +1,4 @@
-﻿namespace MEU.GV4.Data.Models.METClassic;
+﻿namespace MEU.GV4.METClassic.Models;
 
 public class Boon
 {

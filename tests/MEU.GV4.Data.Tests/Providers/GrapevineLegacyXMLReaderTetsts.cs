@@ -1,7 +1,8 @@
 ﻿using MEU.GV4.Data.Models;
-using MEU.GV4.Data.Models.METClassic;
-using MEU.GV4.Data.Providers;
+using MEU.GV4.METClassic.Models;
 using System.Xml.Linq;
+using MEU.GV4.METClassic.Serialization;
+using MEU.GV4.Data.Serialization;
 
 namespace MEU.GV4.Data.Tests.Providers;
 

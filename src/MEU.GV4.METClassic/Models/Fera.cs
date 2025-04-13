@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MEU.GV4.Data.Models.METClassic;
+namespace MEU.GV4.METClassic.Models;
 
 public class Fera : Werewolf
 {

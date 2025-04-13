@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization.Metadata;
 using MEU.GV4.Data.Models;
 
-namespace MEU.GV4.Data.Providers;
+namespace MEU.GV4.Data.Serialization;
 public class GrapevineSerializer : IGameSerializer
 {
     private JsonSerializerOptions options = new JsonSerializerOptions
