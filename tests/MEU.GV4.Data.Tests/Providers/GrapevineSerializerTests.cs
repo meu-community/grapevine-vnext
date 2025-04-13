@@ -1,58 +1,68 @@
 ﻿using MEU.GV4.Data.Providers;
 using MEU.GV4.Data.Models.METClassic;
+using System.Text;
 
 namespace MEU.GV4.Data.Tests.Providers;
 public class GrapevineSerializerTests
 {
     [Fact(DisplayName = "Can Serialize MET Game and retain type data")]
-    public void CanSerializeMETGameAndRetainType()
+    public async Task CanSerializeMETGameAndRetainType()
     {
         var game = new METGame();
         var serializer = new GrapevineSerializer();
-        var serialized = serializer.Serialize(game);
+        using (var memStream = new MemoryStream())
+        {
+            await serializer.SerializeAsync(memStream, game);
+            memStream.Position = 0;
 #pragma warning disable CS8604 // Possible null reference argument.
-        var deserialized = serializer.Deserialize(serialized);
+            var deserialized = await serializer.DeserializeAsync(memStream);
 #pragma warning restore CS8604 // Possible null reference argument.
-        Assert.IsType<METGame>(deserialized);
+            Assert.IsType<METGame>(deserialized);
+        }
     }
 
     [Fact(DisplayName = "Can Serialize MET Vampire and retain type data")]
-    public void CanSerializeMETVampireAndRetainType()
+    public async Task CanSerializeMETVampireAndRetainType()
     {
         var game = new METGame()
         {
-            Characters = [ new Vampire() ]
+            Characters = [new Vampire()]
         };
         var serializer = new GrapevineSerializer();
-        var serialized = serializer.Serialize(game);
+        using (var memStream = new MemoryStream())
+        {
+
+            await serializer.SerializeAsync(memStream, game);
+            memStream.Position = 0;
 #pragma warning disable CS8604 // Possible null reference argument.
-        var deserialized = serializer.Deserialize(serialized);
+            var deserialized = await serializer.DeserializeAsync(memStream);
 #pragma warning restore CS8604 // Possible null reference argument.
-        Assert.IsType<Vampire>(deserialized?.Characters[0]);
+            Assert.IsType<Vampire>(deserialized?.Characters[0]);
+        }
     }
 
-    [Fact(DisplayName = "Deserialize Throws GrapevineProviderException when string is empty")]
-    public void DeserializeThrowsGrapevineProviderExceptionWhenEmpty()
+    [Fact(DisplayName = "Deserialize Throws GrapevineProviderException when stream is empty")]
+    public async Task DeserializeThrowsGrapevineProviderExceptionWhenEmpty()
     {
-        var testGameData = string.Empty;
+        var memStream = new MemoryStream();
         var serializer = new GrapevineSerializer();
-        Assert.Throws<GrapevineProviderException>(() => serializer.Deserialize(testGameData));
+        await Assert.ThrowsAsync<GrapevineProviderException>(async () => await serializer.DeserializeAsync(memStream));
     }
 
-    [Fact(DisplayName = "Deserialize Throws GrapevineProviderException when string is whitespace")]
-    public void DeserializeThrowsGrapevineProviderExceptionWhenWhitespace()
+    [Fact(DisplayName = "Deserialize Throws GrapevineProviderException when stream is whitespace")]
+    public async Task DeserializeThrowsGrapevineProviderExceptionWhenWhitespace()
     {
-        var testGameData = " ";
+        var memStream = new MemoryStream(Encoding.UTF8.GetBytes(" "));
         var serializer = new GrapevineSerializer();
-        Assert.Throws<GrapevineProviderException>(() => serializer.Deserialize(testGameData));
+        await Assert.ThrowsAsync<GrapevineProviderException>(async () => await serializer.DeserializeAsync(memStream));
     }
 
-    [Fact(DisplayName = "Deserialize Throws GrapevineProviderException when string is null")]
-    public void DeserializeThrowsGrapevineProviderExceptionWhenNull()
+    [Fact(DisplayName = "Deserialize Throws GrapevineProviderException when stream is null")]
+    public async Task DeserializeThrowsGrapevineProviderExceptionWhenNull()
     {
         var serializer = new GrapevineSerializer();
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-        Assert.Throws<GrapevineProviderException>(() => serializer.Deserialize(null));
+        await Assert.ThrowsAsync<GrapevineProviderException>(async () => await serializer.DeserializeAsync(null));
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     }
 }

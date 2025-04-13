@@ -11,17 +11,24 @@ public class GrapevineSerializer : IGameSerializer
     };
 
 
-    public Game? Deserialize(string rawData)
+    public async Task<Game?> DeserializeAsync(Stream input)
     {
-        if (string.IsNullOrWhiteSpace(rawData))
+        if (input == null || input.Length == 0)
         {
             throw new GrapevineProviderException(ErrorConstants.FILE_CONTENTS_EMPTY);
         }
-        return JsonSerializer.Deserialize<Game>(rawData, options);
+        try
+        {
+            return await JsonSerializer.DeserializeAsync<Game?>(input, options);
+        }
+        catch (JsonException ex)
+        {
+            throw new GrapevineProviderException(ErrorConstants.INVALID_GRAPEVINE_FILE, ex);
+        }
     }
 
-    public string? Serialize(Game game)
+    public async Task SerializeAsync(Stream output, Game game)
     {
-        return JsonSerializer.Serialize(game, options);
+        await JsonSerializer.SerializeAsync(output, game, options);
     }
 }

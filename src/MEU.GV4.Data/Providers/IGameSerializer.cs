@@ -3,6 +3,6 @@
 namespace MEU.GV4.Data.Providers;
 public interface IGameSerializer
 {
-    string? Serialize(Game game);
-    Game? Deserialize(string rawData);
+    Task SerializeAsync(Stream output, Game game);
+    Task<Game?> DeserializeAsync(Stream input);
 }
