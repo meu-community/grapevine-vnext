@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using MEU.GV4.Data.Models;
 
 namespace MEU.GV4.Data.Providers;
@@ -6,9 +7,13 @@ public class GrapevineSerializer : IGameSerializer
 {
     private JsonSerializerOptions options = new JsonSerializerOptions
     {
-        WriteIndented = true,
-        TypeInfoResolver = new METTypeResolver()
+        WriteIndented = true
     };
+
+    public GrapevineSerializer(IJsonTypeInfoResolver typeInfoResolver)
+    {
+        options.TypeInfoResolver = typeInfoResolver;
+    }
 
 
     public async Task<Game?> DeserializeAsync(Stream input)

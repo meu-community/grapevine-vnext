@@ -5,11 +5,13 @@ using System.Text;
 namespace MEU.GV4.Data.Tests.Providers;
 public class GrapevineSerializerTests
 {
+    private METTypeResolver metResolver = new METTypeResolver();
+
     [Fact(DisplayName = "Can Serialize MET Game and retain type data")]
     public async Task CanSerializeMETGameAndRetainType()
     {
         var game = new METGame();
-        var serializer = new GrapevineSerializer();
+        var serializer = new GrapevineSerializer(metResolver);
         using (var memStream = new MemoryStream())
         {
             await serializer.SerializeAsync(memStream, game);
@@ -42,7 +44,7 @@ public class GrapevineSerializerTests
                 new Wraith()
             ]
         };
-        var serializer = new GrapevineSerializer();
+        var serializer = new GrapevineSerializer(metResolver);
         using (var memStream = new MemoryStream())
         {
 
@@ -60,7 +62,7 @@ public class GrapevineSerializerTests
     {
         using (var memStream = new MemoryStream())
         {
-            var serializer = new GrapevineSerializer();
+            var serializer = new GrapevineSerializer(metResolver);
             await Assert.ThrowsAsync<GrapevineProviderException>(async () => await serializer.DeserializeAsync(memStream));
         }
     }
@@ -70,7 +72,7 @@ public class GrapevineSerializerTests
     {
         using (var memStream = new MemoryStream(Encoding.UTF8.GetBytes(" ")))
         {
-            var serializer = new GrapevineSerializer();
+            var serializer = new GrapevineSerializer(metResolver);
             await Assert.ThrowsAsync<GrapevineProviderException>(async () => await serializer.DeserializeAsync(memStream));
         }
     }
@@ -78,7 +80,7 @@ public class GrapevineSerializerTests
     [Fact(DisplayName = "Deserialize Throws GrapevineProviderException when stream is null")]
     public async Task DeserializeThrowsGrapevineProviderExceptionWhenNull()
     {
-        var serializer = new GrapevineSerializer();
+        var serializer = new GrapevineSerializer(metResolver);
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         await Assert.ThrowsAsync<GrapevineProviderException>(async () => await serializer.DeserializeAsync(null));
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
