@@ -265,6 +265,62 @@ public class GrapevineLegacyXMLReaderTetsts
         Assert.Equivalent(testBackgrounds, result.Backgrounds);
     }
 
+    [Fact(DisplayName = "Can Load Actions")]
+    public void CanLoadActions()
+    {
+        var expected = new GameAction()
+        {
+            GameDate = DateOnly.Parse("1/1/2020"),
+            Character = "Bob",
+            Done = true,
+            SubActions =
+            [
+                new()
+                {
+                    Name = "Personal",
+                    Level = 0,
+                    Unused = 0,
+                    Total = 0,
+                    Act = "Test",
+                    Results = "Test",
+                    LinkList = [ new() { Type = "action", GameDate = DateOnly.Parse("12/1/2019"), Name = "Fred", Item = "Personal"}]
+                },
+                new () { Name = "X", Level = 0, Unused = 0, Total = 0 },
+                new () { Name = "Y", Level = 1, Unused = 1, Total = 1, Growth = 1 }
+            ],
+            CreateDate = DateTimeOffset.Parse("1/1/2020"),
+            ModifyDate = DateTimeOffset.Parse("1/1/2020")
+        };
+        var testGameData = """
+            <?xml version="1.0"?>
+            <grapevine version="3">
+                <action date="1/1/2020" character="Bob" done="yes" lastmodified="1/1/2020">
+                  <subaction name="Personal" level="0" unused="0" total="0">
+                    <act>
+                      <![CDATA[Test]]>
+                    </act>
+                    <results>
+                      <![CDATA[Test]]>
+                    </results>
+                    <linklist>
+                      <action date="12/1/2019" name="Fred" item="Personal"/>
+                    </linklist>
+                  </subaction>
+                  <subaction name="X" level="0" unused="0" total="0">
+                    <linklist/>
+                  </subaction>
+                  <subaction name="Y" level="1" unused="1" total="1" growth="1">
+                    <linklist/>
+                  </subaction>
+                </action>
+            </grapevine>
+            """;
+        var reader = new GrapevineLegacyXMLReader();
+        var result = reader.ReadData(testGameData).Actions[0];
+        Assert.NotNull(result);
+        Assert.Equivalent(expected, result);
+    }
+
     [Fact(DisplayName = "Throws provider exception when data is empty")]
     public void ThrowsProviderExceptionWhenDataIsEmpty()
     {

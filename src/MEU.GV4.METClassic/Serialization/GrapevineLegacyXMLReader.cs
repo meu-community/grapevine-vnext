@@ -40,7 +40,8 @@ public class GrapevineLegacyXMLReader
             Calendar = LoadCalendar(root),
             Items = LoadItems(root),
             Rotes = LoadRotes(root),
-            AprSettings = LoadAprSettings(root)
+            AprSettings = LoadAprSettings(root),
+            Actions = LoadActions(root)
         };
 
         return gameData;
@@ -164,6 +165,66 @@ public class GrapevineLegacyXMLReader
         }
 
         return new AprSettings();
+    }
+
+    internal static List<GameAction> LoadActions(XElement root)
+    {
+        var actions = new List<GameAction>();
+        foreach (var action in root.Elements("action"))
+        {
+            actions.Add(new GameAction()
+            {
+                GameDate = XmlHelper.GetAttributeAsDateOnly(action, "date"),
+                Character = XmlHelper.GetAttribute(action, "character"),
+                Done = action.Attribute("done")?.Value == "yes",
+                SubActions = LoadSubActions(action),
+                CreateDate = XmlHelper.GetAttributeAsDateTimeOffset(action, "lastmodified"),
+                ModifyDate = XmlHelper.GetAttributeAsDateTimeOffset(action, "lastmodified")
+            });
+        }
+
+        return actions;
+    }
+
+    internal static List<SubAction> LoadSubActions(XElement action)
+    {
+        var subActions = new List<SubAction>();
+        foreach (var subAction in action.Elements("subaction"))
+        {
+            subActions.Add(new()
+            {
+                Name = XmlHelper.GetAttribute(subAction, "name"),
+                Level = XmlHelper.GetAttributeAsInt(subAction, "level"),
+                Unused = XmlHelper.GetAttributeAsInt(subAction, "unused"),
+                Total = XmlHelper.GetAttributeAsInt(subAction, "total"),
+                Growth = XmlHelper.GetAttributeAsInt(subAction, "growth"),
+                Act = XmlHelper.GetCData(subAction, "act"),
+                Results = XmlHelper.GetCData(subAction,"results"),
+                LinkList = LoadLinkList(subAction)
+            });
+        }
+        return subActions;
+    }
+
+    internal static List<Link> LoadLinkList(XElement el)
+    {
+        var linkList = new List<Link>();
+        var llElement = el.Element("linklist");
+        if (llElement != null)
+        {
+            foreach (var link in llElement.Elements())
+            {
+                linkList.Add(new()
+                {
+                    Type = link.Name.LocalName,
+                    GameDate = XmlHelper.GetAttributeAsDateOnly(link, "date"),
+                    Name = XmlHelper.GetAttribute(link, "name"),
+                    Item = XmlHelper.GetAttribute(link, "item")
+                });
+            }
+        }
+
+        return linkList;
     }
 
     internal static string[] GetSupportedTypes()
