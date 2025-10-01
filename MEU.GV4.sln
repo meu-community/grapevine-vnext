@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MEU.GV4.Data", "src\MEU.GV4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MEU.GV4.Data.Tests", "tests\MEU.GV4.Data.Tests\MEU.GV4.Data.Tests.csproj", "{76BF71E0-2A6F-4108-9D7B-CD3A6FBA5A55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GV4", "src\GV4\GV4.csproj", "{18942A70-F9EF-43C8-A998-D89A2FC5A06E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,12 @@ Global
 		{76BF71E0-2A6F-4108-9D7B-CD3A6FBA5A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76BF71E0-2A6F-4108-9D7B-CD3A6FBA5A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76BF71E0-2A6F-4108-9D7B-CD3A6FBA5A55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18942A70-F9EF-43C8-A998-D89A2FC5A06E}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{18942A70-F9EF-43C8-A998-D89A2FC5A06E}.Debug|Any CPU.Build.0 = Debug|x64
+		{18942A70-F9EF-43C8-A998-D89A2FC5A06E}.Debug|Any CPU.Deploy.0 = Debug|x64
+		{18942A70-F9EF-43C8-A998-D89A2FC5A06E}.Release|Any CPU.ActiveCfg = Release|x64
+		{18942A70-F9EF-43C8-A998-D89A2FC5A06E}.Release|Any CPU.Build.0 = Release|x64
+		{18942A70-F9EF-43C8-A998-D89A2FC5A06E}.Release|Any CPU.Deploy.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

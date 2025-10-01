@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "GV4 (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "GV4 (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
